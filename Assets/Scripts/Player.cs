@@ -11,19 +11,21 @@ public class Player : MonoBehaviour
     public int Attack;
     public int Defense;
     Rigidbody2D rb;
+    bool isFreeze;
 
     void Start()
     {
         HP = 50;
         MaxHP = 50;
-        Attack = 0;
-        Defense = 0;
+        Attack = 30;
+        Defense = 10;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
             rb = transform.AddComponent<Rigidbody2D>();
         rb.isKinematic = false;
         rb.gravityScale = 0.0f;
+        isFreeze = false;
     }
     void UpdateMovement()
     {
@@ -49,9 +51,58 @@ public class Player : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
+    void Fight(Enemy enemy)
+    {
+        //Deal Damage
+        if((Attack - enemy.Defense) > 0)
+        {
+            enemy.HP -= (Attack - enemy.Defense);
+        }
+        //Take Damage
+        if((enemy.Attack - Defense) > 0)
+        {
+            HP -= (enemy.Attack - Defense);
+        }
+        
+    }
+    void Freeze()
+    {
+        rb.velocity = new Vector2 (0, 0);
+    }
     // Update is called once per frame
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Freeze();
+            isFreeze = true;
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            while(HP > 0)
+            {
+                Fight(enemy);
+                if (enemy.HP <= 0)
+                {
+                    Destroy(collision.gameObject);
+                    break;
+                }
+                if(HP <= 0)
+                {
+                    //YOU DIE!!
+                }
+                Debug.Log(HP + " " + enemy.HP);
+            }
+            isFreeze = false;
+        }
+    }
     void Update()
     {
-        UpdateMovement();
+        if(!isFreeze) 
+        {
+            UpdateMovement();
+        }
+        else 
+        {
+            Freeze();
+        }
     }
 }
