@@ -5,7 +5,7 @@ using UnityEngine;
 public class Maze
 {
     private MazePosition[,] maze;
-    public const int MAZE_WIDTH = 10, MAZE_HEIGHT = 10;
+    public const int MAZE_WIDTH = 30, MAZE_HEIGHT = 30;
     public Vector2Int startPos, endPos;
 
     public MazePosition GetPosition(int x, int y)

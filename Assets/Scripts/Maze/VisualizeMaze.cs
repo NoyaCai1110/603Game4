@@ -8,6 +8,8 @@ public class VisualizeMaze : MazeGame
     public Transform player;
     private int endPointX;
     private int endPointY;
+    public GameObject winPopup;
+    public GameObject mazeGrid;
 
 
     private void Visualize()
@@ -65,7 +67,8 @@ public class VisualizeMaze : MazeGame
         player.localPosition = new Vector3(playerPos.x, playerPos.y, 0);
         if(playerPos.x == endPointX && playerPos.y == endPointY)
         {
-            Debug.Log("You Win");
+            winPopup.SetActive(true);
+            mazeGrid.SetActive(false);
         }
         
     }
