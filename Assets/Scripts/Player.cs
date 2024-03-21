@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
             while(HP > 0)
             {
                 Fight(enemy);
+                Debug.Log(HP + " " + enemy.HP);
                 if (enemy.HP <= 0)
                 {
                     Destroy(collision.gameObject);
@@ -89,7 +90,6 @@ public class Player : MonoBehaviour
                 {
                     //YOU DIE!!
                 }
-                Debug.Log(HP + " " + enemy.HP);
             }
             isFreeze = false;
         }
