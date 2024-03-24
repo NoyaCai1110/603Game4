@@ -43,4 +43,9 @@ public class SceneSwitcher : MonoBehaviour
     {
         SceneManager.LoadScene(controlsScene, LoadSceneMode.Single);// switches to the controls scene
     }
+
+    public void onQuitGame()
+    {
+        Application.Quit();
+    }
 }

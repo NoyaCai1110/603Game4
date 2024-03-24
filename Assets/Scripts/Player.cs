@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public int Attack;
     public int Defense;
     Rigidbody2D rb;
-    bool isFreeze;
+    public bool isFreeze;
 
     void Start()
     {
@@ -96,6 +96,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        //commented out for testing purposes
         if(!isFreeze) 
         {
             UpdateMovement();
