@@ -6,6 +6,9 @@ public class MazeGame : MonoBehaviour
 {
     protected Maze m;
     protected Vector2Int playerPos;
+
+    public bool isFreeze = false; //from Player script
+
     private MazeGameState gameState;
     // Start is called before the first frame update
     public virtual void Start()
@@ -18,7 +21,7 @@ public class MazeGame : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if(gameState == MazeGameState.AWAITING_INPUT)
+        if(gameState == MazeGameState.AWAITING_INPUT && !isFreeze)//partly from player script
         {
             HandleInput();
         }

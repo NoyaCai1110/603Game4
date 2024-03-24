@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +11,20 @@ public class PlayerEnemyManager : MonoBehaviour
     public GameObject maze;
     public GameObject popup;
 
+
     private bool ispaused = false;
+    private MazeGame mazeScript;//reference to the script that moves the player
+    private Player playerScript;//reference to the script that holds the player's stats
 
 
     // Start is called before the first frame update
     void Start()
     {
         popup.SetActive(ispaused);//hides popup
+
+        mazeScript = maze.GetComponent<MazeGame>();//gets script from maze GameObject
+
+        //playerScript=player.GetComponent<Player>();//gets the script
     }
 
     // Update is called once per frame
@@ -33,6 +41,7 @@ public class PlayerEnemyManager : MonoBehaviour
                 OnPause();
             }
         }
+
     }
 
     public void OnPause()
@@ -40,7 +49,7 @@ public class PlayerEnemyManager : MonoBehaviour
         ispaused = true;
         popup.SetActive(ispaused);
 
-        //player.GetComponent<Player>().isFreeze = true;
+        mazeScript.isFreeze = true;
         //freeze the enemies too
     }
 
@@ -49,7 +58,7 @@ public class PlayerEnemyManager : MonoBehaviour
         ispaused = false;
         popup.SetActive(ispaused);
 
-        //player.GetComponent<Player>().isFreeze = false;
+        mazeScript.isFreeze = false;
         //freeze the enemies too
     }
 }
