@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public int MaxHP;
     public int Attack;
     public int Defense;
+    public int loots;
     Rigidbody2D rb;
     public bool isFreeze;
 
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
         MaxHP = 50;
         Attack = 30;
         Defense = 10;
+        loots = 10;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
@@ -65,6 +67,14 @@ public class Player : MonoBehaviour
         }
         
     }
+    void Win (Enemy enemy)
+    {
+        loots += enemy.loots;
+    }
+    void Lose(Enemy enemy)
+    {
+
+    }
     void Freeze()
     {
         rb.velocity = new Vector2 (0, 0);
@@ -83,11 +93,13 @@ public class Player : MonoBehaviour
                 Debug.Log(HP + " " + enemy.HP);
                 if (enemy.HP <= 0)
                 {
+                    Win(enemy);
                     Destroy(collision.gameObject);
                     break;
                 }
                 if(HP <= 0)
                 {
+                    Lose(enemy);
                     //YOU DIE!!
                 }
             }
