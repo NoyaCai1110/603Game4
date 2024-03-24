@@ -518,10 +518,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87a6e4852ff29a4ab44175fc1e0b854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1332994232}
   enemy: {fileID: 8703346519614542563, guid: 8f372b30db02eef47a794a742dd3426b, type: 3}
   maze: {fileID: 735048349}
   popup: {fileID: 2108774556}
+  HUDtext: {fileID: 2146646343}
 --- !u!1001 &735048348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -610,7 +611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFreeze: 0
   mazePosPrefab: {fileID: 1002394793614558523, guid: 1b77b04200aae4075ba78712e43c669b, type: 3}
-  player: {fileID: 0}
+  player: {fileID: 1695617702}
   winPopup: {fileID: 928863026}
   mazeGrid: {fileID: 735048349}
 --- !u!4 &735048351 stripped
@@ -1382,6 +1383,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311875742}
   m_CullTransparentMesh: 1
+--- !u!1 &1332994232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1927749105862019823, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+  m_PrefabInstance: {fileID: 1695617701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1695617701
 PrefabInstance:
   m_ObjectHideFlags: 0
