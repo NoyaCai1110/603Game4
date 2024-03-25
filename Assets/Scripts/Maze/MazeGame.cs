@@ -39,22 +39,23 @@ public class MazeGame : MonoBehaviour
 
     private void HandleInput()
     {
-        if(Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKey(KeyCode.W))
         {
             Move(Vector2Int.up);
         }
-        if(Input.GetKeyDown(KeyCode.S))
+        if(Input.GetKey(KeyCode.S))
         {
             Move(Vector2Int.down);
         }
-        if(Input.GetKeyDown(KeyCode.D))
+        if(Input.GetKey(KeyCode.D))
         {
             Move(Vector2Int.right);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             Move(Vector2Int.left);
         }
 
     }
 }
+

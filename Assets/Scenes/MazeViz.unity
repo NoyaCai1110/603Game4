@@ -283,10 +283,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &684229542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7018661814887156144, guid: 67555fa0e759847039f6724d688603a8, type: 3}
+  m_PrefabInstance: {fileID: 398280541800343510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &684229545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684229542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855b50cd46a4544958a7d662bf961436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFreeze: 0
+  mazePosPrefab: {fileID: 1002394793614558523, guid: 1b77b04200aae4075ba78712e43c669b, type: 3}
+  player: {fileID: 1728649065}
+  winPopup: {fileID: 1506836381}
+  mazeGrid: {fileID: 684229542}
 --- !u!1 &1506836381 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7834266419738120139, guid: 4ecad034584bf471dba1c7142372c66a, type: 3}
   m_PrefabInstance: {fileID: 9065981874648963324}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1728649065 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1433470799109618239, guid: 67555fa0e759847039f6724d688603a8, type: 3}
+  m_PrefabInstance: {fileID: 398280541800343510}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &398280541800343510
 PrefabInstance:
@@ -344,10 +371,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: maze
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5834158055376202608, guid: 67555fa0e759847039f6724d688603a8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7018661814887156144, guid: 67555fa0e759847039f6724d688603a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 684229545}
   m_SourcePrefab: {fileID: 100100000, guid: 67555fa0e759847039f6724d688603a8, type: 3}
 --- !u!1001 &9065981874648963324
 PrefabInstance:
