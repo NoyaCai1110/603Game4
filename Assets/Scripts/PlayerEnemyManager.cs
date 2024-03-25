@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerEnemyManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerEnemyManager : MonoBehaviour
     public GameObject maze;
     public GameObject popup;
     public TextMeshProUGUI HUDtext;
+    public int mazeSize = 30;
+    public int enemyNum = 5;
 
     private bool ispaused = false;
     private MazeGame mazeScript;//reference to the script that moves the player
@@ -26,6 +29,14 @@ public class PlayerEnemyManager : MonoBehaviour
         mazeScript = maze.GetComponent<MazeGame>();//gets script from maze GameObject
         playerScript=player.GetComponent<Player>();//gets the script
 
+        //creates enemies
+        for (int i = 0; i < enemyNum; i++)
+        {
+            float xPos = UnityEngine.Random.Range(0, mazeSize/2)-3f;//gets a random location for the enemy
+            float yPos = UnityEngine.Random.Range(0, mazeSize/2);
+
+            Instantiate(enemy, new Vector3(xPos, yPos, 0.0f), Quaternion.identity); //makes the enemy
+        }
     }
 
     // Update is called once per frame
@@ -44,7 +55,7 @@ public class PlayerEnemyManager : MonoBehaviour
         }
 
         //updates HUD with player's stats
-        HUDtext.text = "HP: " + playerScript.HP + "\nAttack: " + playerScript.Attack + "\nDefense: " + playerScript.Defense;
+        HUDtext.text = "HP: " + playerScript.HP + "\nAttack: " + playerScript.Attack + "\nDefense: " + playerScript.Defense + "\nLoot: " + playerScript.loots;
 
     }
 
