@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+[CreateAssetMenu]
+public class Enemy : ScriptableObject
 {
     // Start is called before the first frame update
-    public int HP = 20;
-    public int MaxHP = 20;
-    public int Attack = 5;
-    public int Defense = 3;
-    public int loots = 10;
+    public string name;
+    public int HP;
+    public int MaxHP;
+    public int Attack;
+    public int Defense;
+    public int dropped_gold;
+    public int exp;
+    public Sprite sprite; 
     void Start()
     {
         

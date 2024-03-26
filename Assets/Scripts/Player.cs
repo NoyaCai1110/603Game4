@@ -11,8 +11,12 @@ public class Player : MonoBehaviour
     public int Attack;
     public int Defense;
     public int loots;
+    public int level;
+    public int exp; 
+
     Rigidbody2D rb;
     public bool isFreeze;
+    public GameObject battleHUDPrefab;
 
     void Start()
     {
@@ -67,11 +71,31 @@ public class Player : MonoBehaviour
         }
         
     }
+
+    void Strike(Enemy enemy)
+    {
+      
+    }
+
+    void TakeDamage(int damage)
+    {
+        if(HP <= 0)
+        {
+            Lose();
+        }
+    }
+
+    void HealDamage(int amount)
+    {
+
+    }
+
+    void 
     void Win (Enemy enemy)
     {
-        loots += enemy.loots;
+        loots += enemy.dropped_gold;
     }
-    void Lose(Enemy enemy)
+    void Lose()
     {
 
     }
@@ -79,31 +103,49 @@ public class Player : MonoBehaviour
     {
         rb.velocity = new Vector2 (0, 0);
     }
+
+    void BeginBattle(Enemy enemy)
+    {
+        Freeze();
+        isFreeze = true;
+
+
+        /*conjure the battle HUD */
+        GameObject battleHUD = GameObject.Instantiate(battleHUDPrefab);
+        battleHUD.GetComponent<BattleHandler>().Setup(this, enemy);
+
+
+        /*while(HP > 0)
+        {
+            Fight(enemy);
+            Debug.Log(HP + " " + enemy.HP);
+            if (enemy.HP <= 0)
+            {
+                Win(enemy);
+                Destroy(collision.gameObject);
+                break;
+            }
+            if(HP <= 0)
+            {
+                Lose();
+                //YOU DIE!!
+            }
+        }*/
+    }
+
+    void EndBattle(Enemy enemy)
+    {
+        isFreeze = false;
+    }
     // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //begin battle when encountering an enemy
         if (collision.gameObject.tag == "Enemy")
         {
-            Freeze();
-            isFreeze = true;
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            while(HP > 0)
-            {
-                Fight(enemy);
-                Debug.Log(HP + " " + enemy.HP);
-                if (enemy.HP <= 0)
-                {
-                    Win(enemy);
-                    Destroy(collision.gameObject);
-                    break;
-                }
-                if(HP <= 0)
-                {
-                    Lose(enemy);
-                    //YOU DIE!!
-                }
-            }
-            isFreeze = false;
+            BeginBattle(enemy);
+       
         }
     }
     void Update()
