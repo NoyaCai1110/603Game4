@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 7187419121523246196}
   - component: {fileID: 7396483833916528312}
   - component: {fileID: 8488038516787611973}
+  - component: {fileID: 5282744945903674836}
   m_Layer: 5
   m_Name: BattleHUD
   m_TagString: Untagged
@@ -483,7 +484,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02592356087a61a4b98d6a37faa33e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterSprite: {fileID: 0}
+  currentEvent: 0
+  player: {fileID: 0}
+  enemy: {fileID: 0}
+  monster_container: {fileID: 7708552009377622737}
+  monsterPrefab: {fileID: 8127226459803408404, guid: 36b664e2326453e4e84a28f546fe2ccf, type: 3}
+  battle_log: {fileID: 2060267113378451032}
+  hp_text: {fileID: 3827282084898043928}
+  atk_text: {fileID: 8852763703484517416}
+  def_text: {fileID: 118294305763016592}
+  lvl_text: {fileID: 5035907465087235924}
+--- !u!114 &5282744945903674836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6088023142290344509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 6a38e9eca465c6848938bc1d33cc2e81, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &6571142646557516561
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,6 +535,7 @@ GameObject:
   - component: {fileID: 3232920795978653453}
   - component: {fileID: 2287221359085296888}
   - component: {fileID: 8595658097732087596}
+  - component: {fileID: 2060267113378451032}
   m_Layer: 5
   m_Name: BattleLog
   m_TagString: Untagged
@@ -560,6 +601,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2060267113378451032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6571142646557516561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86b7a8ae45176584e87735f2a69ab066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loggerText: {fileID: 5985763968409929182}
 --- !u!1 &6671097121727297044
 GameObject:
   m_ObjectHideFlags: 0

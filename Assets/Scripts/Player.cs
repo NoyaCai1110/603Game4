@@ -18,13 +18,15 @@ public class Player : MonoBehaviour
     public bool isFreeze;
     public GameObject battleHUDPrefab;
 
+    private GameObject currentEncounter; 
+
     void Start()
     {
-        HP = 50;
-        MaxHP = 50;
-        Attack = 30;
-        Defense = 10;
-        loots = 10;
+        HP = 10;
+        MaxHP = 10;
+        Attack = 3;
+        Defense = 1;
+        loots = 0;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
@@ -57,54 +59,40 @@ public class Player : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
-    void Fight(Enemy enemy)
-    {
-        //Deal Damage
-        if((Attack - enemy.Defense) > 0)
-        {
-            enemy.HP -= (Attack - enemy.Defense);
-        }
-        //Take Damage
-        if((enemy.Attack - Defense) > 0)
-        {
-            HP -= (enemy.Attack - Defense);
-        }
-        
-    }
 
-    void Strike(Enemy enemy)
+    //handler for taking damage 
+    public void TakeDamage(int damage)
     {
-      
-    }
+        this.HP = Mathf.Max(0, this.HP - damage);
 
-    void TakeDamage(int damage)
-    {
         if(HP <= 0)
         {
             Lose();
         }
     }
 
-    void HealDamage(int amount)
+    //Healing health
+    public void HealDamage(int amount)
     {
-
+        this.HP = Mathf.Max(this.MaxHP, this.HP + amount);
     }
 
-    void 
-    void Win (Enemy enemy)
+    public void LevelUp()
     {
-        loots += enemy.dropped_gold;
+        this.level += 1;
+        //level up stuff
     }
+
     void Lose()
     {
-
+        
     }
     void Freeze()
     {
         rb.velocity = new Vector2 (0, 0);
     }
 
-    void BeginBattle(Enemy enemy)
+    void BeginBattle(List<Enemy> enemyParty)
     {
         Freeze();
         isFreeze = true;
@@ -112,7 +100,9 @@ public class Player : MonoBehaviour
 
         /*conjure the battle HUD */
         GameObject battleHUD = GameObject.Instantiate(battleHUDPrefab);
-        battleHUD.GetComponent<BattleHandler>().Setup(this, enemy);
+        battleHUD.GetComponent<BattleHandler>().Setup(this, enemyParty);
+
+        currentEncounter = battleHUD;
 
 
         /*while(HP > 0)
@@ -133,8 +123,9 @@ public class Player : MonoBehaviour
         }*/
     }
 
-    void EndBattle(Enemy enemy)
+    public void EndBattle()
     {
+        GameObject.Destroy(currentEncounter);
         isFreeze = false;
     }
     // Update is called once per frame
@@ -143,9 +134,10 @@ public class Player : MonoBehaviour
         //begin battle when encountering an enemy
         if (collision.gameObject.tag == "Enemy")
         {
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            BeginBattle(enemy);
-       
+            EnemyList enemyParty = collision.gameObject.GetComponent<EnemyList>();
+            BeginBattle(enemyParty.enemies);
+            GameObject.Destroy(collision.gameObject);
+
         }
     }
     void Update()
