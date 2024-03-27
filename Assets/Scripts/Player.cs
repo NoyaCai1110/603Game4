@@ -11,18 +11,26 @@ public class Player : MonoBehaviour
     public int Attack;
     public int Defense;
     public int coins;
-    Rigidbody2D rb;
-    public bool isFreeze;
+    public int level;
+    public int exp;
+
     public List<merchandise> w_list = new List<merchandise>();  //Weapon
     public List<merchandise> s_list = new List<merchandise>();  //Shield
     public List<merchandise> p_list = new List<merchandise>();  //Potion
+
+    Rigidbody2D rb;
+    public bool isFreeze;
+    public GameObject battleHUDPrefab;
+
+    private GameObject currentEncounter; 
+
     void Start()
     {
-        HP = 50;
-        MaxHP = 50;
-        Attack = 30;
-        Defense = 10;
-        coins = 10;
+        HP = 10;
+        MaxHP = 10;
+        Attack = 3;
+        Defense = 1;
+        coins = 0;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
@@ -55,57 +63,91 @@ public class Player : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
-    void Fight(Enemy enemy)
-    {
-        //Deal Damage
-        if((Attack - enemy.Defense) > 0)
-        {
-            enemy.HP -= (Attack - enemy.Defense);
-        }
-        //Take Damage
-        if((enemy.Attack - Defense) > 0)
-        {
-            HP -= (enemy.Attack - Defense);
-        }
-        
-    }
-    void Win (Enemy enemy)
-    {
-        coins += enemy.coins;
-    }
-    void Lose(Enemy enemy)
-    {
 
+    //handler for adding gold
+
+    public void AddCoins(int amount)
+    {
+        coins += amount;
+    }
+    //handler for taking damage 
+    public void TakeDamage(int damage)
+    {
+        this.HP = Mathf.Max(0, this.HP - damage);
+
+        if(HP <= 0)
+        {
+            Lose();
+        }
+    }
+
+    //Healing health
+    public void HealDamage(int amount)
+    {
+        this.HP = Mathf.Max(this.MaxHP, this.HP + amount);
+    }
+
+    public void LevelUp()
+    {
+        this.level += 1;
+        //level up stuff
+    }
+
+    void Lose()
+    {
+        
     }
     void Freeze()
     {
         rb.velocity = new Vector2 (0, 0);
     }
+
+    void BeginBattle(List<Enemy> enemyParty)
+    {
+        Freeze();
+        isFreeze = true;
+
+
+        /*conjure the battle HUD */
+        GameObject battleHUD = GameObject.Instantiate(battleHUDPrefab);
+        battleHUD.GetComponent<BattleHandler>().Setup(this, enemyParty);
+
+        currentEncounter = battleHUD;
+
+
+        /*while(HP > 0)
+        {
+            Fight(enemy);
+            Debug.Log(HP + " " + enemy.HP);
+            if (enemy.HP <= 0)
+            {
+                Win(enemy);
+                Destroy(collision.gameObject);
+                break;
+            }
+            if(HP <= 0)
+            {
+                Lose();
+                //YOU DIE!!
+            }
+        }*/
+    }
+
+    public void EndBattle()
+    {
+        GameObject.Destroy(currentEncounter);
+        isFreeze = false;
+    }
     // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //begin battle when encountering an enemy
         if (collision.gameObject.tag == "Enemy")
         {
-            Freeze();
-            isFreeze = true;
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            while(HP > 0)
-            {
-                Fight(enemy);
-                Debug.Log(HP + " " + enemy.HP);
-                if (enemy.HP <= 0)
-                {
-                    Win(enemy);
-                    Destroy(collision.gameObject);
-                    break;
-                }
-                if(HP <= 0)
-                {
-                    Lose(enemy);
-                    //YOU DIE!!
-                }
-            }
-            isFreeze = false;
+            EnemyList enemyParty = collision.gameObject.GetComponent<EnemyList>();
+            BeginBattle(enemyParty.enemies);
+            GameObject.Destroy(collision.gameObject);
+
         }
     }
     void Update()
