@@ -81,38 +81,40 @@ public class Shop : MonoBehaviour
         item.image = m.image;
         return item;
     }
-    void purchase_c_item(Merchandise c_item, Player player)
+    void purchase_item(List<Merchandise> list, int index, Player player)
     {
-        if(c_item.stock <= 0)
+        Merchandise item = list[index];
+        if(item.stock <= 0)
         {
             Debug.Log("Out of stock");
             return;
         }
-        if(player.coins < c_item.price && c_item.type != item_type.Coin)
+        if(player.coins < item.price && item.type != item_type.Coin)
         {
             Debug.Log("Not enough Coins");
             return;
         }
-        c_item.stock --;
+        item.stock --;
+        list[index] = item;
         // Charge player && Inventory
-        switch (c_item.type)
+        switch (item.type)
         {
             case item_type.Coin:
-                player.coins += c_item.stat;
+                player.coins += item.stat;
                 break;
             case item_type.Weapon:
-                player.coins -= c_item.price;
-                Weapon w = w_converter(c_item);
+                player.coins -= item.price;
+                Weapon w = w_converter(item);
                 player.w_list.Add(w);
                 break;
             case item_type.Shield:
-                player.coins -= c_item.price;
-                Shield s = s_converter(c_item);
+                player.coins -= item.price;
+                Shield s = s_converter(item);
                 player.s_list.Add(s);
                 break;
             case item_type.Potions: 
-                player.coins -= c_item.price;
-                Potion p = p_converter(c_item);
+                player.coins -= item.price;
+                Potion p = p_converter(item);
                 bool found = false;
                 for(int i = 0; i < player.p_list.Count; i++)
                 {
@@ -124,18 +126,24 @@ public class Shop : MonoBehaviour
                         found = true;
                     }
                 }
-                if(!found)
+                if (!found)
+                {
+                    p.quantity = 1;
                     player.p_list.Add(p);
+                }
+                    
                 break;
             default:
                 break;
         }
+        return;
     }
     public List<Merchandise> m_coin = new List<Merchandise>();
     private Merchandise c_item;
     public List<Merchandise> m_money = new List<Merchandise>();
     private Merchandise m_item;
     [HideInInspector]public Sprite image;    //placeholder
+    Player player;
     void Awake()
     {
         //merchandise using coins
@@ -151,8 +159,9 @@ public class Shop : MonoBehaviour
     }
     void Start()
     {
-
-        
+        player = GameObject.Find("Player").GetComponent<Player>();
+        purchase_item(m_coin, 0, player);   //purchase m_coin[0]
+        purchase_item(m_coin, 1, player);
     }
 
 
