@@ -10,9 +10,13 @@ public class Player : MonoBehaviour
     public int MaxHP;
     public int Attack;
     public int Defense;
-    public int loots;
+    public int coins;
     public int level;
-    public int exp; 
+    public int exp;
+
+    public List<merchandise> w_list = new List<merchandise>();  //Weapon
+    public List<merchandise> s_list = new List<merchandise>();  //Shield
+    public List<merchandise> p_list = new List<merchandise>();  //Potion
 
     Rigidbody2D rb;
     public bool isFreeze;
@@ -26,7 +30,7 @@ public class Player : MonoBehaviour
         MaxHP = 10;
         Attack = 3;
         Defense = 1;
-        loots = 0;
+        coins = 0;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
@@ -60,6 +64,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    //handler for adding gold
+
+    public void AddCoins(int amount)
+    {
+        coins += amount;
+    }
     //handler for taking damage 
     public void TakeDamage(int damage)
     {

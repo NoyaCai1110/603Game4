@@ -160,7 +160,8 @@ public class BattleHandler : MonoBehaviour
     
     private void GainLoot()
     {
-        battle_log.ShowDialogue($"Loot found: {enemy.dropped_gold} Gold");
+        battle_log.ShowDialogue($"Loot found: {enemy.dropped_gold} coins");
+        player.AddCoins(enemy.dropped_gold);
 
         actionQueue.Enqueue(BattleEvent.BattleEnd);
     }
