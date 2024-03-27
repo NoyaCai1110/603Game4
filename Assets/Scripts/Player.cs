@@ -10,17 +10,19 @@ public class Player : MonoBehaviour
     public int MaxHP;
     public int Attack;
     public int Defense;
-    public int loots;
+    public int coins;
     Rigidbody2D rb;
     public bool isFreeze;
-
+    public List<merchandise> w_list = new List<merchandise>();  //Weapon
+    public List<merchandise> s_list = new List<merchandise>();  //Shield
+    public List<merchandise> p_list = new List<merchandise>();  //Potion
     void Start()
     {
         HP = 50;
         MaxHP = 50;
         Attack = 30;
         Defense = 10;
-        loots = 10;
+        coins = 10;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour
     }
     void Win (Enemy enemy)
     {
-        loots += enemy.loots;
+        coins += enemy.coins;
     }
     void Lose(Enemy enemy)
     {

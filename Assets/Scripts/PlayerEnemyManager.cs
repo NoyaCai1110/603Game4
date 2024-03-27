@@ -55,7 +55,7 @@ public class PlayerEnemyManager : MonoBehaviour
         }
 
         //updates HUD with player's stats
-        HUDtext.text = "HP: " + playerScript.HP + "\nAttack: " + playerScript.Attack + "\nDefense: " + playerScript.Defense + "\nLoot: " + playerScript.loots;
+        HUDtext.text = "HP: " + playerScript.HP + "\nAttack: " + playerScript.Attack + "\nDefense: " + playerScript.Defense + "\nLoot: " + playerScript.coins;
 
     }
 

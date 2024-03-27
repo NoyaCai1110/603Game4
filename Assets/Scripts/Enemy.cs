@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     public int MaxHP = 20;
     public int Attack = 5;
     public int Defense = 3;
-    public int loots = 10;
+    public int coins = 10;
     void Start()
     {
         
