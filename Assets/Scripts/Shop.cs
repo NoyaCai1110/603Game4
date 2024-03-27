@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[Serializable]
 public struct merchandise
 {
     public string name;
@@ -59,6 +59,8 @@ public class Shop : MonoBehaviour
                 player.coins -= c_item.price;
                 player.p_list.Add(c_item);
                 break;
+            default:
+                break;
         }
     }
     public List<merchandise> m_coin = new List<merchandise>();
@@ -70,18 +72,20 @@ public class Shop : MonoBehaviour
         //merchandise using coins
         c_item = init_item("Life Potion", 20, 5, 20, item_type.Potions);
         m_coin.Add(c_item);
-        c_item = init_item("Wooden Sword", 50, 1, 5, item_type.Weapon);
-        m_coin.Add(c_item);
-        c_item = init_item("Wooden Shield", 50, 1, 3, item_type.Shield);
-        m_coin.Add(c_item);
-        //merchandise using money
-        m_item = init_item("500 Coins", 5, 1000, 500, item_type.Coin);
-        m_money.Add(m_item);
+        //c_item = init_item("Wooden Sword", 50, 1, 5, item_type.Weapon);
+        //m_coin.Add(c_item);
+        //c_item = init_item("Wooden Shield", 50, 1, 3, item_type.Shield);
+        //m_coin.Add(c_item);
+        ////merchandise using money
+        //m_item = init_item("500 Coins", 5, 1000, 500, item_type.Coin);
+        //m_money.Add(m_item);
+        
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        //m_coin.Clear();
     }
 }
