@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using TMPro; 
 
-public class Enemy : MonoBehaviour
+public class Logger : MonoBehaviour
 {
+    public TextMeshProUGUI loggerText; 
     // Start is called before the first frame update
-    public int HP = 20;
-    public int MaxHP = 20;
-    public int Attack = 5;
-    public int Defense = 3;
-    public int coins = 10;
     void Start()
     {
         
@@ -21,4 +17,11 @@ public class Enemy : MonoBehaviour
     {
         
     }
+
+    public void ShowDialogue(string text)
+    {
+        loggerText.text = text; 
+    }
+
+
 }
