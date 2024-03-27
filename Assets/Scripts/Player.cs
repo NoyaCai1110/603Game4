@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+  
     // Start is called before the first frame update
+
+    public List<PartyMember> party; 
     public int HP;
     public int MaxHP;
     public int Attack;
@@ -13,6 +16,8 @@ public class Player : MonoBehaviour
     public int coins;
     public int level;
     public int exp;
+
+    public Enemy testEnemy;
 
     public List<merchandise> w_list = new List<merchandise>();  //Weapon
     public List<merchandise> s_list = new List<merchandise>();  //Shield
@@ -26,10 +31,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        HP = 10;
-        MaxHP = 10;
-        Attack = 3;
-        Defense = 1;
+        //create initial party
+        CreateInitialParty();
+
+
         coins = 0;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
@@ -38,7 +43,32 @@ public class Player : MonoBehaviour
         rb.isKinematic = false;
         rb.gravityScale = 0.0f;
         isFreeze = false;
+
+
+
+        //FOR DEBUGGING
+        List<Enemy> testEncounter = new List<Enemy>();
+        testEncounter.Add(testEnemy);
+        testEncounter.Add(testEnemy);
+        testEncounter.Add(testEnemy);
+        testEncounter.Add(testEnemy);
+        BeginBattle(testEncounter);
     }
+    private void CreateInitialParty()
+    {
+        AddPartyMember("bard", "Hero");
+        AddPartyMember("fighter", "Jack");
+        AddPartyMember("wizard", "WizKid");
+        AddPartyMember("cleric", "Rosie");
+    }
+
+    public void AddPartyMember(string char_class, string char_name)
+    {
+        PartyMember newMember = GameObject.Find("GameManager").GetComponent<CharCreator>().CreateCharacter(char_class, char_name);
+
+        party.Add(newMember);
+    }
+
     void UpdateMovement()
     {
         if (rb == null) return;
@@ -110,7 +140,7 @@ public class Player : MonoBehaviour
 
         /*conjure the battle HUD */
         GameObject battleHUD = GameObject.Instantiate(battleHUDPrefab);
-        battleHUD.GetComponent<BattleHandler>().Setup(this, enemyParty);
+        battleHUD.GetComponent<BattleHandler>().Setup(party, enemyParty);
 
         currentEncounter = battleHUD;
 

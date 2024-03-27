@@ -381,6 +381,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4766529111674072863, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: m_GravityScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: battleHUDPrefab
       value: 

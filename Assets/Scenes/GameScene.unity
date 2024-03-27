@@ -670,6 +670,7 @@ GameObject:
   m_Component:
   - component: {fileID: 611598637}
   - component: {fileID: 611598638}
+  - component: {fileID: 611598639}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -711,6 +712,23 @@ MonoBehaviour:
   HUDtext: {fileID: 2146646343}
   mazeSize: 20
   enemyNum: 10
+--- !u!114 &611598639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611598636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53fbec8c13cdf4742b24bd6bd0ff7956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bard: {fileID: 11400000, guid: 5c4628197a2bb294397c8ae66f5ae142, type: 2}
+  fighter: {fileID: 11400000, guid: 2c0af5b26fc3d13478c852c858af8aac, type: 2}
+  cleric: {fileID: 11400000, guid: e331afafdf85551409d598784f853b36, type: 2}
+  wizard: {fileID: 11400000, guid: b653dc0d017b1174ebcf515389785ef1, type: 2}
+  rogue: {fileID: 11400000, guid: 6e16a914c70be0d418a376a086b0fb0e, type: 2}
 --- !u!1 &691008441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,9 +2057,37 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: HP
+      value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: testEnemy
+      value: 
+      objectReference: {fileID: 11400000, guid: f8d43e4e650ef624d896c1ccd8978621, type: 2}
+    - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: battleHUDPrefab
       value: 
       objectReference: {fileID: 6088023142290344509, guid: 411829fb62f8f2149b57bf3e3378a37d, type: 3}
+    - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: party.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: party.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c4628197a2bb294397c8ae66f5ae142, type: 2}
+    - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: party.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: e331afafdf85551409d598784f853b36, type: 2}
+    - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: party.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c0af5b26fc3d13478c852c858af8aac, type: 2}
+    - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: party.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: b653dc0d017b1174ebcf515389785ef1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

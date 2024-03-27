@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 53fbec8c13cdf4742b24bd6bd0ff7956
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bard: {fileID: 11400000, guid: 5c4628197a2bb294397c8ae66f5ae142, type: 2}
+  - fighter: {fileID: 11400000, guid: 2c0af5b26fc3d13478c852c858af8aac, type: 2}
+  - cleric: {fileID: 11400000, guid: e331afafdf85551409d598784f853b36, type: 2}
+  - wizard: {fileID: 11400000, guid: b653dc0d017b1174ebcf515389785ef1, type: 2}
+  - rogue: {fileID: 11400000, guid: 6e16a914c70be0d418a376a086b0fb0e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -29,6 +29,12 @@ public class Enemy : ScriptableObject
         this.exp = enemytoCopy.exp;
         this.sprite = enemytoCopy.sprite;
     }
+
+    public void BasicAttack(List<PartyMember> playerParty)
+    {
+
+    }
+
     public void TakeDamage(int damage)
     {
         this.HP = Mathf.Max(0, this.HP - damage);
