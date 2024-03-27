@@ -14,9 +14,9 @@ public class Player : MonoBehaviour
     public int level;
     public int exp;
 
-    public List<merchandise> w_list = new List<merchandise>();  //Weapon
-    public List<merchandise> s_list = new List<merchandise>();  //Shield
-    public List<merchandise> p_list = new List<merchandise>();  //Potion
+    public List<Weapon> w_list = new List<Weapon>();  //Weapon
+    public List<Shield> s_list = new List<Shield>();  //Shield
+    public List<Potion> p_list = new List<Potion>();  //Potion
 
     Rigidbody2D rb;
     public bool isFreeze;
