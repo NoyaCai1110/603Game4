@@ -13,18 +13,21 @@ public struct Merchandise
     public Sprite image;
     public item_type type;    
 };
+[Serializable]
 public struct Weapon
 {
     public string name;
     public int stat;    //Attack
     public Sprite image;
 };
+[Serializable]
 public struct Shield
 {
     public string name;
     public int stat;    //Defense
     public Sprite image;
 };
+[Serializable]
 public struct Potion
 {
     public string name;
@@ -85,6 +88,11 @@ public class Shop : MonoBehaviour
             Debug.Log("Out of stock");
             return;
         }
+        if(player.coins < c_item.price && c_item.type != item_type.Coin)
+        {
+            Debug.Log("Not enough Coins");
+            return;
+        }
         c_item.stock --;
         // Charge player && Inventory
         switch (c_item.type)
@@ -143,7 +151,7 @@ public class Shop : MonoBehaviour
     }
     void Start()
     {
-        
+
         
     }
 

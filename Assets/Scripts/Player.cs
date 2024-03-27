@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         MaxHP = 10;
         Attack = 3;
         Defense = 1;
-        coins = 0;
+        coins = 200;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
