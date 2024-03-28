@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,9 +27,80 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     public bool isFreeze;
     public GameObject battleHUDPrefab;
+    private GameObject currentEncounter;
 
-    private GameObject currentEncounter; 
+    public List<Weapon> w_list = new List<Weapon>();  //Weapon
+    public List<Shield> s_list = new List<Shield>();  //Shield
+    public List<Potion> p_list = new List<Potion>();  //Potion
 
+    int cur_w = 0;
+    int cur_s = 0;
+
+    void equip_weapon(int w_index)
+    {
+        if (w_index > w_list.Count - 1)
+        {
+            Debug.Log("No Weapon here");
+            return;
+        }
+        if (!w_list[w_index].equipped) 
+        {
+            Weapon tmp;
+            tmp = w_list[cur_w];
+            tmp.equipped = false;
+            w_list[cur_w] = tmp;
+            tmp = w_list[w_index];
+            tmp.equipped = true;
+            w_list[w_index] = tmp;
+            cur_w = w_index;
+            Attack = w_list[cur_w].stat;
+        }   
+    }
+
+    void equip_shield(int s_index)
+    {
+        if(s_index > s_list.Count-1) 
+        {
+            Debug.Log("No Shield here");
+            return;
+        }
+        if (!s_list[s_index].equipped)
+        {
+            Shield tmp;
+            tmp = s_list[cur_s];
+            tmp.equipped = false;
+            s_list[cur_s] = tmp;
+            tmp = s_list[s_index];
+            tmp.equipped = true;
+            s_list[s_index] = tmp;
+            cur_s = s_index;
+            Defense = s_list[cur_s].stat;
+        }
+    }
+    void drink_potion(int p_index)
+    {
+        if(p_index > p_list.Count-1)
+        {
+            Debug.Log("No Potion here");
+            return;
+        }
+        Potion tmp;
+        tmp = p_list[p_index];
+        if(tmp.quantity == 1)
+        {
+            p_list.Remove(tmp);
+        }
+        else
+        {
+            tmp.quantity --;
+            p_list[p_index] = tmp;
+        }
+        HP += tmp.stat;
+        if(HP > MaxHP)
+        {
+            HP = MaxHP;
+        }
+    }
     void Start()
     {
         //create initial party
@@ -36,6 +108,11 @@ public class Player : MonoBehaviour
 
 
         coins = 0;
+        HP = 10;
+        MaxHP = 100;
+        Attack = 3;
+        Defense = 1;
+        coins = 500;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
@@ -191,5 +268,17 @@ public class Player : MonoBehaviour
         {
             Freeze();
         }
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    drink_potion(0);
+        //}
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //{
+        //    equip_shield(0);
+        //}
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    equip_shield(1);
+        //}
     }
 }
