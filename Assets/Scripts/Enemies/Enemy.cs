@@ -4,16 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Enemy : ScriptableObject
+public class Enemy : Combatant
 {
     // Start is called before the first frame update
-    public string name;
-    public int HP;
-    public int MaxHP;
-    public int Attack;
-    public int Defense;
-    public int dropped_gold;
-    public int exp;
+    public int dropped_gold, exp;
     public Sprite sprite;
 
 

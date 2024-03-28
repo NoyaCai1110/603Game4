@@ -23,14 +23,14 @@ public enum BattleEvent
 
 public struct Action
 {
-    
+   
 }
 
 public class BattleHandler : MonoBehaviour
 {
     //handles the dialogue for the battle log 
     private Queue<BattleEvent> eventQueue = new Queue<BattleEvent>();
-    private Queue<BattleEvent> battleQueue = new Queue 
+    private Queue<BattleEvent> actionQueue = new Queue<BattleEvent>();
 
     //each party member and their respective ui panel on the top screen
     private Dictionary<GameObject, PartyMember> partyPanels = new Dictionary<GameObject, PartyMember>();  

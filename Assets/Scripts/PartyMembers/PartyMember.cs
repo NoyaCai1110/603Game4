@@ -5,24 +5,14 @@ using UnityEngine;
 
 
 [CreateAssetMenu]
-public class PartyMember : ScriptableObject
+public class PartyMember : Combatant
 {
     [SerializeField]
-    public int HP, MaxHP,MP,MaxMP,Attack, Defense,Magic,Speed,level,exp;
-    public string name; 
-    public bool isDead; 
+    public int level,exp;
 
     public void Copy(PartyMember member)
     {
-        this.name = member.name;
-        this.HP = member.HP;
-        this.MaxHP = member.MaxMP;
-        this.MP = member.MP;
-        this.MaxMP = member.MaxMP;
-        this.Attack = member.Attack;
-        this.Defense = member.Defense;
-        this.Magic = member.Magic;
-        this.Speed = member.Speed;
+               
         this.level = member.level;
         this.exp = member.exp; 
 
