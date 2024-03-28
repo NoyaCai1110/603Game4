@@ -20,10 +20,6 @@ public class Player : MonoBehaviour
 
     public Enemy testEnemy;
 
-    public List<merchandise> w_list = new List<merchandise>();  //Weapon
-    public List<merchandise> s_list = new List<merchandise>();  //Shield
-    public List<merchandise> p_list = new List<merchandise>();  //Potion
-
     Rigidbody2D rb;
     public bool isFreeze;
     public GameObject battleHUDPrefab;
@@ -105,7 +101,6 @@ public class Player : MonoBehaviour
     {
         //create initial party
         CreateInitialParty();
-
 
         coins = 0;
         HP = 10;
