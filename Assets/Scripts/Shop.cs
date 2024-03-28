@@ -18,6 +18,7 @@ public struct Weapon
 {
     public string name;
     public int stat;    //Attack
+    public bool equipped;
     public Sprite image;
 };
 [Serializable]
@@ -25,6 +26,7 @@ public struct Shield
 {
     public string name;
     public int stat;    //Defense
+    public bool equipped;
     public Sprite image;
 };
 [Serializable]
@@ -63,6 +65,7 @@ public class Shop : MonoBehaviour
         item.name = m.name;
         item.stat = m.stat;
         item.image = m.image;
+        item.equipped = false;
         return item;
     }
     Shield s_converter(Merchandise m)
@@ -71,6 +74,7 @@ public class Shop : MonoBehaviour
         item.name = m.name;
         item.stat = m.stat;
         item.image = m.image;
+        item.equipped = false;
         return item;
     }
     Potion p_converter(Merchandise m)
@@ -151,7 +155,11 @@ public class Shop : MonoBehaviour
         m_coin.Add(c_item);
         c_item = init_item("Wooden Sword", 50, 1, 5, image, item_type.Weapon);
         m_coin.Add(c_item);
+        c_item = init_item("Metal Sword", 80, 1, 8, image, item_type.Weapon);
+        m_coin.Add(c_item);
         c_item = init_item("Wooden Shield", 50, 1, 3, image, item_type.Shield);
+        m_coin.Add(c_item);
+        c_item = init_item("Metal Shield", 80, 1, 5, image, item_type.Shield);
         m_coin.Add(c_item);
         //merchandise using money
         m_item = init_item("500 Coins", 5, 1000, 500, image, item_type.Coin);
@@ -161,7 +169,15 @@ public class Shop : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<Player>();
         purchase_item(m_coin, 0, player);   //purchase m_coin[0]
+        purchase_item(m_coin, 0, player);
+        purchase_item(m_coin, 0, player);
+        purchase_item(m_coin, 0, player);
+        purchase_item(m_coin, 0, player);
+        purchase_item(m_coin, 0, player);
         purchase_item(m_coin, 1, player);
+        purchase_item(m_coin, 2, player);
+        purchase_item(m_coin, 3, player);
+        purchase_item(m_coin, 4, player);
     }
 
 
