@@ -10,6 +10,10 @@ public class PartyMember : Combatant
     [SerializeField]
     public int level,exp;
 
+    Weapon equippedWeapon;
+    Shield equippedShield;
+
+
     public void Copy(PartyMember member)
     {
                
@@ -17,20 +21,10 @@ public class PartyMember : Combatant
         this.exp = member.exp; 
 
     }
-    public void TakeDamage(int damage)
-    {
-        this.HP = Mathf.Max(0, this.HP - damage);
 
-        if (HP <= 0)
-        {
-            
-        }
-    }
-
-    //Healing health
-    public void HealDamage(int amount)
+    public override void Act()
     {
-        this.HP = Mathf.Max(this.MaxHP, this.HP + amount);
+        
     }
 
     public void LevelUp()

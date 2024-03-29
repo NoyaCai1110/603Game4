@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Combatant : ScriptableObject
 {
+    //every combatant should have these attributes
     public int HP, MaxHP, MP, MaxMP, Attack, Defense, Magic, Speed;
     public string name;
-    public bool isDead;
+    public bool isDead, isDefending;
 
-    public void Copy(Combatant combatant)
+
+
+    protected void Copy(Combatant combatant)
     {
         this.name = combatant.name;
         this.HP = combatant.HP;
@@ -21,6 +24,15 @@ public class Combatant : ScriptableObject
         this.Speed = combatant.Speed;
 
     }
+
+
+
+    //Behavior for what happens when this character acts
+    public virtual void Act()
+    {
+
+    }
+
     public void TakeDamage(int damage)
     {
         this.HP = Mathf.Max(0, this.HP - damage);
@@ -47,9 +59,9 @@ public class Combatant : ScriptableObject
 
     }
 
-    public void UseItem()
+    public void UseItem(Potion potion)
     {
-
+        
     }
 
     

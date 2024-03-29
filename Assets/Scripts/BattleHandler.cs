@@ -21,30 +21,48 @@ public enum BattleEvent
   
 }
 
-public struct Action
+public enum ActionType
 {
-   
+    Attack,
+    Spell, 
+    Item, 
+    Defend,
+    None
+}
+
+public struct Turn
+{
+    public Turn(Combatant combatant)
+    {
+        owner = combatant;
+        action = ActionType.None;
+    }
+
+    public Combatant owner; 
+    public ActionType action; 
 }
 
 public class BattleHandler : MonoBehaviour
 {
     //handles the dialogue for the battle log 
     private Queue<BattleEvent> eventQueue = new Queue<BattleEvent>();
-    private Queue<BattleEvent> actionQueue = new Queue<BattleEvent>();
+    private Queue<Turn> actionQueue = new Queue<Turn>();
 
     //each party member and their respective ui panel on the top screen
-    private Dictionary<GameObject, PartyMember> partyPanels = new Dictionary<GameObject, PartyMember>();  
+    private Dictionary<GameObject, PartyMember> partyPanels = new Dictionary<GameObject, PartyMember>();
+    private Dictionary<GameObject, Enemy> monster_sprites = new Dictionary<GameObject, Enemy>();
 
-    public BattleEvent currentEvent; 
+    private Turn currentTurn;
+    private BattleEvent currentEvent;
+    private bool issuing_commands = false;
 
-    public Player player;
-    public Enemy enemy;
     public List<PartyMember> playerParty;
     public List<Enemy> enemyParty;
 
     public GameObject monster_container; //anchor for the monster sprite
     public GameObject monsterPrefab;
-    public GameObject charpanelPrefab; 
+    public GameObject charpanelPrefab;
+    public CommandManager commandPanel;
     public Logger battle_log; //battle text box
     public void Setup(List<PartyMember> playerParty, List<Enemy> enemyParty)
     {
@@ -52,11 +70,11 @@ public class BattleHandler : MonoBehaviour
         //load player party
         this.playerParty = playerParty;
 
-        int index = 1; 
+        int index = 1;
         //set up player stats
         foreach (PartyMember member in playerParty)
         {
-               
+
             //create a prefab and anchor it to one of the slots on the top part of the HUD
             GameObject newPanel = GameObject.Instantiate(charpanelPrefab, GameObject.Find($"Slot{index}").transform.position, Quaternion.identity);
 
@@ -75,12 +93,12 @@ public class BattleHandler : MonoBehaviour
             index++;
         }
 
+
         //x-coord of the next sprite's position
-        float xPos = 0;
         RectTransform rect_transform = monster_container.GetComponent<RectTransform>();
 
         float startPositionX = rect_transform.rect.xMin;
-        startPositionX += Mathf.Abs(startPositionX) * .3f; 
+        startPositionX += Mathf.Abs(startPositionX) * .3f;
         float endPositionX = rect_transform.rect.xMax;
         endPositionX -= endPositionX * .3f;
 
@@ -98,103 +116,124 @@ public class BattleHandler : MonoBehaviour
 
             monsterSprite.GetComponent<RectTransform>().localPosition = spritePosition;
 
+
             //assign parent 
             monsterSprite.transform.SetParent(monster_container.transform);
 
             //set sprite
             monsterSprite.GetComponent<Image>().sprite = enemyParty[i].sprite;
+
+            //attach each enemy to their respective sprite
+            monster_sprites.Add(monsterSprite, enemyParty[i]);
+            //and then store them in backend (for targeting)
+            //instantiate so that the base object isn't permanently modified
+            this.enemyParty.Add(Instantiate(enemyParty[i]));
+
+
         }
-  
-        this.enemy = new Enemy(enemyParty[0]);
 
         Kickoff();
 
     }
 
-
     //after setting up references, start the fight!
     private void Kickoff()
     {
         eventQueue.Enqueue(BattleEvent.BattleStart);
-        battle_log.ShowDialogue($"A group of monsters draw near!");
+        battle_log.ShowDialogue($"Monsters draw near!");
         //initial encounter text
 
-        //the player acts first (for now)
-        eventQueue.Enqueue(BattleEvent.PlayerAction);
+        LoadRound();
     }
 
-    private void EnemyActs()
+    //https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=net-8.0#system-collections-generic-list-1-sort(system-comparison((-0)))
+    //load the initiative order in order of each Combatant's Speed
+    private void LoadRound()
     {
-        //enemy attacks
-        int damage = Mathf.Max(0, (enemy.Attack - player.Defense));
-        player.TakeDamage(damage);
-     
-
-
-        battle_log.ShowDialogue($"{enemy.name} attacks! You take {damage} damage!");
-
-        //player dies
-        if(player.HP <= 0)
+        int sortBySpeed(Combatant a, Combatant b)
         {
-            eventQueue.Enqueue(BattleEvent.EnemyVictory);
+            if (a == null)
+            {
+                if (b == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else
+            {
+                if (b == null)
+                {
+                    return 1;
+                }
+                else
+                {
+                    //if a and b are valid, check speed;
+                    int returnValue = a.Speed.CompareTo(b.Speed);
+
+                    if (returnValue != 0)
+                    {
+                        return returnValue;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
         }
-        //player still alive; pass to player
-        else
+
+        List<Combatant> combatants = new List<Combatant>();
+
+        foreach (Enemy e in enemyParty)
         {
-            eventQueue.Enqueue(BattleEvent.PlayerAction);
+            if (!e.isDead)
+            {
+                combatants.Add(e);
+            }
         }
+
+        foreach (PartyMember p in playerParty)
+        {
+            if (!p.isDead)
+            {
+                combatants.Add(p);
+            }
+        }
+
+        //sort by Speed
+        combatants.Sort(sortBySpeed);
+
+        for (int i = combatants.Count - 1; i == 0; i++)
+        {
+            Turn newTurn = new Turn(combatants[i]);
+
+            actionQueue.Enqueue(newTurn);
+        }
+
+
     }
 
-    private void PlayerActs()
+    public void PerformTurn(Turn currentTurn)
     {
-        //player attqcks
-        int damage = Mathf.Max(0, (player.Attack - enemy.Defense));
-        enemy.TakeDamage(damage);
-
-        battle_log.ShowDialogue($"You strike the {enemy.name}. It takes {damage} damage!");
-
-        //enemy slain
-        if(enemy.HP <= 0)
+        if (currentTurn.owner is Enemy)
         {
-            eventQueue.Enqueue(BattleEvent.EnemyDies);
+            (currentTurn.owner as Enemy).Act();
         }
 
-        //enemy still alive; pass to enemy
-        else
+        if (currentTurn.owner is PartyMember)
         {
-            eventQueue.Enqueue(BattleEvent.EnemyAction);
+            (currentTurn.owner as PartyMember).Act();
         }
-        
-
-    }
-
-    private void PlayerDeath(Player player)
-    {
-        battle_log.ShowDialogue("Hero is knocked out.");
-
-        //if(player party alive count == 0)
-        //eventQueue.Enqueue(BattleEvent.EnemyVictory)
-
-        eventQueue.Enqueue(BattleEvent.EnemyVictory);
-    }
-
-    private void EnemyDeath(Enemy enemy)
-    {
-        //destroy sprites
-        GameObject.Destroy(monster_container);
-
-
-        battle_log.ShowDialogue($"{enemy.name} is slain!");
-        eventQueue.Enqueue(BattleEvent.PlayerVictory);
     }
 
     private void PlayerVictory()
     {
         battle_log.ShowDialogue("Victory!");
         /// add exp
-        player.exp += enemy.exp;
-        eventQueue.Enqueue(BattleEvent.GainXP);
-
         //player reaches level up threshold
         //if(player.exp > threshold){
         //eventQueue.Enqueue(BattleEvent.Levelup)
@@ -202,23 +241,20 @@ public class BattleHandler : MonoBehaviour
 
         eventQueue.Enqueue(BattleEvent.GainLoot);
     }
-    
+
     private void GainLoot()
     {
-        battle_log.ShowDialogue($"Loot found: {enemy.dropped_gold} coins");
-        player.AddCoins(enemy.dropped_gold);
 
-        eventQueue.Enqueue(BattleEvent.BattleEnd);
     }
 
-    private void GainXP() {
-        battle_log.ShowDialogue($"You earned {enemy.exp} experience points.");
+    private void GainXP()
+    {
+
     }
 
     private void LevelUp()
     {
-        player.LevelUp();
-        battle_log.ShowDialogue($"You leveled up!");
+
     }
 
     private void EnemyVictory()
@@ -228,71 +264,51 @@ public class BattleHandler : MonoBehaviour
         //if(enemy party alive count == 0)
         //eventQueue.Enqueue(BattleEvent.PlayerVictory)
 
-        eventQueue.Enqueue(BattleEvent.PlayerVictory);
+        eventQueue.Enqueue(BattleEvent.EnemyVictory);
     }
 
+
+    public void LoadNextEvent()
+    {
+        BattleEvent currentEvent = eventQueue.Peek();
+
+        switch (currentEvent)
+        {
+
+        }
+
+    }
+
+    //public void LoadCommands;
     //press A to move to the next event 
-    //public void OnConfirm()
-    //{
-    //    eventQueue.Dequeue();
+    public void OnConfirm()
+    {
+        if (!issuing_commands)
+        {
+            //check the turn 
+            currentTurn = actionQueue.Peek();
+            //tell the turn's owner to Act()
+            //perform the action, which should load the battleEvent queue
+            PerformTurn(currentTurn);
 
-    //    currentEvent = eventQueue.Peek();
 
-    //    switch (currentEvent)
-    //    {
-    //        case BattleEvent.PlayerAction:
-    //            {
-    //                PlayerActs();
-    //                break; 
-    //            }
-    //        case BattleEvent.EnemyAction:
-    //            {
-    //                EnemyActs();
-    //                break;
-    //            }
-    //        case BattleEvent.PlayerDies:
-    //            {
-    //                PlayerDeath(player);
-    //                break;
-    //            }
-    //        case BattleEvent.EnemyDies:
-    //            {
-    //                EnemyDeath(enemy);
-    //                break; 
-    //            }
-    //        case BattleEvent.PlayerVictory:
-    //            {
-    //                PlayerVictory();
-    //                break;
-    //            }
-    //        case BattleEvent.EnemyVictory:
-    //            {
-    //                EnemyVictory();
-    //                break; 
-    //            }
-    //        case BattleEvent.GainLoot:
-    //            {
-    //                GainLoot();
-    //                break;
-    //            }
-    //        case BattleEvent.GainXP:
-    //            {
-    //                GainXP();
-    //                break; 
-    //            }
-    //        case BattleEvent.LevelUp:
-    //            {
-    //                LevelUp();
-    //                break;
-    //            }
-    //        case BattleEvent.BattleEnd:
-    //            {
-    //                player.EndBattle();
-    //                //remove the screen 
-    //                Destroy(this);
-    //                break;
-    //            }
+            //pass through all loaded battle log text before passing to the next action
+            if (eventQueue.Count != 0)
+            {
+                LoadNextEvent();
+            }
+            else
+            {
+                actionQueue.Dequeue();
 
-    //    }
-    //}
+            }
+
+            //when the queue is emptied, load in command panel
+            if (actionQueue.Count == 0)
+            {
+                issuing_commands = true;
+                commandPanel.Show(true);
+            }
+        }
+    }
 }

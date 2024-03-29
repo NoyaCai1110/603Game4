@@ -6,53 +6,24 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Enemy : Combatant
 {
-    // Start is called before the first frame update
+    //loot and exp from defeating it
     public int dropped_gold, exp;
     public Sprite sprite;
 
 
     //deep copy 
-    public Enemy(Enemy enemytoCopy)
+
+    public void Copy(Enemy enemyToCopy)
     {
-        this.name = enemytoCopy.name;
-        this.HP = enemytoCopy.HP;
-        this.MaxHP = enemytoCopy.MaxHP;
-        this.Attack = enemytoCopy.Attack;
-        this.Defense = enemytoCopy.Defense;
-        this.dropped_gold = enemytoCopy.dropped_gold;
-        this.exp = enemytoCopy.exp;
-        this.sprite = enemytoCopy.sprite;
+        base.Copy(enemyToCopy as Combatant);
+
+        this.dropped_gold = enemyToCopy.dropped_gold;
+        this.exp = enemyToCopy.exp;
+        this.sprite = enemyToCopy.sprite;
     }
 
-    public void BasicAttack(List<PartyMember> playerParty)
+    public override void Act()
     {
-
-    }
-
-    public void TakeDamage(int damage)
-    {
-        this.HP = Mathf.Max(0, this.HP - damage);
-
-        if (HP <= 0)
-        {
-           
-        }
-    }
-
-    //Healing health
-    public void HealDamage(int amount)
-    {
-        this.HP = Mathf.Max(this.MaxHP, this.HP + amount);
-    }
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //implement enemy behavior here
     }
 }

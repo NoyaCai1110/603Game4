@@ -8,7 +8,7 @@ public class CharPanel : MonoBehaviour
     public TextMeshProUGUI health_num;
     public TextMeshProUGUI mana_num;
     public TextMeshProUGUI lvl_num;
-    public TextMeshProUGUI name;
+    public TextMeshProUGUI name; 
 
     //initial setup for character state 
     public void Setup(PartyMember character)
@@ -24,15 +24,5 @@ public class CharPanel : MonoBehaviour
     {
         Setup(character);
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -122,8 +122,8 @@ public class Player : MonoBehaviour
         List<Enemy> testEncounter = new List<Enemy>();
         testEncounter.Add(testEnemy);
         testEncounter.Add(testEnemy);
-        testEncounter.Add(testEnemy);
-        testEncounter.Add(testEnemy);
+
+
         BeginBattle(testEncounter);
     }
     private void CreateInitialParty()
