@@ -9,7 +9,8 @@ public class PartyMember : Combatant
 {
     [SerializeField]
     public int level,exp;
-
+    public int cur_w = 0;
+    public int cur_s = 0;
     public void Copy(PartyMember member)
     {
                
