@@ -24,9 +24,45 @@ public class PartyMember : Combatant
 
     }
 
-    public override void Act()
+    public override void Act(Turn currentTurn)
     {
-        
+        ActionType action = currentTurn.action;
+        switch (action)
+        {
+            case ActionType.Attack:
+                {
+                    this.BasicAttack(currentTurn.targets[0]);
+                    break;
+                }
+            case ActionType.Revive:
+                {
+                    break;
+                }
+            case ActionType.WideSweep:
+                {
+                    break;
+                }
+            case ActionType.Escape:
+                {
+                    break;
+                }
+            case ActionType.Fireball:
+                {
+                    break;
+                }
+            case ActionType.Burn:
+                {
+                    break;
+                }
+            case ActionType.Heal:
+                {
+                    break;
+                }
+            case ActionType.Item:
+                {
+                    break;
+                }
+        }
     }
 
     public void LevelUp()
@@ -42,7 +78,8 @@ public class PartyMember : Combatant
 
     public void BasicAttack(Enemy enemy)
     {
-
+        int damage = Mathf.Max(this.Attack - enemy.Defense, 0);
+        enemy.TakeDamage(damage);
     }
 
     // Start is called before the first frame update

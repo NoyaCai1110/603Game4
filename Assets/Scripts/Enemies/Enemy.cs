@@ -22,7 +22,7 @@ public class Enemy : Combatant
         this.sprite = enemyToCopy.sprite;
     }
 
-    public override void Act()
+    public override void Act(Turn currentTurn)
     {
         //implement enemy behavior here
     }
