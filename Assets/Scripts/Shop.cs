@@ -87,6 +87,11 @@ public class Shop : MonoBehaviour
     }
     void purchase_item(List<Merchandise> list, int index, Inventory bp)
     {
+        if(index > list.Count -1) 
+        {
+            Debug.Log("Item Not Valid");
+            return;
+        }
         Merchandise item = list[index];
         if(item.stock <= 0)
         {
@@ -167,7 +172,7 @@ public class Shop : MonoBehaviour
     }
     void Start()
     {
-        Player player = GameObject.Find("Player").GetComponent<Player>();
+        backpack = GameObject.Find("Player").GetComponent<Inventory>();
         purchase_item(m_coin, 0, backpack);   //purchase m_coin[0]
         purchase_item(m_coin, 0, backpack);
         purchase_item(m_coin, 0, backpack);

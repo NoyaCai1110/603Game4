@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5122656141425063669}
   - component: {fileID: 4766529111674072863}
   - component: {fileID: 7902192515418756071}
+  - component: {fileID: 6669136057644268067}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -171,7 +172,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adeec7cfc76d08a4797c50ddb8d8e06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  party: []
   HP: 50
   MaxHP: 50
   Attack: 30
   Defense: 10
+  coins: 0
+  level: 0
+  exp: 0
+  testEnemy: {fileID: 0}
+  isFreeze: 0
+  battleHUDPrefab: {fileID: 0}
+--- !u!114 &6669136057644268067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927749105862019823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14de0a58b3e797c49a5db44f53698c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Coins: 0
+  w_list: []
+  s_list: []
+  p_list: []
