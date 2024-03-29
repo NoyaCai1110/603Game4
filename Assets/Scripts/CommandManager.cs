@@ -28,7 +28,7 @@ public class CommandManager : MonoBehaviour
         //first, show the initial screen to allow manual / auto combat
     }
 
-    //shows the nex 
+   
     private void PromptCommand(PartyMember member)
     {
 

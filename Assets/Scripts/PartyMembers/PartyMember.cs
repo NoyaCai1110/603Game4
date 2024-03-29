@@ -18,7 +18,7 @@ public class PartyMember : Combatant
     public int cur_s = 0;
     public void Copy(PartyMember member)
     {
-               
+        base.Copy(member);
         this.level = member.level;
         this.exp = member.exp; 
 
