@@ -14,6 +14,8 @@ public class PartyMember : Combatant
     Shield equippedShield;
 
 
+    public int cur_w = 0;
+    public int cur_s = 0;
     public void Copy(PartyMember member)
     {
                
