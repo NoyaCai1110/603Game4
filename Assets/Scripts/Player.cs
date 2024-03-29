@@ -45,10 +45,9 @@ public class Player : MonoBehaviour
         rb.gravityScale = 0.0f;
         isFreeze = false;
 
-
-
         //FOR DEBUGGING
         List<Enemy> testEncounter = new List<Enemy>();
+        testEncounter.Add(testEnemy);
         testEncounter.Add(testEnemy);
         testEncounter.Add(testEnemy);
 
@@ -101,33 +100,7 @@ public class Player : MonoBehaviour
     {
         coins += amount;
     }
-    //handler for taking damage 
-    public void TakeDamage(int damage)
-    {
-        this.HP = Mathf.Max(0, this.HP - damage);
-
-        if(HP <= 0)
-        {
-            Lose();
-        }
-    }
-
-    //Healing health
-    public void HealDamage(int amount)
-    {
-        this.HP = Mathf.Max(this.MaxHP, this.HP + amount);
-    }
-
-    public void LevelUp()
-    {
-        this.level += 1;
-        //level up stuff
-    }
-
-    void Lose()
-    {
-        
-    }
+    
     void Freeze()
     {
         rb.velocity = new Vector2 (0, 0);

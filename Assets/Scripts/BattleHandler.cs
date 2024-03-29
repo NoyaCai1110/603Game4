@@ -9,6 +9,7 @@ public enum BattleEvent
 {
     BattleStart,
     BattleEnd, 
+    IssuingCommands,
     PlayerAction,
     EnemyAction,
     EnemyVictory, 
@@ -24,9 +25,13 @@ public enum BattleEvent
 public enum ActionType
 {
     Attack,
-    Spell, 
+    Heal,
+    Revive,
+    Burn, 
+    Fireball, 
+    WideSweep,
+    Escape,
     Item, 
-    Defend,
     None
 }
 
@@ -36,10 +41,12 @@ public struct Turn
     {
         owner = combatant;
         action = ActionType.None;
+        targets = new List<Combatant>();
     }
 
     public Combatant owner; 
-    public ActionType action; 
+    public ActionType action;
+    public List<Combatant> targets;
 }
 
 public class BattleHandler : MonoBehaviour
@@ -49,8 +56,8 @@ public class BattleHandler : MonoBehaviour
     private Queue<Turn> actionQueue = new Queue<Turn>();
 
     //each party member and their respective ui panel on the top screen
-    private Dictionary<GameObject, PartyMember> partyPanels = new Dictionary<GameObject, PartyMember>();
-    private Dictionary<GameObject, Enemy> monster_sprites = new Dictionary<GameObject, Enemy>();
+    public Dictionary<GameObject, PartyMember> partyPanels = new Dictionary<GameObject, PartyMember>();
+    public Dictionary<GameObject, Enemy> monster_sprites = new Dictionary<GameObject, Enemy>();
 
     private Turn currentTurn;
     private BattleEvent currentEvent;
@@ -134,6 +141,8 @@ public class BattleHandler : MonoBehaviour
 
         Kickoff();
 
+
+
     }
 
     //after setting up references, start the fight!
@@ -144,6 +153,7 @@ public class BattleHandler : MonoBehaviour
         //initial encounter text
 
         LoadRound();
+
     }
 
     //https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=net-8.0#system-collections-generic-list-1-sort(system-comparison((-0)))
@@ -221,12 +231,12 @@ public class BattleHandler : MonoBehaviour
     {
         if (currentTurn.owner is Enemy)
         {
-            (currentTurn.owner as Enemy).Act();
+            (currentTurn.owner as Enemy).Act(currentTurn);
         }
 
         if (currentTurn.owner is PartyMember)
         {
-            (currentTurn.owner as PartyMember).Act();
+            (currentTurn.owner as PartyMember).Act(currentTurn);
         }
     }
 
@@ -274,22 +284,53 @@ public class BattleHandler : MonoBehaviour
 
         switch (currentEvent)
         {
-
+            case BattleEvent.BattleStart:
+                {
+                    break;
+                }
         }
 
+    }
+
+    public void RecieveCommand(PartyMember member, ActionType command)
+    {
+        //Find the turn and modify the action
+        Turn action_owner; 
+        foreach(Turn t in actionQueue)
+        {
+            if (t.owner == member)
+            {
+                action_owner = t;
+                break;
+            }
+        }
+
+        action_owner.action = command;
+    }
+
+    //after commands are inputted, set up initiative and then close command panel
+    public void EndCommands()
+    {
+    
+        commandPanel.Enable(false);
+        OnConfirm(); //load in the first action in the action queue
     }
 
     //public void LoadCommands;
     //press A to move to the next event 
     public void OnConfirm()
     {
+        //this input is disabled while the command panel is enabled 
         if (!issuing_commands)
         {
             //check the turn 
-            currentTurn = actionQueue.Peek();
+            bool hasTurn = actionQueue.TryPeek(out currentTurn);
             //tell the turn's owner to Act()
             //perform the action, which should load the battleEvent queue
-            PerformTurn(currentTurn);
+            if (hasTurn)
+            {
+                PerformTurn(currentTurn);
+            }
 
 
             //pass through all loaded battle log text before passing to the next action
@@ -303,11 +344,13 @@ public class BattleHandler : MonoBehaviour
 
             }
 
+            //This should always run first at the very first round of battle
             //when the queue is emptied, load in command panel
             if (actionQueue.Count == 0)
             {
                 issuing_commands = true;
-                commandPanel.Show(true);
+                commandPanel.Enable(true);
+                commandPanel.Setup();
             }
         }
     }
