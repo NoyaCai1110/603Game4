@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
             rb = transform.AddComponent<Rigidbody2D>();
         rb.isKinematic = false;
         rb.gravityScale = 0.0f;
-        isFreeze = false;
+        //isFreeze = false;
 
         //FOR DEBUGGING
         List<Enemy> testEncounter = new List<Enemy>();
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         testEncounter.Add(testEnemy);
 
 
-        BeginBattle(testEncounter);
+        //BeginBattle(testEncounter);
     }
     private void CreateInitialParty()
     {
