@@ -85,7 +85,7 @@ public class Shop : MonoBehaviour
         item.image = m.image;
         return item;
     }
-    void purchase_item(List<Merchandise> list, int index, Inventory bp)
+    public void purchase_item(List<Merchandise> list, int index, Inventory bp)
     {
         if(index > list.Count -1) 
         {
@@ -152,7 +152,7 @@ public class Shop : MonoBehaviour
     public List<Merchandise> m_money = new List<Merchandise>();
     private Merchandise m_item;
     [HideInInspector]public Sprite image;    //placeholder
-    Inventory backpack;
+    public Inventory backpack;
     void Awake()
     {
         //merchandise using coins
