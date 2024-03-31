@@ -182,7 +182,7 @@ MonoBehaviour:
   exp: 0
   testEnemy: {fileID: 0}
   isFreeze: 0
-  battleHUDPrefab: {fileID: 0}
+  battleHUDPrefab: {fileID: 6088023142290344509, guid: 411829fb62f8f2149b57bf3e3378a37d, type: 3}
 --- !u!114 &6669136057644268067
 MonoBehaviour:
   m_ObjectHideFlags: 0
