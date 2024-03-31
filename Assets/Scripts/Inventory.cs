@@ -1,6 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[Serializable]
+public struct Weapon
+{
+    public string name;
+    public int stat;    //Attack
+    public bool equipped;
+    public Sprite image;
+};
+[Serializable]
+public struct Shield
+{
+    public string name;
+    public int stat;    //Defense
+    public bool equipped;
+    public Sprite image;
+};
+[Serializable]
+public struct Potion
+{
+    public string name;
+    public int stat;    //Recover
+    public int num;
+    public Sprite image;
+};
 
 public class Inventory : MonoBehaviour
 {
@@ -60,13 +85,13 @@ public class Inventory : MonoBehaviour
         }
         Potion tmp;
         tmp = p_list[p_index];
-        if (tmp.quantity == 1)
+        if (tmp.num == 1)
         {
             p_list.Remove(tmp);
         }
         else
         {
-            tmp.quantity--;
+            tmp.num--;
             p_list[p_index] = tmp;
         }
         pm.HP += tmp.stat;

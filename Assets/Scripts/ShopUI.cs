@@ -14,14 +14,17 @@ public class ShopUI : MonoBehaviour
     public GameObject moneyItems;
     public Shop shopScript;
     public GameObject itemPrefab;
-
-    private List<GameObject> items = new List<GameObject>();
+    public Inventory backpack;
+    [SerializeField] private List<GameObject> items = new List<GameObject>();
     private List<GameObject> itemsM = new List<GameObject>();
 
-    void start()
+    void Start()
     {
-        shop1.SetActive(true);
-        shop2.SetActive(false);
+        shopScript = GameObject.Find("Shop").GetComponent<Shop>();
+        backpack = GameObject.Find("Player").GetComponent<Inventory>();
+        //shop1.SetActive(true);
+        //shop2.SetActive(false);
+        hideShop1();
     }
 
     // Update is called once per frame
@@ -52,6 +55,7 @@ public class ShopUI : MonoBehaviour
         //displays all coin items
         if (shopScript.m_coin.Count > 0)
         {
+            //Debug.Log("count "+shopScript.m_coin.Count);
             //Debug.Log(items.Count);
             for (int i = 0; i < shopScript.m_coin.Count; i++)
             {
@@ -68,12 +72,28 @@ public class ShopUI : MonoBehaviour
 
                 //Image itemImage = items[i].GetComponent<Image>();
                 //itemImage = shopScript.m_coin[i].image;//doesn't work
+                
 
                 if (shopScript.m_coin[i].stock > 0)
                 {
-                    items[i].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(i));
+                    //print(i);
+                    //items[i].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(i));
                 }
+                
             }
+            int j = 0;
+            while(j < shopScript.m_coin.Count)
+            {
+                if (shopScript.m_coin[j].stock > 0)
+                    items[j].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(j));
+                j++;
+            }
+            j = shopScript.m_coin.Count - 1;
+            //items[0].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(0));
+            //items[1].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(1));
+            //items[2].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(2));
+            //items[3].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(3));
+            //items[4].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(4));
         }
         
 
@@ -98,7 +118,8 @@ public class ShopUI : MonoBehaviour
                 
                 if (shopScript.m_money[i].stock > 0)
                 {
-                    itemsM[i].GetComponentInChildren<Button>().onClick.AddListener(()=> onButtonClickMoney(i));
+                    //itemsM[i].GetComponent<IDkeeper>().id = i;
+                    itemsM[i].GetComponentInChildren<Button>().onClick.AddListener(()=>onButtonClickMoney(i));
                 }
             }
         }
@@ -106,6 +127,7 @@ public class ShopUI : MonoBehaviour
 
     private void updateItemUICoin(int i)
     {
+        //Debug.Log(i);
         TextMeshProUGUI[] textBoxes = items[i].GetComponentsInChildren<TextMeshProUGUI>();
         textBoxes[0].text = shopScript.m_coin[i].stock.ToString();
         textBoxes[1].text = shopScript.m_coin[i].name;
@@ -114,7 +136,8 @@ public class ShopUI : MonoBehaviour
 
         if(shopScript.m_coin[i].stock == 0)
         {
-            items[i].GetComponentInChildren<Button>().gameObject.SetActive(false);
+            Button button = items[i].GetComponentInChildren<Button>();
+            if(button != null)  items[i].GetComponentInChildren<Button>().gameObject.SetActive(false);
         }
     }
 
@@ -134,14 +157,15 @@ public class ShopUI : MonoBehaviour
 
     public void onButtonClickCoin(int i)
     {
-        shopScript.purchase_item(shopScript.m_coin, i, shopScript.backpack);
-
+        Debug.Log("i = "+i);
+        shopScript.purchase_item(shopScript.m_coin, i, backpack);
+        
         updateItemUICoin(i);
     }
 
     public void onButtonClickMoney(int i)
     {
-        shopScript.purchase_item(shopScript.m_money, i, shopScript.backpack);
+        shopScript.purchase_item(shopScript.m_money, i, backpack);
 
         updateItemUIMoney(i);
     }

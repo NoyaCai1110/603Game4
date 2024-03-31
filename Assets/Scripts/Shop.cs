@@ -13,30 +13,7 @@ public struct Merchandise
     public Sprite image;
     public item_type type;    
 };
-[Serializable]
-public struct Weapon
-{
-    public string name;
-    public int stat;    //Attack
-    public bool equipped;
-    public Sprite image;
-};
-[Serializable]
-public struct Shield
-{
-    public string name;
-    public int stat;    //Defense
-    public bool equipped;
-    public Sprite image;
-};
-[Serializable]
-public struct Potion
-{
-    public string name;
-    public int stat;    //Recover
-    public int quantity;
-    public Sprite image;
-};
+
 public enum item_type
 {
     Coin,   
@@ -87,8 +64,9 @@ public class Shop : MonoBehaviour
     }
     public void purchase_item(List<Merchandise> list, int index, Inventory bp)
     {
-        if(index > list.Count -1) 
+        if(index > list.Count - 1) 
         {
+            //Debug.Log(index);
             Debug.Log("Item Not Valid");
             return;
         }
@@ -130,14 +108,14 @@ public class Shop : MonoBehaviour
                     if (bp.p_list[i].name == p.name)
                     {
                         Potion tmp = bp.p_list[i];
-                        tmp.quantity ++;
+                        tmp.num ++;
                         bp.p_list[i] = tmp;
                         found = true;
                     }
                 }
                 if (!found)
                 {
-                    p.quantity = 1;
+                    p.num = 1;
                     bp.p_list.Add(p);
                 }
                     
@@ -172,17 +150,17 @@ public class Shop : MonoBehaviour
     }
     void Start()
     {
-        backpack = GameObject.Find("Player").GetComponent<Inventory>();
-        purchase_item(m_coin, 0, backpack);   //purchase m_coin[0]
-        purchase_item(m_coin, 0, backpack);
-        purchase_item(m_coin, 0, backpack);
-        purchase_item(m_coin, 0, backpack);
-        purchase_item(m_coin, 0, backpack);
-        purchase_item(m_coin, 0, backpack);
-        purchase_item(m_coin, 1, backpack);
-        purchase_item(m_coin, 2, backpack);
-        purchase_item(m_coin, 3, backpack);
-        purchase_item(m_coin, 4, backpack);
+        //backpack = GameObject.Find("Player").GetComponent<Inventory>();
+        //purchase_item(m_coin, 0, backpack);   //purchase m_coin[0]
+        //purchase_item(m_coin, 0, backpack);
+        //purchase_item(m_coin, 0, backpack);
+        //purchase_item(m_coin, 0, backpack);
+        //purchase_item(m_coin, 0, backpack);
+        //purchase_item(m_coin, 0, backpack);
+        //purchase_item(m_coin, 1, backpack);
+        //purchase_item(m_coin, 2, backpack);
+        //purchase_item(m_coin, 3, backpack);
+        //purchase_item(m_coin, 4, backpack);
     }
 
 
