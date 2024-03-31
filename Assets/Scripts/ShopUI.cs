@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,20 +47,6 @@ public class ShopUI : MonoBehaviour
         shop2.SetActive(false);
     }
 
-    public void onButtonClickCoin(int i)
-    {
-        shopScript.purchase_item(shopScript.m_coin, i, shopScript.backpack); 
-
-        updateItemUICoin(i);
-    }
-
-    public void onButtonClickMoney(int i)
-    {
-        shopScript.purchase_item(shopScript.m_money, i, shopScript.backpack);
-
-        updateItemUIMoney(i);
-    }
-
     private void displayItems()
     {
         //displays all coin items
@@ -79,11 +66,13 @@ public class ShopUI : MonoBehaviour
                 textBoxes[2].text = shopScript.m_coin[i].stat.ToString();
                 textBoxes[3].text = shopScript.m_coin[i].price.ToString();*/
 
-                Image itemImage = items[i].GetComponent<Image>();
+                //Image itemImage = items[i].GetComponent<Image>();
                 //itemImage = shopScript.m_coin[i].image;//doesn't work
-                //itemImage.GetComponentInChildren<TextMeshProUGUI>().text = shopScript.m_coin[i].stock.ToString();
 
-                items[i].GetComponentInChildren<Button>().onClick.AddListener(delegate { onButtonClickCoin(i); });
+                if (shopScript.m_coin[i].stock > 0)
+                {
+                    items[i].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(i));
+                }
             }
         }
         
@@ -104,11 +93,13 @@ public class ShopUI : MonoBehaviour
                 textBoxesM[2].text = shopScript.m_money[i].stat.ToString();
                 textBoxesM[3].text = shopScript.m_money[i].price.ToString();*/
 
-                Image itemImage = itemsM[i].GetComponent<Image>();
+                //Image itemImage = itemsM[i].GetComponent<Image>();
                 //itemImage = shopScript.m_money[i].image;//doesn't work
-                //itemImage.GetComponentInChildren<TextMeshProUGUI>().text = shopScript.m_money[i].stock.ToString();
-
-                itemsM[i].GetComponentInChildren<Button>().onClick.AddListener(delegate { onButtonClickMoney(i); });
+                
+                if (shopScript.m_money[i].stock > 0)
+                {
+                    itemsM[i].GetComponentInChildren<Button>().onClick.AddListener(()=> onButtonClickMoney(i));
+                }
             }
         }
     }
@@ -139,5 +130,19 @@ public class ShopUI : MonoBehaviour
         {
             itemsM[i].GetComponentInChildren<Button>().gameObject.SetActive(false);
         }
+    }
+
+    public void onButtonClickCoin(int i)
+    {
+        shopScript.purchase_item(shopScript.m_coin, i, shopScript.backpack);
+
+        updateItemUICoin(i);
+    }
+
+    public void onButtonClickMoney(int i)
+    {
+        shopScript.purchase_item(shopScript.m_money, i, shopScript.backpack);
+
+        updateItemUIMoney(i);
     }
 }
