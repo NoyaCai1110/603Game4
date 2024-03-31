@@ -7,7 +7,8 @@ public class Combatant : ScriptableObject
     //every combatant should have these attributes
     public int HP, MaxHP, MP, MaxMP, Attack, Defense, Magic, Speed;
     public string name;
-    public bool isDead, isDefending;
+    public bool isDead = false;
+    public bool isDefending = false;
 
 
 
@@ -22,13 +23,10 @@ public class Combatant : ScriptableObject
         this.Defense = combatant.Defense;
         this.Magic = combatant.Magic;
         this.Speed = combatant.Speed;
-
     }
 
-
-
     //Behavior for what happens when this character acts
-    public virtual void Act()
+    public virtual void Act(Turn currentTurn)
     {
 
     }
