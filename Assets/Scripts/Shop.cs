@@ -13,30 +13,7 @@ public struct Merchandise
     public Sprite image;
     public item_type type;    
 };
-[Serializable]
-public struct Weapon
-{
-    public string name;
-    public int stat;    //Attack
-    public bool equipped;
-    public Sprite image;
-};
-[Serializable]
-public struct Shield
-{
-    public string name;
-    public int stat;    //Defense
-    public bool equipped;
-    public Sprite image;
-};
-[Serializable]
-public struct Potion
-{
-    public string name;
-    public int stat;    //Recover
-    public int quantity;
-    public Sprite image;
-};
+
 public enum item_type
 {
     Coin,   
@@ -130,14 +107,14 @@ public class Shop : MonoBehaviour
                     if (bp.p_list[i].name == p.name)
                     {
                         Potion tmp = bp.p_list[i];
-                        tmp.quantity ++;
+                        tmp.num ++;
                         bp.p_list[i] = tmp;
                         found = true;
                     }
                 }
                 if (!found)
                 {
-                    p.quantity = 1;
+                    p.num = 1;
                     bp.p_list.Add(p);
                 }
                     
