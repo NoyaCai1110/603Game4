@@ -20,6 +20,11 @@ MonoBehaviour:
   Defense: 3
   Magic: 0
   Speed: 1
-  level: 1
+  name: 
+  isDead: 1
+  isDefending: 0
+  level: 3
   exp: 0
-  isDead: 0
+  abilities: []
+  cur_w: 0
+  cur_s: 0

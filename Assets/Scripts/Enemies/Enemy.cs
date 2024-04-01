@@ -22,8 +22,9 @@ public class Enemy : Combatant
         this.sprite = enemyToCopy.sprite;
     }
 
-    public override void Act(Turn currentTurn)
+    public override List<string> Act(Ability ability)
     {
         //implement enemy behavior here
+        return new List<string>();
     }
 }

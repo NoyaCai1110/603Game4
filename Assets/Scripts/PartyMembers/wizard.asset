@@ -20,6 +20,13 @@ MonoBehaviour:
   Defense: 0
   Magic: 0
   Speed: 3
-  level: 1
+  name: 
+  isDead: 1
+  isDefending: 0
+  level: 3
   exp: 0
-  isDead: 0
+  abilities:
+  - {fileID: 11400000, guid: 48ac8c30e7ae1f54994bfbc97aab5ae5, type: 2}
+  - {fileID: 11400000, guid: 44a8d941e5ca14643abfbadd0c67e662, type: 2}
+  cur_w: 0
+  cur_s: 0

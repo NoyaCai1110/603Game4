@@ -22,37 +22,24 @@ public enum BattleEvent
   
 }
 
-public enum ActionType
-{
-    Attack,
-    Heal,
-    Revive,
-    Burn, 
-    Fireball, 
-    WideSweep,
-    Escape,
-    Item, 
-    None
-}
 
 public struct Turn
 {
     public Turn(Combatant combatant)
     {
         owner = combatant;
-        action = ActionType.None;
-        targets = new List<Combatant>();
+        ability = null; //make sure that the ability is assigned!
     }
 
-    public Combatant owner; 
-    public ActionType action;
-    public List<Combatant> targets;
+    public Combatant owner;
+    public Ability ability; 
 }
+
 
 public class BattleHandler : MonoBehaviour
 {
     //handles the dialogue for the battle log 
-    private Queue<BattleEvent> eventQueue = new Queue<BattleEvent>();
+    private Queue<string> eventQueue = new Queue<string>();
     private Queue<Turn> actionQueue = new Queue<Turn>();
 
     //each party member and their respective ui panel on the top screen
@@ -148,7 +135,6 @@ public class BattleHandler : MonoBehaviour
     //after setting up references, start the fight!
     private void Kickoff()
     {
-        eventQueue.Enqueue(BattleEvent.BattleStart);
         battle_log.ShowDialogue($"Monsters draw near!");
         //initial encounter text
 
@@ -217,7 +203,7 @@ public class BattleHandler : MonoBehaviour
         //sort by Speed
         combatants.Sort(sortBySpeed);
 
-        for (int i = combatants.Count - 1; i == 0; i++)
+        for (int i = combatants.Count - 1; i == 0; i--)
         {
             Turn newTurn = new Turn(combatants[i]);
 
@@ -229,14 +215,20 @@ public class BattleHandler : MonoBehaviour
 
     public void PerformTurn(Turn currentTurn)
     {
+        List<string> text_events = new List<string>(); 
         if (currentTurn.owner is Enemy)
         {
-            (currentTurn.owner as Enemy).Act(currentTurn);
+            text_events.AddRange((currentTurn.owner as Enemy).Act(currentTurn.ability));
         }
 
         if (currentTurn.owner is PartyMember)
         {
-            (currentTurn.owner as PartyMember).Act(currentTurn);
+            text_events.AddRange((currentTurn.owner as PartyMember).Act(currentTurn.ability));
+        }
+
+        foreach(string item in text_events)
+        {
+            eventQueue.Enqueue(item);
         }
     }
 
@@ -249,7 +241,6 @@ public class BattleHandler : MonoBehaviour
         //eventQueue.Enqueue(BattleEvent.Levelup)
         //}
 
-        eventQueue.Enqueue(BattleEvent.GainLoot);
     }
 
     private void GainLoot()
@@ -274,25 +265,15 @@ public class BattleHandler : MonoBehaviour
         //if(enemy party alive count == 0)
         //eventQueue.Enqueue(BattleEvent.PlayerVictory)
 
-        eventQueue.Enqueue(BattleEvent.EnemyVictory);
     }
 
 
     public void LoadNextEvent()
     {
-        BattleEvent currentEvent = eventQueue.Peek();
-
-        switch (currentEvent)
-        {
-            case BattleEvent.BattleStart:
-                {
-                    break;
-                }
-        }
-
+        battle_log.ShowDialogue(eventQueue.Dequeue());
     }
 
-    public void RecieveCommand(PartyMember member, ActionType command)
+    public void RecieveCommand(PartyMember member, Ability ability)
     {
         //Find the turn and modify the action
         Turn action_owner; 
@@ -305,7 +286,7 @@ public class BattleHandler : MonoBehaviour
             }
         }
 
-        action_owner.action = command;
+        action_owner.ability = ability;
     }
 
     //after commands are inputted, set up initiative and then close command panel
@@ -313,9 +294,28 @@ public class BattleHandler : MonoBehaviour
     {
     
         commandPanel.Enable(false);
+        issuing_commands = false;
         OnConfirm(); //load in the first action in the action queue
     }
 
+
+    private void UpdateUI()
+    {
+        foreach (GameObject panel in partyPanels.Keys)
+        {
+            panel.GetComponent<CharPanel>().Setup(partyPanels[panel]);
+        }
+
+        foreach(GameObject e in monster_sprites.Keys)
+        {
+            if (monster_sprites[e].isDead)
+            {
+                monster_sprites.Remove(e);
+                GameObject.Destroy(e);
+            }
+        }
+
+    }
     //public void LoadCommands;
     //press A to move to the next event 
     public void OnConfirm()
@@ -325,32 +325,45 @@ public class BattleHandler : MonoBehaviour
         {
             //check the turn 
             bool hasTurn = actionQueue.TryPeek(out currentTurn);
+
+            
             //tell the turn's owner to Act()
             //perform the action, which should load the battleEvent queue
             if (hasTurn)
             {
+                //skip turns that have nothing
+                if(currentTurn.ability.abilityType == AbilityType.None)
+                {
+                    actionQueue.Dequeue();
+                }
+
                 PerformTurn(currentTurn);
-            }
+
+                //cleanup 
+                UpdateUI();
+
+                //pass through all loaded battle log text before passing to the next action
+                if (eventQueue.Count != 0)
+                {
+                    LoadNextEvent();
+                }
+                else
+                {
+                    actionQueue.Dequeue();
 
 
-            //pass through all loaded battle log text before passing to the next action
-            if (eventQueue.Count != 0)
-            {
-                LoadNextEvent();
-            }
-            else
-            {
-                actionQueue.Dequeue();
-
+                }
             }
 
             //This should always run first at the very first round of battle
             //when the queue is emptied, load in command panel
             if (actionQueue.Count == 0)
             {
+                LoadRound();
                 issuing_commands = true;
                 commandPanel.Enable(true);
                 commandPanel.Setup();
+  
             }
         }
     }

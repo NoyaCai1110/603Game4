@@ -58,8 +58,6 @@ public class Player : MonoBehaviour
     {
         AddPartyMember("bard", "Hero");
         AddPartyMember("fighter", "Jack");
-        AddPartyMember("wizard", "WizKid");
-        AddPartyMember("cleric", "Rosie");
     }
 
     public void AddPartyMember(string char_class, string char_name)

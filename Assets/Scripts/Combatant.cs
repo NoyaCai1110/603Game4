@@ -26,40 +26,63 @@ public class Combatant : ScriptableObject
     }
 
     //Behavior for what happens when this character acts
-    public virtual void Act(Turn currentTurn)
+    public virtual List<string> Act(Ability ability)
     {
-
+        return null;
     }
 
-    public void TakeDamage(int damage)
+    public List<string> TakeDamage(int damage)
     {
+        List<string> log_events = new List<string>();
         this.HP = Mathf.Max(0, this.HP - damage);
+
+        log_events.Add($"{this.name} takes {damage} damage.");
 
         if (HP <= 0)
         {
-            isDead = true;
+            log_events.AddRange(Death());
         }
+
+        return log_events;
     }
 
+    public List<string> Death()
+    {
+        List<string> log_events = new List<string>();
+
+        log_events.Add($"{this.name} is slain.");
+        isDead = true;
+
+        return log_events;
+    }
     //Healing health
-    public void HealDamage(int amount)
+    public List<string> HealDamage(int amount)
     {
         this.HP = Mathf.Max(this.MaxHP, this.HP + amount);
+
+        List<string> log_events = new List<string>();
+
+        log_events.Add($"{this.name} recovers health!");
+        isDead = true;
+
+
+        return log_events;
+
     }
 
-    public void BasicAttack(Combatant target)
+    public List<string> BasicAttack(Combatant target)
     {
-        
+        return null;
     }
 
-    public void Defend()
+    public List<string> Defend()
     {
-
+        return null;
     }
 
-    public void UseItem(Potion potion)
+    public List<string> UseItem(Potion potion)
     {
-        
+        return null;    
     }
 
     

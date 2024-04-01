@@ -10,6 +10,8 @@ public class PartyMember : Combatant
     [SerializeField]
     public int level,exp;
 
+    public List<Ability> abilities; 
+
     Weapon equippedWeapon;
     Shield equippedShield;
 
@@ -24,57 +26,91 @@ public class PartyMember : Combatant
 
     }
 
-    public override void Act(Turn currentTurn)
+    public override List<string> Act(Ability ability)
     {
-        ActionType action = currentTurn.action;
-        switch (action)
+        List<string> complete_log = new List<string>();
+
+        complete_log.AddRange(ParseAbility(ability));
+
+        return complete_log;
+    }
+
+    public List<string> ParseAbility(Ability ability)
+    {
+        List<string> log_events = new List<string>();
+
+        log_events.Add(ability.description);
+
+        switch (ability.abilityType)
         {
-            case ActionType.Attack:
+            case AbilityType.MagicDamage:
                 {
-                    this.BasicAttack(currentTurn.targets[0]);
+                   
+                        break;
+                }
+            case AbilityType.PhysicalDamage:
+                {
+                    foreach (Combatant c in ability.targets)
+                    {
+                        bool success = true; 
+                        
+                        //check conditions
+                        foreach(Condition cond in ability.conditions)
+                        {
+                            switch (cond)
+                            {
+                                case Condition.IsDead:
+                                    {
+                                        success = false;
+                                        break; 
+                                    }
+                            }
+                        }
+
+                        if (!success)
+                        {
+                            log_events.Add($"{name} hits nothing but air...");
+                            break;
+                        }
+                        else
+                        {
+                            //take damage
+                            int damage = Mathf.Max(this.Attack - c.Defense, 0);
+                            log_events.AddRange(c.TakeDamage(damage));
+                            //check for death
+                        }
+
+                    }
                     break;
                 }
-            case ActionType.Revive:
+            case AbilityType.Healing:
+                {
+                    break; 
+                }
+            case AbilityType.Special:
                 {
                     break;
                 }
-            case ActionType.WideSweep:
+            case AbilityType.None:
                 {
                     break;
                 }
-            case ActionType.Escape:
-                {
-                    break;
-                }
-            case ActionType.Fireball:
-                {
-                    break;
-                }
-            case ActionType.Burn:
-                {
-                    break;
-                }
-            case ActionType.Heal:
-                {
-                    break;
-                }
-            case ActionType.Item:
+            default:
                 {
                     break;
                 }
         }
-    }
 
+        
+
+        return log_events;
+    }
     public void LevelUp()
     {
         this.level += 1;
         //level up stuff
     }
 
-    public void UseSkill()
-    {
-
-    }
 
     public void BasicAttack(Enemy enemy)
     {
