@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         //commented out for testing purposes
         if(!isFreeze) 
         {
-            UpdateMovement();
+            //UpdateMovement();
         }
         else 
         {
