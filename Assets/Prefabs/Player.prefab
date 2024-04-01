@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4766529111674072863}
   - component: {fileID: 7902192515418756071}
   - component: {fileID: 6669136057644268067}
+  - component: {fileID: 2276332599799164950}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -148,7 +149,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -173,10 +174,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   party: []
-  HP: 50
-  MaxHP: 50
-  Attack: 30
-  Defense: 10
   coins: 0
   level: 0
   exp: 0
@@ -199,3 +196,16 @@ MonoBehaviour:
   w_list: []
   s_list: []
   p_list: []
+--- !u!114 &2276332599799164950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927749105862019823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74dd5e150aa1b427ea7a508ca83d270b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentNode: {fileID: 0}
