@@ -15,11 +15,11 @@ MonoBehaviour:
   targetType: 0
   owner: 
   ability_name: Wide Strike
-  damageType: 1
+  abilityType: 1
   power_modifier: 0.75
   MP_Cost: 4
   targets: []
-  conditions: 01000000
+  conditions: 0100000002000000
   log_text: '{owner} makes a wide swing!'
   description: 'Attack all enemies at once with your weapon. (MP Cost: 3)'
   unlocked_lvl: 2

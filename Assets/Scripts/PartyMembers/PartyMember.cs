@@ -84,7 +84,7 @@ public class PartyMember : Combatant
                         {
                             //take damage + check for death
                             int damage = Mathf.Max(this.Attack - c.Defense, 0);
-                            TakeDamage(damage, log_events);
+                            c.TakeDamage(damage, log_events);
                            
                         }
 

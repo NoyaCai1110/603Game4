@@ -67,6 +67,10 @@ public class CommandManager : MonoBehaviour
             command_queue.Add(member);
         }
 
+        member_name.text = "";
+        command_desc.text = "";
+
+
         uiState = UIState.Init;
         //first, show the initial screen to allow manual / auto combat
         ShowPanel(init_panel);
@@ -84,13 +88,10 @@ public class CommandManager : MonoBehaviour
     //Clicking 'Issue Orders'
     public void OnManual()
     {
-        Debug.Log(queue_index);
         //if all commands have been set, end the command dialogue
         if (queue_index == playerParty.Count)
         {
-            SendCommands();
-            
-           
+            SendCommands();      
             return;
         }
 
@@ -347,7 +348,10 @@ public class CommandManager : MonoBehaviour
 
     public void OnBack()
     {
-        if(uiState == UIState.Init)
+        member_name.text = "";
+        command_desc.text = "";
+
+        if (uiState == UIState.Init)
         {
             return;
         }

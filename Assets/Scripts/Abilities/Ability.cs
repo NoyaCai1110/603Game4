@@ -27,7 +27,9 @@ public enum Condition
 {
     IsDead,
     IsAlive,
-    CantAct
+    TargetIsAlive, 
+    TargetIsDead,
+    CannotAct
 }
 
 [CreateAssetMenu]

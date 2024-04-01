@@ -15,11 +15,11 @@ MonoBehaviour:
   targetType: 0
   owner: 
   ability_name: Attack
-  damageType: 1
+  abilityType: 1
   power_modifier: 1
   MP_Cost: 0
   targets: []
-  conditions: 01000000
+  conditions: 0100000002000000
   log_text: '{owner} attacks!'
   description: 'Strike an enemy with your weapon. '
   unlocked_lvl: 0

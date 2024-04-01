@@ -15,7 +15,7 @@ MonoBehaviour:
   targetType: 2
   owner: 
   ability_name: Smoke Bomb
-  damageType: 4
+  abilityType: 0
   power_modifier: 0
   MP_Cost: 5
   targets: []

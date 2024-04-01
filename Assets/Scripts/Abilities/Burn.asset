@@ -15,11 +15,11 @@ MonoBehaviour:
   targetType: 0
   owner: 
   ability_name: Burn
-  damageType: 0
+  abilityType: 0
   power_modifier: 2
   MP_Cost: 3
   targets: []
-  conditions: 01000000
+  conditions: 0100000002000000
   log_text: '{owner} casts Burn!'
   description: 'Singe an enemy with fire. '
   unlocked_lvl: 1

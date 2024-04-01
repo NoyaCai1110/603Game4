@@ -15,11 +15,11 @@ MonoBehaviour:
   targetType: 3
   owner: 
   ability_name: Nothing
-  damageType: 2
+  abilityType: 2
   power_modifier: 0
   MP_Cost: 0
   targets: []
-  conditions: 02000000
+  conditions: 04000000
   log_text: 
   description: 
   unlocked_lvl: 0
