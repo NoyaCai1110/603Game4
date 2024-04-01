@@ -21,7 +21,7 @@ MonoBehaviour:
   Magic: 0
   Speed: 1
   name: 
-  isDead: 1
+  isDead: 0
   isDefending: 0
   level: 3
   exp: 0

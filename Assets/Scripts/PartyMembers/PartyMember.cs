@@ -32,6 +32,10 @@ public class PartyMember : Combatant
 
         complete_log.AddRange(ParseAbility(ability));
 
+        foreach(string s in complete_log)
+        {
+            Debug.Log(s);
+        }
         return complete_log;
     }
 
@@ -39,7 +43,7 @@ public class PartyMember : Combatant
     {
         List<string> log_events = new List<string>();
 
-        log_events.Add(ability.description);
+        log_events.Add(ability.GetLogText());
 
         switch (ability.abilityType)
         {
@@ -61,7 +65,11 @@ public class PartyMember : Combatant
                             {
                                 case Condition.IsDead:
                                     {
-                                        success = false;
+                                        if (c.isDead)
+                                        {
+                                            success = false;
+                                        }
+                                     
                                         break; 
                                     }
                             }

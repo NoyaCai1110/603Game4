@@ -2496,6 +2496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02592356087a61a4b98d6a37faa33e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nothing: {fileID: 11400000, guid: c3fa8b11d47942146a1a5f3a09069b1c, type: 2}
   playerParty: []
   enemyParty: []
   monster_container: {fileID: 7708552009377622737}

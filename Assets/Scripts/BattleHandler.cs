@@ -25,10 +25,10 @@ public enum BattleEvent
 
 public struct Turn
 {
-    public Turn(Combatant combatant)
+    public Turn(Combatant combatant, Ability ability)
     {
         owner = combatant;
-        ability = null; //make sure that the ability is assigned!
+        this.ability = ability;
     }
 
     public Combatant owner;
@@ -49,6 +49,7 @@ public class BattleHandler : MonoBehaviour
     private Turn currentTurn;
     private BattleEvent currentEvent;
     private bool issuing_commands = false;
+    public Ability nothing;
 
     public List<PartyMember> playerParty;
     public List<Enemy> enemyParty;
@@ -138,8 +139,6 @@ public class BattleHandler : MonoBehaviour
         battle_log.ShowDialogue($"Monsters draw near!");
         //initial encounter text
 
-        LoadRound();
-
     }
 
     //https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=net-8.0#system-collections-generic-list-1-sort(system-comparison((-0)))
@@ -203,9 +202,10 @@ public class BattleHandler : MonoBehaviour
         //sort by Speed
         combatants.Sort(sortBySpeed);
 
-        for (int i = combatants.Count - 1; i == 0; i--)
+        for (int i = 0; i < combatants.Count -1; i++)
         {
-            Turn newTurn = new Turn(combatants[i]);
+            Turn newTurn = new Turn(combatants[combatants.Count-1-i], nothing);
+            
 
             actionQueue.Enqueue(newTurn);
         }
@@ -342,17 +342,20 @@ public class BattleHandler : MonoBehaviour
                 //cleanup 
                 UpdateUI();
 
-                //pass through all loaded battle log text before passing to the next action
-                if (eventQueue.Count != 0)
-                {
-                    LoadNextEvent();
-                }
-                else
+            }
+
+            //pass through all loaded battle log text before passing to the next action
+            if (eventQueue.Count != 0)
+            {
+                LoadNextEvent();
+            }
+            else
+            {
+                if(actionQueue.Count != 0)
                 {
                     actionQueue.Dequeue();
-
-
                 }
+               
             }
 
             //This should always run first at the very first round of battle
