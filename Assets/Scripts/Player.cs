@@ -9,11 +9,7 @@ public class Player : MonoBehaviour
   
     // Start is called before the first frame update
 
-    public List<PartyMember> party; 
-    public int HP;
-    public int MaxHP;
-    public int Attack;
-    public int Defense;
+    public List<PartyMember> party;
     public int coins;
     public int level;
     public int exp;
@@ -30,13 +26,7 @@ public class Player : MonoBehaviour
     {
         //create initial party
         CreateInitialParty();
-
-        coins = 0;
-        HP = 10;
-        MaxHP = 100;
-        Attack = 3;
-        Defense = 1;
-        coins = 500;
+        coins = GetComponentInParent<Inventory>().Coins;
         if (GetComponent<Rigidbody2D>() != null) 
             rb = GetComponent<Rigidbody2D>();
         else
@@ -157,23 +147,11 @@ public class Player : MonoBehaviour
         //commented out for testing purposes
         if(!isFreeze) 
         {
-            UpdateMovement();
+            //UpdateMovement();
         }
         else 
         {
             Freeze();
         }
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    drink_potion(0);
-        //}
-        //if (Input.GetKeyDown(KeyCode.Z))
-        //{
-        //    equip_shield(0);
-        //}
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    equip_shield(1);
-        //}
     }
 }

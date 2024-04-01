@@ -102,7 +102,7 @@ public class Inventory : MonoBehaviour
     }
     void Start()
     {
-        Coins = 500;
+        Coins = 300;
     }
 
     // Update is called once per frame
