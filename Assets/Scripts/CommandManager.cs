@@ -124,7 +124,7 @@ public class CommandManager : MonoBehaviour
         for (int i = 0; i < command_queue.Count; i++)
         {
             //DEBUG PRINT
-            //Debug.Log($"{queued_abilties[i].owner}, {queued_abilties[i].ability_name}");
+            Debug.Log($"{queued_abilties[i].owner}, {queued_abilties[i].ability_name}");
             handler.RecieveCommand(command_queue[i], queued_abilties[i]);
         }
         queue_index = 0;
