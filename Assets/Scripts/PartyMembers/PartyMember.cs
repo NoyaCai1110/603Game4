@@ -82,10 +82,10 @@ public class PartyMember : Combatant
                         }
                         else
                         {
-                            //take damage
+                            //take damage + check for death
                             int damage = Mathf.Max(this.Attack - c.Defense, 0);
-                            log_events.AddRange(c.TakeDamage(damage));
-                            //check for death
+                            TakeDamage(damage, log_events);
+                           
                         }
 
                     }
@@ -117,13 +117,6 @@ public class PartyMember : Combatant
     {
         this.level += 1;
         //level up stuff
-    }
-
-
-    public void BasicAttack(Enemy enemy)
-    {
-        int damage = Mathf.Max(this.Attack - enemy.Defense, 0);
-        enemy.TakeDamage(damage);
     }
 
     // Start is called before the first frame update

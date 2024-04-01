@@ -31,29 +31,27 @@ public class Combatant : ScriptableObject
         return null;
     }
 
-    public List<string> TakeDamage(int damage)
+    public void TakeDamage(int damage, List<string> log_events)
     {
-        List<string> log_events = new List<string>();
+    
         this.HP = Mathf.Max(0, this.HP - damage);
 
         log_events.Add($"{this.name} takes {damage} damage.");
 
         if (HP <= 0)
         {
-            log_events.AddRange(Death());
+            Death(log_events);
         }
 
-        return log_events;
+   
     }
 
-    public List<string> Death()
+    public void Death(List<string> log_events)
     {
-        List<string> log_events = new List<string>();
 
         log_events.Add($"{this.name} is slain.");
         isDead = true;
 
-        return log_events;
     }
     //Healing health
     public List<string> HealDamage(int amount)

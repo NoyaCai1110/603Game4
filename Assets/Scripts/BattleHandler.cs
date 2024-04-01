@@ -276,23 +276,25 @@ public class BattleHandler : MonoBehaviour
     public void RecieveCommand(PartyMember member, Ability ability)
     {
         //Find the turn and modify the action
-        Turn action_owner; 
         foreach(Turn t in actionQueue)
         {
             if (t.owner == member)
             {
-                action_owner = t;
+                SaveAbility(t, ability);
                 break;
             }
         }
 
-        action_owner.ability = ability;
+        void SaveAbility(Turn turn, Ability ability){
+            turn.ability = ability;
+        }
+
+  
     }
 
     //after commands are inputted, set up initiative and then close command panel
     public void EndCommands()
     {
-    
         commandPanel.Enable(false);
         issuing_commands = false;
         OnConfirm(); //load in the first action in the action queue
@@ -335,6 +337,8 @@ public class BattleHandler : MonoBehaviour
                 if(currentTurn.ability.abilityType == AbilityType.None)
                 {
                     actionQueue.Dequeue();
+                    return;
+                 
                 }
 
                 PerformTurn(currentTurn);
