@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (targetNode != null && IsAdjacentNode(targetNode))
         {
-            transform.position = targetNode.transform.position;
+            transform.position = targetNode.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
             currentNode = targetNode;
             Debug.Log("Moved to node of type: " + targetNode.type);
         }
@@ -24,22 +24,25 @@ public class PlayerMovement : MonoBehaviour
         return node == currentNode.left || node == currentNode.right || 
                node == currentNode.up || node == currentNode.down;
     }
-
+    void Start()
+    {
+        transform.position = currentNode.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
+    }
     void Update()
     {
-        if (Input.GetKey(KeyCode.W) && currentNode.up != null)
+        if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null)
         {
             MoveToNode(currentNode.up);
         }
-        else if (Input.GetKey(KeyCode.S) && currentNode.down != null)
+        else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null)
         {
             MoveToNode(currentNode.down);
         }
-        else if (Input.GetKey(KeyCode.A) && currentNode.left != null)
+        else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null)
         {
             MoveToNode(currentNode.left);
         }
-        else if (Input.GetKey(KeyCode.D) && currentNode.right != null)
+        else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null)
         {
             MoveToNode(currentNode.right);
         }

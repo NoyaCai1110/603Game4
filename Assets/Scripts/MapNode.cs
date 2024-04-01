@@ -20,9 +20,29 @@ public class MapNode : MonoBehaviour
     public MapNode right;
     public MapNode up;
     public MapNode down;
+    public LineRenderer lr;
     void Start()
     {
-        //type = Map_type.Fight;
+        lr = gameObject.AddComponent<LineRenderer>();
+        lr.startWidth = 0.1f;        lr.endWidth = 0.1f;
+        lr.startColor = Color.white; lr.endColor = Color.white;
+        lr.positionCount = 3;
+        int i = 0;
+        if (right != null)
+        {
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, right.transform.position);
+            lr.SetPosition(2, transform.position);
+            i = 3;
+        }
+        if(up != null)
+        {
+            lr.positionCount = i + 3;
+            lr.SetPosition(i, transform.position);
+            lr.SetPosition(i+1, up.transform.position);
+            lr.SetPosition(i+2, transform.position);
+        }
+        
     }
 
     // Update is called once per frame
