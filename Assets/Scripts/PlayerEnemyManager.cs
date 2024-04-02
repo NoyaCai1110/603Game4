@@ -9,16 +9,16 @@ public class PlayerEnemyManager : MonoBehaviour
 {
     //references
     public GameObject player;
-    public GameObject enemy;//right now this is going to reference the prefab, but depending on how we spawn them this will change
-    public GameObject maze;
+    //public GameObject enemy;//right now this is going to reference the prefab, but depending on how we spawn them this will change
+    //public GameObject maze;
     public GameObject popup;
-    public TextMeshProUGUI HUDtext;
+    //public TextMeshProUGUI HUDtext;
     public int mazeSize = 30;
     public int enemyNum = 5;
 
     private bool ispaused = false;
-    private MazeGame mazeScript;//reference to the script that moves the player
-    private Player playerScript;//reference to the script that holds the player's stats 
+    //private MazeGame mazeScript;//reference to the script that moves the player
+    //private Player playerScript;//reference to the script that holds the player's stats 
     
 
     // Start is called before the first frame update
@@ -26,17 +26,17 @@ public class PlayerEnemyManager : MonoBehaviour
     {
         popup.SetActive(ispaused);//hides popup
 
-        mazeScript = maze.GetComponent<MazeGame>();//gets script from maze GameObject
-        playerScript=player.GetComponent<Player>();//gets the script
+        //mazeScript = maze.GetComponent<MazeGame>();//gets script from maze GameObject
+        //playerScript=player.GetComponent<Player>();//gets the script
 
         //creates enemies
-        for (int i = 0; i < enemyNum; i++)
+        /*for (int i = 0; i < enemyNum; i++)
         {
             float xPos = UnityEngine.Random.Range(0, mazeSize/2)-3f;//gets a random location for the enemy
             float yPos = UnityEngine.Random.Range(0, mazeSize/2);
 
             Instantiate(enemy, new Vector3(xPos, yPos, 0.0f), Quaternion.identity); //makes the enemy
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -64,7 +64,7 @@ public class PlayerEnemyManager : MonoBehaviour
         ispaused = true;
         popup.SetActive(ispaused);
 
-        mazeScript.isFreeze = true;
+        //mazeScript.isFreeze = true;
         //freeze the enemies too
     }
 
@@ -73,7 +73,7 @@ public class PlayerEnemyManager : MonoBehaviour
         ispaused = false;
         popup.SetActive(ispaused);
 
-        mazeScript.isFreeze = false;
+        //mazeScript.isFreeze = false;
         //freeze the enemies too
     }
 }
