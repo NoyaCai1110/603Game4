@@ -341,6 +341,8 @@ public class BattleHandler : MonoBehaviour
                 //then close the handler
                 battleEnded = true;
                 playerWon = true;
+                PlayerMovement PM = player.GetComponent<PlayerMovement>();
+                PM.busy = false;
             }
 
         }
