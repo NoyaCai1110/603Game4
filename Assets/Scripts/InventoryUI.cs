@@ -29,12 +29,16 @@ public class InventoryUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Populate the character panels with proper info (CURRENTLY BUGGED)
+        //Populate the character panels with proper info
         for (int i = 0; i < characterPanels.Count; i++)
         {
             characterPanels[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerScript.party[i].name;
             characterPanels[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "HP: " + playerScript.party[i].HP;
             characterPanels[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "MP: " + playerScript.party[i].MP;
+            characterPanels[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Attack: " + playerScript.party[i].Attack;
+            characterPanels[i].transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Magic: " + playerScript.party[i].Magic;
+            characterPanels[i].transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "Defense: " + playerScript.party[i].Defense;
+            characterPanels[i].transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = "Speed: " + playerScript.party[i].Speed;
         }
     }
 
