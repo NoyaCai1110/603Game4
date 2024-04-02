@@ -93,11 +93,13 @@ public class Shop : MonoBehaviour
                 bp.Coins -= item.price;
                 Weapon w = w_converter(item);
                 bp.w_list.Add(w);
+                bp.w_list.Sort((x, y) => x.stat.CompareTo(y.stat));
                 break;
             case item_type.Shield:
                 bp.Coins -= item.price;
                 Shield s = s_converter(item);
                 bp.s_list.Add(s);
+                bp.s_list.Sort((x, y) => x.stat.CompareTo(y.stat));
                 break;
             case item_type.Potions: 
                 bp.Coins -= item.price;
@@ -118,7 +120,7 @@ public class Shop : MonoBehaviour
                     p.num = 1;
                     bp.p_list.Add(p);
                 }
-                    
+                bp.p_list.Sort((x, y) => -x.stat.CompareTo(y.stat));
                 break;
             default:
                 break;
