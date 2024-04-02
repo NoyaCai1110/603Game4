@@ -35,6 +35,31 @@ public class InventoryUI : MonoBehaviour
             characterPanels[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerScript.party[i].name;
             characterPanels[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "HP: " + playerScript.party[i].HP;
             characterPanels[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "MP: " + playerScript.party[i].MP;
+            if (playerScript.party[i].cur_w != -1 )
+            {
+                if (!inventoryScript.w_list[playerScript.party[i].cur_w].equipped)
+                {
+                    //inventoryScript.equip_weapon(playerScript.party[i].cur_w, playerScript.party[i]);
+                    characterPanels[i].transform.GetChild(7).GetComponent<Image>().sprite = inventoryScript.w_list[i].image;
+                }
+                else
+                {
+                    playerScript.party[i].cur_w = -1;
+                }
+                
+            }
+            if (playerScript.party[i].cur_s != -1)
+            {
+                if (!inventoryScript.s_list[playerScript.party[i].cur_s].equipped)
+                {
+                    inventoryScript.equip_shield(playerScript.party[i].cur_s, playerScript.party[i]);
+                    characterPanels[i].transform.GetChild(8).GetComponent<Image>().sprite = inventoryScript.s_list[i].image;
+                }
+                else
+                {
+                    playerScript.party[i].cur_s = -1;
+                }
+            }
         }
     }
 

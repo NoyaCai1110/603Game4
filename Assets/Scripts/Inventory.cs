@@ -73,6 +73,9 @@ public class Inventory : MonoBehaviour
 
     public void equip_shield(int s_index, PartyMember pm)
     {
+        print(pm);
+        print(pm.cur_s);
+        //print(pm.HP);
         if (s_index > s_list.Count - 1)
         {
             Debug.Log("No Shield here");
