@@ -164,7 +164,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1389,10 +1389,54 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1555594758713912448, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555594758713912448, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555594758713912448, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 1676937218954387835, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
       propertyPath: m_Name
       value: ShopNodeHelper
       objectReference: {fileID: 0}
+    - target: {fileID: 1676937218954387835, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058843102939081144, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: images.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3058843102939081144, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: images.Array.data[0]
+      value: 
+      objectReference: {fileID: 221333333, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
+    - target: {fileID: 3058843102939081144, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: images.Array.data[1]
+      value: 
+      objectReference: {fileID: -727906403, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
+    - target: {fileID: 3058843102939081144, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: images.Array.data[2]
+      value: 
+      objectReference: {fileID: -513730679, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
+    - target: {fileID: 3058843102939081144, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: images.Array.data[3]
+      value: 
+      objectReference: {fileID: -1377239997, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
+    - target: {fileID: 3058843102939081144, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: images.Array.data[4]
+      value: 
+      objectReference: {fileID: 57188715, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
+    - target: {fileID: 3058843102939081144, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
+      propertyPath: images.Array.data[5]
+      value: 
+      objectReference: {fileID: 613311404, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
     - target: {fileID: 6781803767958809810, guid: c2de96838b2cef54ea428a10db741bff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.6687098
@@ -1516,15 +1560,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: s_list.Array.data[0].stat
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: s_list.Array.data[1].name
-      value: Steel Shield
+      value: Metal Shield
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: s_list.Array.data[1].stat
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[0].name
@@ -1532,23 +1576,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[0].stat
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[1].name
-      value: Steel Sword
+      value: Wooden Sword
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[1].stat
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[2].name
-      value: Iron Sword
+      value: Metal Sword
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[2].stat
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: s_list.Array.data[0].image
@@ -1565,11 +1609,11 @@ PrefabInstance:
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[1].image
       value: 
-      objectReference: {fileID: -513730679, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
+      objectReference: {fileID: -727906403, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[2].image
       value: 
-      objectReference: {fileID: -394554714, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
+      objectReference: {fileID: -513730679, guid: 084a6daeeec1a914087e4c78aeeaf8fd, type: 3}
     - target: {fileID: 7902192515418756071, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: party.Array.size
       value: 4
@@ -2545,6 +2589,10 @@ PrefabInstance:
     - target: {fileID: 1971832961844990188, guid: 8fb06a2edb8cb8c429dfa47caea075cc, type: 3}
       propertyPath: m_Name
       value: PausePopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 1971832961844990188, guid: 8fb06a2edb8cb8c429dfa47caea075cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3668319936066861219, guid: 8fb06a2edb8cb8c429dfa47caea075cc, type: 3}
       propertyPath: m_LocalPosition.x

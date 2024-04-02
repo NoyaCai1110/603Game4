@@ -183,6 +183,9 @@ public class ShopUI : MonoBehaviour
         textBoxes[2].text = shop.m_coin[i].stat.ToString();
         textBoxes[3].text = shop.m_coin[i].price.ToString();
 
+        Image itemSprite = items[i].transform.GetChild(0).GetComponent<Image>();
+        itemSprite.sprite = shop.m_coin[i].image;
+
         if (shop.m_coin[i].stock == 0)
         {
             Button button = items[i].GetComponentInChildren<Button>();
@@ -197,6 +200,9 @@ public class ShopUI : MonoBehaviour
         textBoxes[1].text = shop.m_money[i].name;
         textBoxes[2].text = shop.m_money[i].stat.ToString();
         textBoxes[3].text = shop.m_money[i].price.ToString();
+
+        Image itemSprite = itemsM[i].transform.GetChild(0).GetComponent<Image>();
+        itemSprite.sprite = shop.m_money[i].image;
 
         if (shop.m_money[i].stock == 0)
         {
