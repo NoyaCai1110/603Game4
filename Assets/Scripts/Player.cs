@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public bool isFreeze;
     public GameObject battleHUDPrefab;
     private GameObject currentEncounter;
+    
 
     
     void Start()
@@ -36,13 +37,12 @@ public class Player : MonoBehaviour
         isFreeze = false;
 
         //FOR DEBUGGING
-        List<Enemy> testEncounter = new List<Enemy>();
+        /*List<Enemy> testEncounter = new List<Enemy>();
         testEncounter.Add(testEnemy);
         testEncounter.Add(testEnemy);
         testEncounter.Add(testEnemy);
 
-
-        BeginBattle(testEncounter);
+        BeginBattle(testEncounter);*/
     }
     private void CreateInitialParty()
     {
@@ -94,41 +94,19 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2 (0, 0);
     }
 
-    void BeginBattle(List<Enemy> enemyParty)
+    public void BeginBattle(List<Enemy> enemyParty)
     {
-        Freeze();
-        isFreeze = true;
-
 
         /*conjure the battle HUD */
         GameObject battleHUD = GameObject.Instantiate(battleHUDPrefab);
         battleHUD.GetComponent<BattleHandler>().Setup(party, enemyParty);
 
         currentEncounter = battleHUD;
-
-
-        /*while(HP > 0)
-        {
-            Fight(enemy);
-            Debug.Log(HP + " " + enemy.HP);
-            if (enemy.HP <= 0)
-            {
-                Win(enemy);
-                Destroy(collision.gameObject);
-                break;
-            }
-            if(HP <= 0)
-            {
-                Lose();
-                //YOU DIE!!
-            }
-        }*/
     }
 
     public void EndBattle()
     {
         GameObject.Destroy(currentEncounter);
-        isFreeze = false;
     }
     // Update is called once per frame
     private void OnCollisionEnter2D(Collision2D collision)
@@ -140,18 +118,6 @@ public class Player : MonoBehaviour
             BeginBattle(enemyParty.enemies);
             GameObject.Destroy(collision.gameObject);
 
-        }
-    }
-    void Update()
-    {
-        //commented out for testing purposes
-        if(!isFreeze) 
-        {
-            //UpdateMovement();
-        }
-        else 
-        {
-            Freeze();
         }
     }
 }

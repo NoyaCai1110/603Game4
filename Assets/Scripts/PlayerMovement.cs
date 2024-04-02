@@ -19,6 +19,40 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Cannot move to the selected node.");
         }
+
+        switch (currentNode.type)
+        {
+            case Map_type.Fight:
+                {
+                    FightEncounter encounter = currentNode.gameObject.GetComponent<FightEncounter>();
+                    List<Enemy> e_list = encounter.enemies;
+                    this.gameObject.GetComponent<Player>().BeginBattle(e_list);
+                    break;
+                }
+            case Map_type.Shop:
+                {
+                    break;
+                }
+            case Map_type.Start:
+                {
+                    break;
+                }
+            case Map_type.Exit:
+                {
+                    break;
+                }
+            case Map_type.Chest:
+                {
+                    break;
+                }
+            //nothing happens
+            case Map_type.Empty:
+                {
+
+                    break;
+                }
+        }
+
     }
     private bool IsAdjacentNode(MapNode node)
     {

@@ -16,7 +16,7 @@ public class Combatant : ScriptableObject
     {
         this.name = combatant.name;
         this.HP = combatant.HP;
-        this.MaxHP = combatant.MaxMP;
+        this.MaxHP = combatant.MaxHP;
         this.MP = combatant.MP;
         this.MaxMP = combatant.MaxMP;
         this.Attack = combatant.Attack;

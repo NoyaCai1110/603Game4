@@ -20,11 +20,10 @@ MonoBehaviour:
   Defense: 3
   Magic: 0
   Speed: 1
-  name: 
+  name: Frank
   isDead: 0
   isDefending: 0
-  level: 3
+  level: 1
   exp: 0
-  abilities: []
   cur_w: 0
   cur_s: 0
