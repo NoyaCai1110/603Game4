@@ -75,7 +75,7 @@ public class BattleHandler : MonoBehaviour
     {
 
         //load player party
-       /* this.playerParty = playerParty;
+        this.playerParty = playerParty;
 
         int index = 1;
         //set up player stats
@@ -139,7 +139,7 @@ public class BattleHandler : MonoBehaviour
 
         }
 
-        Kickoff();*/
+        Kickoff();
 
 
 

@@ -36,13 +36,13 @@ public class Player : MonoBehaviour
         isFreeze = false;
 
         //FOR DEBUGGING
-        List<Enemy> testEncounter = new List<Enemy>();
+        /*List<Enemy> testEncounter = new List<Enemy>();
         testEncounter.Add(testEnemy);
         testEncounter.Add(testEnemy);
         testEncounter.Add(testEnemy);
 
 
-        BeginBattle(testEncounter);
+        BeginBattle(testEncounter);*/
     }
     private void CreateInitialParty()
     {
