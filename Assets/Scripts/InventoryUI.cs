@@ -45,6 +45,7 @@ public class InventoryUI : MonoBehaviour
                 {
                     inventoryScript.equip_weapon(playerScript.party[i].cur_w, playerScript.party[i]);
                     characterPanels[i].transform.GetChild(7).GetComponent<Image>().sprite = inventoryScript.w_list[playerScript.party[i].cur_w].image;
+                    characterPanels[i].transform.GetChild(7).GetChild(1).gameObject.SetActive(true);
                 }
                 else
                 {
@@ -58,6 +59,7 @@ public class InventoryUI : MonoBehaviour
                 {
                     inventoryScript.equip_shield(playerScript.party[i].cur_s, playerScript.party[i]);
                     characterPanels[i].transform.GetChild(8).GetComponent<Image>().sprite = inventoryScript.s_list[playerScript.party[i].cur_s].image;
+                    characterPanels[i].transform.GetChild(8).GetChild(1).gameObject.SetActive(true);
                 }
                 else
                 {
