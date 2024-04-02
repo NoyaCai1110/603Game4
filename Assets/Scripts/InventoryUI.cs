@@ -11,6 +11,7 @@ public class InventoryUI : MonoBehaviour
     public GameObject shieldWindow;
     public GameObject weaponContent;
     public GameObject shieldContent;
+    public GameObject inventoryControls;
 
     //List item prefabs
     public GameObject weaponItemPrefab;
@@ -176,9 +177,10 @@ public class InventoryUI : MonoBehaviour
         CloseShieldWindow();
     }
 
-    public void CloseInventory()
+    public void ToggleInventory()
     {
-        this.gameObject.SetActive(false);
+        this.gameObject.SetActive(!this.gameObject.activeInHierarchy);
+        inventoryControls.SetActive(!inventoryControls.activeInHierarchy);
     }
 
     public void CloseWeaponWindow()

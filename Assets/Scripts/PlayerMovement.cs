@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public MapNode currentNode;
     public GameObject inventoryPanel;
+    public InventoryUI inventoryScript;
 
     public void MoveToNode(MapNode targetNode)
     {
@@ -49,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
-            inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
+            inventoryScript.ToggleInventory();
         }
         
     }
