@@ -47,16 +47,19 @@ public class InventoryUI : MonoBehaviour
         //Loop through weapons
         foreach (Weapon w in inventoryScript.w_list)
         {
-            //Instantiate new weapon UI item
-            GameObject newWeapon = Instantiate(weaponItemPrefab, weaponContent.transform);
+            if (!w.equipped)
+            {
+                //Instantiate new weapon UI item
+                GameObject newWeapon = Instantiate(weaponItemPrefab, weaponContent.transform);
 
-            //Set up button method
-            newWeapon.GetComponent<Button>().onClick.AddListener(() => EquipWeapon(newWeapon.transform.GetChild(0).gameObject));
+                //Set up button method
+                newWeapon.GetComponent<Button>().onClick.AddListener(() => EquipWeapon(newWeapon.transform.GetChild(0).gameObject));
 
-            //Change info on UI to match that of the weapon in the list
-            newWeapon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = w.name;
-            newWeapon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Attack: " + w.stat;
-            newWeapon.transform.GetChild(2).GetComponent<Image>().sprite = w.image;
+                //Change info on UI to match that of the weapon in the list
+                newWeapon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = w.name;
+                newWeapon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Attack: " + w.stat;
+                newWeapon.transform.GetChild(2).GetComponent<Image>().sprite = w.image;
+            }
         }
 
         //Show weapon window
@@ -72,11 +75,16 @@ public class InventoryUI : MonoBehaviour
         //Loop through and populate shield list (same implementation as weapon list)
         foreach (Shield s in inventoryScript.s_list)
         {
-            GameObject newShield = Instantiate(shieldItemPrefab, shieldContent.transform);
-            newShield.GetComponent<Button>().onClick.AddListener(() => EquipShield(newShield.transform.GetChild(0).gameObject));
-            newShield.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = s.name;
-            newShield.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Defense: " + s.stat;
-            newShield.transform.GetChild(2).GetComponent<Image>().sprite = s.image;
+            if (!s.equipped)
+            {
+                GameObject newShield = Instantiate(shieldItemPrefab, shieldContent.transform);
+
+                newShield.GetComponent<Button>().onClick.AddListener(() => EquipShield(newShield.transform.GetChild(0).gameObject));
+
+                newShield.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = s.name;
+                newShield.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Defense: " + s.stat;
+                newShield.transform.GetChild(2).GetComponent<Image>().sprite = s.image;
+            }
         }
         shieldWindow.SetActive(true);
     }
