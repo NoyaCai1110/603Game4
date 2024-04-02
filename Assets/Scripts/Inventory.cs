@@ -100,6 +100,7 @@ public class Inventory : MonoBehaviour
             pm.HP = pm.MaxHP;
         }
     }
+
     void Start()
     {
         Coins = 300;
