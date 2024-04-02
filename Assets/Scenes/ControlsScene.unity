@@ -765,6 +765,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'WASD: Move
 
+    A: Advance Combat
+
     Escape: Pause Game'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5fe9ac3df50c18f45a069b4a87f6d088, type: 2}
@@ -792,7 +794,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.15
+  m_fontSize: 38.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

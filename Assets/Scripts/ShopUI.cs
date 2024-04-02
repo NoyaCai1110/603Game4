@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class ShopUI : MonoBehaviour
 {
@@ -17,11 +18,16 @@ public class ShopUI : MonoBehaviour
     public Inventory backpack;
     [SerializeField] private List<GameObject> items = new List<GameObject>();
     private List<GameObject> itemsM = new List<GameObject>();
+    private GameObject player;
+    private bool storeRunning = false;
+    private bool storeClosed = false;
+
 
     void Start()
     {
         shop = GetComponentInParent<Shop>();
-        backpack = GameObject.Find("Player").GetComponent<Inventory>();
+        player = GameObject.Find("Player");
+        backpack = player.GetComponent<Inventory>();
         //shop1.SetActive(true);
         //shop2.SetActive(false);
         hideShop1();
@@ -30,15 +36,32 @@ public class ShopUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (!storeRunning && !storeClosed && Collision())
+        {
+            storeRunning = true;
+
+            hideShop2();
+        }
+        else if (!Collision())
+        {
+            closeShop();
+            storeClosed = false;
+        }
+    }
+
+    public void hideBothShops()
+    {
+        shop2.SetActive(false);
+        shop1.SetActive(false);
     }
 
     public void hideShop1()
     {
         shop2.SetActive(true);
         shop1.SetActive(false);
-        
-        if(items.Count == 0)
+
+        if (items.Count == 0)
         {
             displayItems();
         }
@@ -50,6 +73,34 @@ public class ShopUI : MonoBehaviour
         shop2.SetActive(false);
     }
 
+    public void closeShop()
+    {
+        storeRunning = false;
+        storeClosed = true;
+
+        hideBothShops();
+    }
+
+    private bool Collision()
+    {
+        //gets the centers of both
+        Vector3 pCenter = player.GetComponentInChildren<SpriteRenderer>().bounds.center;
+        Vector3 sCenter = shop.transform.localPosition;
+
+        //determines the distance between the centers of the player and the given shop
+        float distance = (float)Math.Sqrt(Math.Pow(sCenter.x - pCenter.x, 2) + Math.Pow(sCenter.y - pCenter.y, 2));
+
+        //checks if there is a collision, returns true if true
+        if (distance < this.transform.localScale.x + player.transform.localScale.x)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void displayItems()
     {
         //displays all coin items
@@ -59,7 +110,7 @@ public class ShopUI : MonoBehaviour
             //Debug.Log(items.Count);
             for (int i = 0; i < shop.m_coin.Count; i++)
             {
-                items.Add(Instantiate(itemPrefab, new Vector3(0f,430f-200f * i, 0), Quaternion.identity));
+                items.Add(Instantiate(itemPrefab, new Vector3(0f, 430f - 200f * i, 0), Quaternion.identity));
                 items[i].transform.SetParent(coinItems.transform, false);
 
                 updateItemUICoin(i);
@@ -72,7 +123,7 @@ public class ShopUI : MonoBehaviour
 
                 //Image itemImage = items[i].GetComponent<Image>();
                 //itemImage = shopScript.m_coin[i].image;//doesn't work
-                
+
 
                 if (shop.m_coin[i].stock > 0)
                 {
@@ -80,25 +131,25 @@ public class ShopUI : MonoBehaviour
                     IDkeeper itemid = items[i].GetComponent<IDkeeper>();
                     itemid.id = i;
                     itemid.SetShops(shop, this);
-                    items[i].GetComponentInChildren<Button>().onClick.AddListener(()=>itemid.onButtonClickCoin());
+                    items[i].GetComponentInChildren<Button>().onClick.AddListener(() => itemid.onButtonClickCoin());
                 }
-                
+
             }
-            
+
             //items[0].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(0));
             //items[1].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(1));
             //items[2].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(2));
             //items[3].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(3));
             //items[4].GetComponentInChildren<Button>().onClick.AddListener(() => onButtonClickCoin(4));
         }
-        
+
 
         //displays all money items
         if (shop.m_money.Count > 0)
         {
             for (int i = 0; i < shop.m_money.Count; i++)
             {
-                itemsM.Add(Instantiate(itemPrefab, new Vector3(0f, 430f-200f * i, 0), Quaternion.identity));
+                itemsM.Add(Instantiate(itemPrefab, new Vector3(0f, 430f - 200f * i, 0), Quaternion.identity));
                 itemsM[i].transform.SetParent(moneyItems.transform, false);
 
                 updateItemUIMoney(i);
@@ -111,13 +162,13 @@ public class ShopUI : MonoBehaviour
 
                 //Image itemImage = itemsM[i].GetComponent<Image>();
                 //itemImage = shopScript.m_money[i].image;//doesn't work
-                
+
                 if (shop.m_money[i].stock > 0)
                 {
                     IDkeeper itemid = itemsM[i].GetComponent<IDkeeper>();
                     itemid.id = i;
                     itemid.SetShops(shop, this);
-                    itemsM[i].GetComponentInChildren<Button>().onClick.AddListener(()=> itemid.onButtonClickMoney());
+                    itemsM[i].GetComponentInChildren<Button>().onClick.AddListener(() => itemid.onButtonClickMoney());
                 }
             }
         }
@@ -132,10 +183,10 @@ public class ShopUI : MonoBehaviour
         textBoxes[2].text = shop.m_coin[i].stat.ToString();
         textBoxes[3].text = shop.m_coin[i].price.ToString();
 
-        if(shop.m_coin[i].stock == 0)
+        if (shop.m_coin[i].stock == 0)
         {
             Button button = items[i].GetComponentInChildren<Button>();
-            if(button != null)  items[i].GetComponentInChildren<Button>().gameObject.SetActive(false);
+            if (button != null) items[i].GetComponentInChildren<Button>().gameObject.SetActive(false);
         }
     }
 
@@ -153,5 +204,5 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    
+
 }
