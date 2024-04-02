@@ -1403,20 +1403,40 @@ PrefabInstance:
       value: Wooden Shield
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: s_list.Array.data[0].stat
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: s_list.Array.data[1].name
       value: Steel Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: s_list.Array.data[1].stat
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[0].name
       value: Wooden Sword
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: w_list.Array.data[0].stat
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[1].name
       value: Steel Sword
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: w_list.Array.data[1].stat
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: w_list.Array.data[2].name
       value: Iron Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
+      propertyPath: w_list.Array.data[2].stat
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6669136057644268067, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: s_list.Array.data[0].image

@@ -123,6 +123,7 @@ public class InventoryUI : MonoBehaviour
         //Equip weapon through inventory script
         inventoryScript.equip_weapon(weaponIndex, playerScript.party[characterSelected]);
         characterPanels[characterSelected].transform.GetChild(7).GetChild(1).gameObject.SetActive(true);
+        characterPanels[characterSelected].transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Attack: " + playerScript.party[characterSelected].Attack;
 
         CloseWeaponWindow();
     }
@@ -143,6 +144,7 @@ public class InventoryUI : MonoBehaviour
 
         inventoryScript.equip_shield(shieldIndex, playerScript.party[characterSelected]);
         characterPanels[characterSelected].transform.GetChild(8).GetChild(1).gameObject.SetActive(true);
+        characterPanels[characterSelected].transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "Defense: " + playerScript.party[characterSelected].Defense;
         
         CloseShieldWindow();
     }
@@ -180,6 +182,7 @@ public class InventoryUI : MonoBehaviour
     {
         inventoryScript.unequip_weapon(playerScript.party[characterNumber]);
         characterPanels[characterNumber].transform.GetChild(7).GetComponent<Image>().sprite = null;
+        characterPanels[characterSelected].transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Attack: " + playerScript.party[characterSelected].Attack;
 
         characterPanels[characterNumber].transform.GetChild(7).GetChild(1).gameObject.SetActive(false);
     }
@@ -188,6 +191,7 @@ public class InventoryUI : MonoBehaviour
     {
         inventoryScript.unequip_shield(playerScript.party[characterNumber]);
         characterPanels[characterNumber].transform.GetChild(8).GetComponent<Image>().sprite = null;
+        characterPanels[characterSelected].transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "Defense: " + playerScript.party[characterSelected].Defense;
 
         characterPanels[characterNumber].transform.GetChild(8).GetChild(1).gameObject.SetActive(false);
     }
