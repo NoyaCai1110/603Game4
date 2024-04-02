@@ -43,8 +43,8 @@ public class InventoryUI : MonoBehaviour
             {
                 if (!inventoryScript.w_list[playerScript.party[i].cur_w].equipped)
                 {
-                    //inventoryScript.equip_weapon(playerScript.party[i].cur_w, playerScript.party[i]);
-                    characterPanels[i].transform.GetChild(7).GetComponent<Image>().sprite = inventoryScript.w_list[i].image;
+                    inventoryScript.equip_weapon(playerScript.party[i].cur_w, playerScript.party[i]);
+                    characterPanels[i].transform.GetChild(7).GetComponent<Image>().sprite = inventoryScript.w_list[playerScript.party[i].cur_w].image;
                 }
                 else
                 {
@@ -56,8 +56,8 @@ public class InventoryUI : MonoBehaviour
             {
                 if (!inventoryScript.s_list[playerScript.party[i].cur_s].equipped)
                 {
-                    //inventoryScript.equip_shield(playerScript.party[i].cur_s, playerScript.party[i]);
-                    characterPanels[i].transform.GetChild(8).GetComponent<Image>().sprite = inventoryScript.s_list[i].image;
+                    inventoryScript.equip_shield(playerScript.party[i].cur_s, playerScript.party[i]);
+                    characterPanels[i].transform.GetChild(8).GetComponent<Image>().sprite = inventoryScript.s_list[playerScript.party[i].cur_s].image;
                 }
                 else
                 {
