@@ -32,25 +32,25 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null)// && !inventoryPanel.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.up);
         }
-        else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null)// && !inventoryPanel.activeInHierarchy)
+        else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.down);
         }
-        else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null)// && !inventoryPanel.activeInHierarchy)
+        else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.left);
         }
-        else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null)// && !inventoryPanel.activeInHierarchy)
+        else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.right);
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
-            //inventoryScript.ToggleInventory();
+            inventoryScript.ToggleInventory();
         }
         
     }
