@@ -181,7 +181,7 @@ public class InventoryUI : MonoBehaviour
         inventoryScript.unequip_weapon(playerScript.party[characterNumber]);
         characterPanels[characterNumber].transform.GetChild(7).GetComponent<Image>().sprite = null;
 
-        characterPanels[characterSelected].transform.GetChild(7).GetChild(1).gameObject.SetActive(false);
+        characterPanels[characterNumber].transform.GetChild(7).GetChild(1).gameObject.SetActive(false);
     }
 
     public void UnequipShield(int characterNumber)
@@ -189,6 +189,6 @@ public class InventoryUI : MonoBehaviour
         inventoryScript.unequip_shield(playerScript.party[characterNumber]);
         characterPanels[characterNumber].transform.GetChild(8).GetComponent<Image>().sprite = null;
 
-        characterPanels[characterSelected].transform.GetChild(8).GetChild(1).gameObject.SetActive(false);
+        characterPanels[characterNumber].transform.GetChild(8).GetChild(1).gameObject.SetActive(false);
     }
 }
