@@ -177,16 +177,10 @@ public class InventoryUI : MonoBehaviour
         CloseShieldWindow();
     }
 
-    public void OpenInventory()
+    public void ToggleInventory()
     {
-        this.gameObject.SetActive(true);
-        inventoryControls.SetActive(false);
-    }
-
-    public void CloseInventory()
-    {
-        this.gameObject.SetActive(false);
-        inventoryControls.SetActive(true);
+        this.gameObject.SetActive(!this.gameObject.activeInHierarchy);
+        inventoryControls.SetActive(!inventoryControls.activeInHierarchy);
     }
 
     public void CloseWeaponWindow()
