@@ -20,6 +20,10 @@ MonoBehaviour:
   Defense: 1
   Magic: 2
   Speed: 2
+  name: Rosie
+  isDead: 0
+  isDefending: 0
   level: 1
   exp: 0
-  isDead: 0
+  cur_w: 0
+  cur_s: 0

@@ -20,6 +20,10 @@ MonoBehaviour:
   Defense: 1
   Magic: 0
   Speed: 5
+  name: Rylock
+  isDead: 0
+  isDefending: 0
   level: 0
   exp: 0
-  isDead: 0
+  cur_w: 0
+  cur_s: 0
