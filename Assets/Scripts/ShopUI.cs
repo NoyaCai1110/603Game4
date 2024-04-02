@@ -20,6 +20,7 @@ public class ShopUI : MonoBehaviour
     private List<GameObject> itemsM = new List<GameObject>();
     private GameObject player;
     private bool storeRunning = false;
+    private bool storeClosed = false;
 
     void Start()
     {
@@ -34,16 +35,16 @@ public class ShopUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!storeRunning && Collision())
+        if (!storeRunning && !storeClosed && Collision())
         {
             storeRunning = true;
 
             hideShop2();
         }
-
-        if(!storeRunning || !Collision())
+        else if(!Collision())
         {
             closeShop();
+            storeClosed = false;
         }
     }
 
@@ -73,6 +74,7 @@ public class ShopUI : MonoBehaviour
     public void closeShop()
     {
         storeRunning = false;
+        storeClosed = true;
 
         hideBothShops();
     }
