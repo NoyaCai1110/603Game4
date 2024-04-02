@@ -68,15 +68,15 @@ public class Inventory : MonoBehaviour
             tmp.equipped = false;
             w_list[pm.cur_w] = tmp;
             pm.Attack -= tmp.stat;
-            print(pm.Attack);
+            //print(pm.Attack);
             pm.cur_w = -1;
         }
     }
 
     public void equip_shield(int s_index, PartyMember pm)
     {
-        print(pm);
-        print(pm.cur_s);
+        //print(pm);
+        //print(pm.cur_s);
         //print(pm.HP);
         if (s_index > s_list.Count - 1)
         {
@@ -110,7 +110,7 @@ public class Inventory : MonoBehaviour
             tmp.equipped = false;
             s_list[pm.cur_s] = tmp;
             pm.Defense -= tmp.stat;
-            print(pm.Defense);
+            //print(pm.Defense);
             pm.cur_s = -1;
         }
     }
