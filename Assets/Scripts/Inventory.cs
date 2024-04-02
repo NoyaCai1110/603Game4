@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
     public List<Shield> s_list = new List<Shield>();  //Shield
     public List<Potion> p_list = new List<Potion>();  //Potion
 
-    void equip_weapon(int w_index, PartyMember pm)
+    public void equip_weapon(int w_index, PartyMember pm)
     {
         if (w_index > w_list.Count - 1)
         {
@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void equip_shield(int s_index, PartyMember pm)
+    public void equip_shield(int s_index, PartyMember pm)
     {
         if (s_index > s_list.Count - 1)
         {

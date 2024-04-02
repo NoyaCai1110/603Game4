@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public MapNode currentNode;
+    public GameObject inventoryPanel;
 
     public void MoveToNode(MapNode targetNode)
     {
@@ -30,21 +31,25 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null)
+        if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.up);
         }
-        else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null)
+        else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.down);
         }
-        else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null)
+        else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.left);
         }
-        else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null)
+        else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null && !inventoryPanel.activeInHierarchy)
         {
             MoveToNode(currentNode.right);
+        }
+        else if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
         }
         
     }
