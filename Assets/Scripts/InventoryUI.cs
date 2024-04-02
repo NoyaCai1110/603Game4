@@ -136,7 +136,7 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        inventoryScript.equip_weapon(shieldIndex, playerScript.party[characterSelected]);
+        inventoryScript.equip_shield(shieldIndex, playerScript.party[characterSelected]);
         shieldWindow.SetActive(false);
 
         foreach(Transform child in shieldContent.transform)
