@@ -9,23 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d41cd1eecfc0aa14cb67ae53d8cf0a7d, type: 3}
-  m_Name: rogue
+  m_Script: {fileID: 11500000, guid: 0b27b5ef305ffa146a25d693f8cf8c67, type: 3}
+  m_Name: Gorgon
   m_EditorClassIdentifier: 
-  HP: 8
-  MaxHP: 8
-  MP: 0
-  MaxMP: 0
+  HP: 50
+  MaxHP: 50
+  MP: 99
+  MaxMP: 99
   Attack: 5
   Defense: 3
-  MagicDefense: 3
-  Magic: 0
+  Magic: 5
   Speed: 5
-  name: Rylock
+  name: Gorgon Sorceror
   isDead: 0
   isDefending: 0
-  level: 3
-  exp: 0
-  abilities: []
-  cur_w: 0
-  cur_s: 0
+  dropped_gold: 250
+  exp: 50
+  sprite: {fileID: 21300000, guid: 143ba97de08ab394b8c68358afcfa33f, type: 3}

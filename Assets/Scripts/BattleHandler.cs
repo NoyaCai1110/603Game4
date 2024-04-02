@@ -38,6 +38,7 @@ public struct Turn
 
 public class BattleHandler : MonoBehaviour
 {
+    public Player player; 
     //handles the dialogue for the battle log 
     private Queue<string> eventQueue = new Queue<string>();
 
@@ -66,6 +67,7 @@ public class BattleHandler : MonoBehaviour
     public Logger battle_log; //battle text box
     public void Setup(List<PartyMember> playerParty, List<Enemy> enemyParty)
     {
+        player = GameObject.Find("Player").GetComponent<Player>();
 
         //load player party
         this.playerParty = playerParty;
@@ -77,7 +79,7 @@ public class BattleHandler : MonoBehaviour
 
             //create a prefab and anchor it to one of the slots on the top part of the HUD
             GameObject newPanel = GameObject.Instantiate(charpanelPrefab, GameObject.Find($"Slot{index}").transform.position, Quaternion.identity);
-            
+
             newPanel.transform.SetParent(this.transform);
 
             //Create a copy so that the original isn't permanently modified outside of runtime 
@@ -277,8 +279,11 @@ public class BattleHandler : MonoBehaviour
 
         foreach (GameObject e in monster_sprites.Keys)
         {
+            //set health bars
+            e.GetComponent<MonsterBar>().SetFill((float)monster_sprites[e].HP / (float)monster_sprites[e].MaxHP);
             if (monster_sprites[e].isDead)
             {
+
                 monster_sprites.Remove(e);
                 GameObject.Destroy(e);
             }
@@ -290,15 +295,15 @@ public class BattleHandler : MonoBehaviour
     {
         int totalExp = 0;
         int totalGold = 0;
-       foreach(Enemy e in enemyParty)
-       {
+        foreach (Enemy e in enemyParty)
+        {
             totalExp += e.exp;
             totalGold += e.dropped_gold;
-       }
+        }
 
         eventQueue.Enqueue("You emerged victorious!");
-        eventQueue.Enqueue($"Each party member gains ${totalExp} experience points.");
-        eventQueue.Enqueue($"The monsters dropped ${totalGold} gold.");
+        eventQueue.Enqueue($"Each party member gains {totalExp} experience points.");
+        eventQueue.Enqueue($"The monsters dropped {totalGold} gold.");
     }
 
     private void EnemyVictory()
@@ -309,19 +314,23 @@ public class BattleHandler : MonoBehaviour
     private void UpdateState()
     {
         //check for enemy wipe
-        if(monster_sprites.Count == 0)
+        if (monster_sprites.Count == 0)
         {
-            PlayerVictory();
-            //reward loot, exp,
-            //then close the handler
-            battleEnded = true; 
+            if (!battleEnded)
+            {
+                PlayerVictory();
+
+                //reward loot, exp,
+                //then close the handler
+                battleEnded = true;
+            }
+     
+  
         }
-
-
-        int playerDeadCount = 0; 
+        int playerDeadCount = 0;
 
         //check for player wipe
-        foreach(PartyMember p in partyPanels.Values)
+        foreach (PartyMember p in partyPanels.Values)
         {
             if (p.isDead)
             {
@@ -333,9 +342,9 @@ public class BattleHandler : MonoBehaviour
             //then close the handler
             battleEnded = true;
         }
-        
 
-        
+
+
     }
     //public void LoadCommands;
     //press A to move to the next event 
@@ -344,6 +353,7 @@ public class BattleHandler : MonoBehaviour
         //this input is disabled while the command panel is enabled 
         if (!issuing_commands)
         {
+            //first round edge case
             if (firstRound)
             {
                 firstRound = false;
@@ -355,12 +365,13 @@ public class BattleHandler : MonoBehaviour
 
                 queue_index = actionQueue.Count;
 
-                return; 
+                return;
             }
+
             //handle pre-round actions
             if (queue_index == -1)
             {
-               
+
             }
             //per turn actions
             else if (queue_index < actionQueue.Count && actionQueue.Count != 0)
@@ -373,6 +384,7 @@ public class BattleHandler : MonoBehaviour
                     //if the battle has ended due to a wipe on either sides, or other circumstances, close the ui
                     if (battleEnded)
                     {
+                        player.WinBattle();
                         //preserve any changes to each party member back onto the play
                         GameObject.Destroy(gameObject);
 
@@ -385,31 +397,30 @@ public class BattleHandler : MonoBehaviour
                     currentTurn = actionQueue[queue_index];
 
                     //skip turns that have nothing
-     
-                    while (currentTurn.ability.abilityType == AbilityType.None){
+
+                    while (currentTurn.ability.abilityType == AbilityType.None)
+                    {
                         queue_index++;
 
-                        if(queue_index == actionQueue.Count){
+                        if (queue_index == actionQueue.Count)
+                        {
                             break;
                         }
                         currentTurn = actionQueue[queue_index];
                     }
 
                     PerformTurn(currentTurn);
+
                 }
-           
+
                 if (eventQueue.Count != 0)
                 {
                     LoadNextEvent();
 
-             
-
                     if (eventQueue.Count == 0)
                     {
-                        queue_index++;
                         //cleanup 
                         UpdateUI();
-
                         UpdateState();
                     }
                 }
@@ -422,8 +433,9 @@ public class BattleHandler : MonoBehaviour
                     issuing_commands = true;
                     commandPanel.Enable(true);
                     commandPanel.Setup();
+
                 }
-         
+
             }
         }
     }

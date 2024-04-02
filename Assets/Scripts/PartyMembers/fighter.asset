@@ -16,14 +16,17 @@ MonoBehaviour:
   MaxHP: 10
   MP: 0
   MaxMP: 0
-  Attack: 5
-  Defense: 3
+  Attack: 6
+  Defense: 6
+  MagicDefense: 1
   Magic: 0
   Speed: 1
   name: Frank
   isDead: 0
   isDefending: 0
-  level: 1
+  level: 3
   exp: 0
+  abilities:
+  - {fileID: 11400000, guid: 0e23bfab4776ea147a5eff8e1a181414, type: 2}
   cur_w: 0
-  cur_s: 0
+  cur_s: 1

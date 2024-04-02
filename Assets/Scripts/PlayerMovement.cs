@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public MapNode currentNode;
     public GameObject inventoryPanel;
+    public bool busy; 
 
     public void MoveToNode(MapNode targetNode)
     {
@@ -24,9 +25,14 @@ public class PlayerMovement : MonoBehaviour
         {
             case Map_type.Fight:
                 {
+                   
                     FightEncounter encounter = currentNode.gameObject.GetComponent<FightEncounter>();
-                    List<Enemy> e_list = encounter.enemies;
-                    this.gameObject.GetComponent<Player>().BeginBattle(e_list);
+                    if(encounter.defeated == false)
+                    {
+                        this.gameObject.GetComponent<Player>().BeginBattle(encounter);
+                        busy = true;
+                    }
+       
                     break;
                 }
             case Map_type.Shop:
@@ -65,26 +71,30 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null && !inventoryPanel.activeInHierarchy)
+        if (!busy)
         {
-            MoveToNode(currentNode.up);
+            if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.up);
+            }
+            else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.down);
+            }
+            else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.left);
+            }
+            else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.right);
+            }
+            else if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null && !inventoryPanel.activeInHierarchy)
-        {
-            MoveToNode(currentNode.down);
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null && !inventoryPanel.activeInHierarchy)
-        {
-            MoveToNode(currentNode.left);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null && !inventoryPanel.activeInHierarchy)
-        {
-            MoveToNode(currentNode.right);
-        }
-        else if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
-        }
+
         
     }
 }

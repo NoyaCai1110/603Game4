@@ -15,11 +15,11 @@ MonoBehaviour:
   targetType: 1
   owner: 
   ability_name: Heal
-  abilityType: 0
+  abilityType: 3
   power_modifier: 1
   MP_Cost: 3
   targets: []
   conditions: 0100000002000000
   log_text: '{owner} casts Heal!'
-  description: Restore one ally's HP a little bit.
+  description: Restore one ally's HP a little bit. (3 MP)
   unlocked_lvl: 1

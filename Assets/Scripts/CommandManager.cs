@@ -8,11 +8,11 @@ public class CommandManager : MonoBehaviour
 {
     public enum UIState
     {
-        Init, 
+        Init,
         ManualCommand,
-        Targeting, 
-        SkillMenu, 
-        ItemMenu, 
+        Targeting,
+        SkillMenu,
+        ItemMenu,
 
     }
     public Dictionary<GameObject, Enemy> enemyParty;
@@ -24,7 +24,7 @@ public class CommandManager : MonoBehaviour
     private int queue_index = 0;
     private PartyMember member_to_command;
 
-    public GameObject ui_wrapper; 
+    public GameObject ui_wrapper;
     public GameObject manual_panel;
     public GameObject init_panel;
     public GameObject skill_panel;
@@ -35,10 +35,10 @@ public class CommandManager : MonoBehaviour
 
     //every combatant should have a basic attack
     public Ability basicAttack;
-    public Ability nullAction; 
+    public Ability nullAction;
 
     //current selected ability whern targetting 
-    private Ability loadedAbility; 
+    private Ability loadedAbility;
 
     private UIState uiState;
 
@@ -53,14 +53,14 @@ public class CommandManager : MonoBehaviour
         this.playerParty = handler.partyPanels;
 
         //don't add panels if this has already been setup
-        if(panels.Count == 0)
+        if (panels.Count == 0)
         {
             panels.Add(manual_panel);
             panels.Add(init_panel);
             panels.Add(targeting_panel);
             panels.Add(skill_panel);
         }
-     
+
         //load in the queue
         foreach (PartyMember member in handler.playerParty)
         {
@@ -74,7 +74,7 @@ public class CommandManager : MonoBehaviour
         uiState = UIState.Init;
         //first, show the initial screen to allow manual / auto combat
         ShowPanel(init_panel);
-        
+
 
     }
 
@@ -91,11 +91,12 @@ public class CommandManager : MonoBehaviour
         //if all commands have been set, end the command dialogue
         if (queue_index == playerParty.Count)
         {
-            SendCommands();      
+            SendCommands();
             return;
         }
 
-        do {
+        do
+        {
             //begin issuing commands for the first party member
             member_to_command = command_queue[queue_index];
 
@@ -107,7 +108,7 @@ public class CommandManager : MonoBehaviour
                 queued_abilties.Add(nothing);
                 queue_index++;
 
-                if(queue_index >= playerParty.Count)
+                if (queue_index >= playerParty.Count)
                 {
                     SendCommands();
                     return;
@@ -156,7 +157,7 @@ public class CommandManager : MonoBehaviour
     //Clicking 'Attack' 
     public void OnClickAttack(bool auto)
     {
-        command_desc.text = "Strike an enemy with your weapon.";
+       
         Ability abilityCopy = Instantiate(basicAttack);
 
         LoadTargets(basicAttack.targetType, abilityCopy);
@@ -167,24 +168,27 @@ public class CommandManager : MonoBehaviour
 
     private void LoadTargets(Targetable targetType, Ability ability)
     {
-        if(targetType == Targetable.EnemyOnly)
+
+        command_desc.text = ability.description;
+
+        if (targetType == Targetable.EnemyOnly)
         {
-            foreach(GameObject panel in enemyParty.Keys)
+            foreach (GameObject panel in enemyParty.Keys)
             {
 
                 Button button = panel.GetComponent<Button>();
                 button.interactable = true;
-                button.onClick.AddListener(()=> { OnClickTarget(enemyParty[panel], ability);});
+                button.onClick.AddListener(() => { OnClickTarget(enemyParty[panel], ability); });
             }
         }
 
         if (targetType == Targetable.FriendlyOnly)
         {
-            foreach(GameObject target in playerParty.Keys)
+            foreach (GameObject target in playerParty.Keys)
             {
                 Button button = target.GetComponent<Button>();
                 button.interactable = true;
-                button.onClick.AddListener(() => { OnClickTarget(playerParty[target], ability);});
+                button.onClick.AddListener(() => { OnClickTarget(playerParty[target], ability); });
             }
         }
 
@@ -262,8 +266,9 @@ public class CommandManager : MonoBehaviour
     {
         uiState = UIState.SkillMenu;
 
-        LoadSkills(member_to_command);
         ShowPanel(skill_panel);
+        LoadSkills(member_to_command);
+
     }
 
     private void LoadSkills(PartyMember member)
@@ -293,8 +298,10 @@ public class CommandManager : MonoBehaviour
             {
                 buttonName.text = $"{member.abilities[i].ability_name}";
                 skillButton.interactable = true;
-                skillButton.onClick.AddListener(() => { LoadSkillTargets(member.abilities[i]);});
 
+                Ability abilityCopy = Instantiate(member.abilities[i]);
+
+                skillButton.onClick.AddListener(() => { LoadSkillTargets(abilityCopy); });
 
             }
         }
@@ -310,16 +317,43 @@ public class CommandManager : MonoBehaviour
                         ability.owner = member_to_command.name;
                         ability.targets = new List<Combatant>();
 
-                        foreach(PartyMember member in playerParty.Values)
+                        foreach (PartyMember member in playerParty.Values)
                         {
                             ability.targets.Add(member);
                         }
 
 
                         queued_abilties.Add(ability);
+
+                        //go to next party member
+                        queue_index++;
+                        //clear targetting panel
+                        DisableTargets();
+                        OnManual();
                         break;
                     }
                 case Targetable.AoEEnemy:
+                    {
+                        //load the action to the queue; its set to be performed
+                        ability.owner = member_to_command.name;
+                        ability.targets = new List<Combatant>();
+
+                        foreach (Enemy e in enemyParty.Values)
+                        {
+                            ability.targets.Add(e);
+                        }
+
+
+                        queued_abilties.Add(ability);
+
+                        //go to next party member
+                        queue_index++;
+                        //clear targetting panel
+                        DisableTargets();
+                        OnManual();
+                        break;
+                    }
+                case Targetable.Special:
                     {
                         break;
                     }
@@ -329,7 +363,7 @@ public class CommandManager : MonoBehaviour
                         LoadTargets(ability.targetType, ability);
                         ShowPanel(targeting_panel);
 
-                        break; 
+                        break;
                     }
             }
         }
@@ -356,25 +390,26 @@ public class CommandManager : MonoBehaviour
             return;
         }
 
-        if(uiState != UIState.ManualCommand)
+        if (uiState != UIState.ManualCommand)
         {
 
-            if(queue_index == 0){
+            if (queue_index == 0)
+            {
 
             }
             ShowPanel(manual_panel);
             uiState = UIState.ManualCommand;
             DisableTargets();
- 
 
-            return; 
+
+            return;
         }
 
-        if(queue_index == 0)
+        if (queue_index == 0)
         {
             ShowPanel(init_panel);
             uiState = UIState.Init;
-            
+
         }
         else
         {
@@ -394,7 +429,7 @@ public class CommandManager : MonoBehaviour
                 {
                     queued_abilties.RemoveAt(queue_index);
                     queue_index--;
-              
+
                 }
 
             }

@@ -20,6 +20,6 @@ MonoBehaviour:
   MP_Cost: 4
   targets: []
   conditions: 0100000002000000
-  log_text: '{Target} casts Bolt!'
-  description: 'Call down lighting to smite one enemy. '
+  log_text: '{owner} casts Bolt!'
+  description: Call down lighting to smite one enemy. (4 MP)
   unlocked_lvl: 3

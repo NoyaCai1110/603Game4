@@ -5,7 +5,7 @@ using UnityEngine;
 public class Combatant : ScriptableObject
 {
     //every combatant should have these attributes
-    public int HP, MaxHP, MP, MaxMP, Attack, Defense, Magic, Speed;
+    public int HP, MaxHP, MP, MaxMP, Attack, Defense, MagicDefense, Magic, Speed;
     public string name;
     public bool isDead = false;
     public bool isDefending = false;
@@ -21,6 +21,7 @@ public class Combatant : ScriptableObject
         this.MaxMP = combatant.MaxMP;
         this.Attack = combatant.Attack;
         this.Defense = combatant.Defense;
+        this.MagicDefense = combatant.MagicDefense;
         this.Magic = combatant.Magic;
         this.Speed = combatant.Speed;
     }
@@ -31,9 +32,126 @@ public class Combatant : ScriptableObject
         return null;
     }
 
+    public List<string> ParseAbility(Ability ability)
+    {
+        List<string> log_events = new List<string>();
+
+        log_events.Add(ability.GetLogText());
+
+        switch (ability.abilityType)
+        {
+            case AbilityType.MagicDamage:
+                {
+                    foreach (Combatant c in ability.targets)
+                    {
+                        bool success = true;
+
+                        //check conditions
+                        foreach (Condition cond in ability.conditions)
+                        {
+                            switch (cond)
+                            {
+                                case Condition.TargetIsAlive:
+                                    {
+                                        if (c.isDead)
+                                        {
+                                            success = false;
+                                        }
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (!success)
+                        {
+                            if (ability.targetType == Targetable.AoEFriendly || ability.targetType == Targetable.AoEEnemy)
+                            {
+                                break;
+                            }
+
+                            log_events.Add($"{name} hits nothing but air...");
+                            break;
+                        }
+                        else
+                        {
+                            //take damage + check for death
+                            int damage = Mathf.Max((int)(this.Magic* ability.power_modifier) - c.MagicDefense, 0);
+                            c.TakeDamage(damage, log_events);
+
+                        }
+
+                    }
+                    break;
+                }
+            case AbilityType.PhysicalDamage:
+                {
+
+                    foreach (Combatant c in ability.targets)
+                    {
+                        bool success = true;
+
+                        //check conditions
+                        foreach (Condition cond in ability.conditions)
+                        {
+                            switch (cond)
+                            {
+                                case Condition.TargetIsAlive:
+                                    {
+                                        if (c.isDead)
+                                        {
+                                            success = false;
+                                        }
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (!success)
+                        {
+                            if(ability.targetType == Targetable.AoEFriendly || ability.targetType == Targetable.AoEEnemy)
+                            {
+                                break;
+                            }
+
+                            log_events.Add($"{name} hits nothing but air...");
+                            break;
+                        }
+                        else
+                        {
+                            //take damage + check for death
+                            int damage = Mathf.Max((int)(this.Attack * ability.power_modifier) - c.Defense, 0);
+                            c.TakeDamage(damage, log_events);
+
+                        }
+
+                    }
+                    break;
+                }
+            case AbilityType.Healing:
+                {
+                    break;
+                }
+            case AbilityType.Special:
+                {
+                    break;
+                }
+            case AbilityType.None:
+                {
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+
+
+
+        return log_events;
+    }
     public void TakeDamage(int damage, List<string> log_events)
     {
-    
+
         this.HP = Mathf.Max(0, this.HP - damage);
 
         log_events.Add($"{this.name} takes {damage} damage.");
@@ -43,7 +161,7 @@ public class Combatant : ScriptableObject
             Death(log_events);
         }
 
-   
+
     }
 
     public void Death(List<string> log_events)
@@ -80,9 +198,9 @@ public class Combatant : ScriptableObject
 
     public List<string> UseItem(Potion potion)
     {
-        return null;    
+        return null;
     }
 
-    
+
 
 }

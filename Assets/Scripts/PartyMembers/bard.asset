@@ -18,12 +18,14 @@ MonoBehaviour:
   MaxMP: 3
   Attack: 3
   Defense: 2
+  MagicDefense: 2
   Magic: 2
   Speed: 2
   name: Bill
   isDead: 0
   isDefending: 0
-  level: 1
+  level: 3
   exp: 0
+  abilities: []
   cur_w: 0
   cur_s: 0

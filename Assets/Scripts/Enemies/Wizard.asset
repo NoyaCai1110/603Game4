@@ -23,6 +23,6 @@ MonoBehaviour:
   name: Wizard
   isDead: 0
   isDefending: 0
-  dropped_gold: 10
-  exp: 0
+  dropped_gold: 12
+  exp: 10
   sprite: {fileID: 21300000, guid: 3c693aed881753041ab3fda5fad5b429, type: 3}

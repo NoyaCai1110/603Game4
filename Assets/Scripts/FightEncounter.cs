@@ -5,5 +5,5 @@ using UnityEngine;
 public class FightEncounter : MonoBehaviour
 {
     public List<Enemy> enemies;
-    bool defeated = false; 
+    public bool defeated = false; 
 }
