@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuScene: 0
-  gameScene: 1
-  optionsScene: 2
-  controlsScene: 3
+  gameScene: 3
+  optionsScene: 1
+  controlsScene: 2
