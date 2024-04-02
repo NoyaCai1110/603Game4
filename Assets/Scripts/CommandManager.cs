@@ -179,6 +179,8 @@ public class CommandManager : MonoBehaviour
                 Button button = panel.GetComponent<Button>();
                 button.interactable = true;
                 button.onClick.AddListener(() => { OnClickTarget(enemyParty[panel], ability); });
+                
+            
             }
         }
 
@@ -189,6 +191,8 @@ public class CommandManager : MonoBehaviour
                 Button button = target.GetComponent<Button>();
                 button.interactable = true;
                 button.onClick.AddListener(() => { OnClickTarget(playerParty[target], ability); });
+
+              
             }
         }
 
@@ -200,6 +204,8 @@ public class CommandManager : MonoBehaviour
                 Button button = panel.GetComponent<Button>();
                 button.interactable = true;
                 button.onClick.AddListener(() => { OnClickTarget(enemyParty[panel], ability); });
+
+          
             }
 
             foreach (GameObject target in playerParty.Keys)
@@ -207,6 +213,9 @@ public class CommandManager : MonoBehaviour
                 Button button = target.GetComponent<Button>();
                 button.interactable = true;
                 button.onClick.AddListener(() => { OnClickTarget(playerParty[target], ability); });
+
+            
+
             }
         }
     }
@@ -302,6 +311,11 @@ public class CommandManager : MonoBehaviour
                 Ability abilityCopy = Instantiate(member.abilities[i]);
 
                 skillButton.onClick.AddListener(() => { LoadSkillTargets(abilityCopy); });
+
+                if (member_to_command.MP < abilityCopy.MP_Cost)
+                {
+                    skillButton.interactable = false;
+                }
 
             }
         }

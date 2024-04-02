@@ -12,10 +12,7 @@ public class Player : MonoBehaviour
     public List<PartyMember> party;
     public int coins;
 
-    public Enemy testEnemy;
-
     Rigidbody2D rb;
-    public bool isFreeze;
     public GameObject battleHUDPrefab;
     private FightEncounter currentEncounter; 
     
@@ -32,13 +29,14 @@ public class Player : MonoBehaviour
             rb = transform.AddComponent<Rigidbody2D>();
         rb.isKinematic = false;
         rb.gravityScale = 0.0f;
-        isFreeze = false;
 
     }
     private void CreateInitialParty()
     {
-        AddPartyMember("bard", "Hero");
-        AddPartyMember("fighter", "Jack");
+        foreach(PartyMember p in party)
+        {
+            p.Setup();
+        }
     }
 
     public void AddPartyMember(string char_class, string char_name)
@@ -102,7 +100,7 @@ public class Player : MonoBehaviour
 
     public void LoseBattle()
     {
-
+        //spawn game over
     }
 
 }

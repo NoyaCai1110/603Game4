@@ -20,10 +20,22 @@ public class PartyMember : Combatant
     public int cur_s = -1;
     public void Copy(PartyMember member)
     {
-        base.Copy(member);
-        this.level = member.level;
-        this.exp = member.exp; 
+        this.isDead = member.isDead;
+        this.HP = member.HP;
+        this.MP = member.MP;
 
+    }
+
+    public void Setup()
+    {
+        this.HP = this.MaxHP;
+        this.MP = this.MaxMP;
+    }
+
+    public void UpdateHP_MP(int hp, int mp)
+    {
+        this.HP = mp;
+        this.MP = mp;
     }
 
     public override List<string> Act(Ability ability)
@@ -32,7 +44,11 @@ public class PartyMember : Combatant
 
         complete_log.AddRange(ParseAbility(ability));
 
-        foreach(string s in complete_log)
+
+        //factor in mana costs
+        this.MP -= ability.MP_Cost;
+
+        foreach (string s in complete_log)
         {
             Debug.Log(s);
         }

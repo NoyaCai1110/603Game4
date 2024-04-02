@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41cd1eecfc0aa14cb67ae53d8cf0a7d, type: 3}
   m_Name: cleric
   m_EditorClassIdentifier: 
-  HP: 6
-  MaxHP: 6
-  MP: 4
-  MaxMP: 4
+  HP: 21
+  MaxHP: 21
+  MP: 2
+  MaxMP: 18
   Attack: 4
   Defense: 4
   MagicDefense: 6

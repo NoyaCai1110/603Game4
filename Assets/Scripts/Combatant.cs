@@ -26,6 +26,7 @@ public class Combatant : ScriptableObject
         this.Speed = combatant.Speed;
     }
 
+
     //Behavior for what happens when this character acts
     public virtual List<string> Act(Ability ability)
     {
@@ -35,6 +36,8 @@ public class Combatant : ScriptableObject
     public List<string> ParseAbility(Ability ability)
     {
         List<string> log_events = new List<string>();
+
+
 
         log_events.Add(ability.GetLogText());
 
@@ -129,6 +132,45 @@ public class Combatant : ScriptableObject
                 }
             case AbilityType.Healing:
                 {
+                    foreach (Combatant c in ability.targets)
+                    {
+                        bool success = true;
+
+                        //check conditions
+                        foreach (Condition cond in ability.conditions)
+                        {
+                            switch (cond)
+                            {
+                                case Condition.TargetIsAlive:
+                                    {
+                                        if (c.isDead)
+                                        {
+                                            success = false;
+                                        }
+                                        break;
+                                    }
+                            }
+                        }
+
+                        if (!success)
+                        {
+                            if (ability.targetType == Targetable.AoEFriendly || ability.targetType == Targetable.AoEEnemy)
+                            {
+                                break;
+                            }
+
+                            log_events.Add($"Had no effect on {c.name}...");
+                            break;
+                        }
+                        else
+                        {
+                            //take damage + check for death
+                            int healAmount = Mathf.Max((int)(this.Magic * ability.power_modifier), 0);
+                            c.HealDamage(healAmount, log_events);
+
+                        }
+
+                    }
                     break;
                 }
             case AbilityType.Special:
@@ -172,23 +214,11 @@ public class Combatant : ScriptableObject
 
     }
     //Healing health
-    public List<string> HealDamage(int amount)
+    public void HealDamage(int amount, List<string> log_events)
     {
-        this.HP = Mathf.Max(this.MaxHP, this.HP + amount);
+        this.HP = Mathf.Min(this.MaxHP, this.HP + amount);
+        log_events.Add($"{this.name} recovers {amount} health!");
 
-        List<string> log_events = new List<string>();
-
-        log_events.Add($"{this.name} recovers health!");
-        isDead = true;
-
-
-        return log_events;
-
-    }
-
-    public List<string> BasicAttack(Combatant target)
-    {
-        return null;
     }
 
     public List<string> Defend()

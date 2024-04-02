@@ -38,7 +38,7 @@ public struct Turn
 
 public class BattleHandler : MonoBehaviour
 {
-    public Player player; 
+    public Player player;
     //handles the dialogue for the battle log 
     private Queue<string> eventQueue = new Queue<string>();
 
@@ -54,6 +54,8 @@ public class BattleHandler : MonoBehaviour
     private bool issuing_commands = false;
     private bool firstRound = true;
     private bool battleEnded = false;
+    private bool enemyWon = false;
+    private bool playerWon = false;
 
     public Ability nothing;
 
@@ -213,6 +215,7 @@ public class BattleHandler : MonoBehaviour
 
         for (int i = 0; i < combatants.Count; i++)
         {
+
             Turn newTurn = new Turn(combatants[combatants.Count - 1 - i], nothing);
 
             actionQueue.Add(newTurn);
@@ -226,7 +229,12 @@ public class BattleHandler : MonoBehaviour
         List<string> text_events = new List<string>();
         if (currentTurn.owner is Enemy)
         {
-            text_events.AddRange((currentTurn.owner as Enemy).Act(currentTurn.ability));
+            List<PartyMember> temp = new List<PartyMember>();
+            foreach (PartyMember p in partyPanels.Values)
+            {
+                temp.Add(p);
+            }
+            text_events.AddRange((currentTurn.owner as Enemy).Act(temp));
         }
 
         if (currentTurn.owner is PartyMember)
@@ -281,12 +289,7 @@ public class BattleHandler : MonoBehaviour
         {
             //set health bars
             e.GetComponent<MonsterBar>().SetFill((float)monster_sprites[e].HP / (float)monster_sprites[e].MaxHP);
-            if (monster_sprites[e].isDead)
-            {
 
-                monster_sprites.Remove(e);
-                GameObject.Destroy(e);
-            }
         }
 
     }
@@ -301,31 +304,45 @@ public class BattleHandler : MonoBehaviour
             totalGold += e.dropped_gold;
         }
 
+        player.AddCoins(totalGold);
         eventQueue.Enqueue("You emerged victorious!");
-        eventQueue.Enqueue($"Each party member gains {totalExp} experience points.");
-        eventQueue.Enqueue($"The monsters dropped {totalGold} gold.");
+        eventQueue.Enqueue($"The monsters dropped {totalGold} coins.");
     }
 
     private void EnemyVictory()
     {
-
+        eventQueue.Enqueue("The party was wiped out...!");
     }
     //check for any notable changes in the game
     private void UpdateState()
     {
+        bool an_enemy_is_alive = false;
+        foreach (GameObject e in monster_sprites.Keys)
+        {
+            if (!monster_sprites[e].isDead)
+            {
+                an_enemy_is_alive = true;
+            }
+            if (monster_sprites[e].isDead)
+            {
+                e.SetActive(false);
+            }
+        }
+
         //check for enemy wipe
-        if (monster_sprites.Count == 0)
+        if (!an_enemy_is_alive)
         {
             if (!battleEnded)
             {
+                eventQueue.Clear();
                 PlayerVictory();
 
                 //reward loot, exp,
                 //then close the handler
                 battleEnded = true;
+                playerWon = true;
             }
-     
-  
+
         }
         int playerDeadCount = 0;
 
@@ -339,13 +356,23 @@ public class BattleHandler : MonoBehaviour
         }
         if (playerDeadCount == playerParty.Count)
         {
-            //then close the handler
-            battleEnded = true;
+            if (!battleEnded)
+            {
+                eventQueue.Clear();
+
+                EnemyVictory();
+
+                //then close the handler
+                battleEnded = true;
+                enemyWon = true;
+            }
+
         }
 
 
 
     }
+
     //public void LoadCommands;
     //press A to move to the next event 
     public void OnConfirm()
@@ -384,7 +411,25 @@ public class BattleHandler : MonoBehaviour
                     //if the battle has ended due to a wipe on either sides, or other circumstances, close the ui
                     if (battleEnded)
                     {
-                        player.WinBattle();
+                        //save changes to HP and MP
+                        int i = 0;
+                        foreach (PartyMember p in partyPanels.Values)
+                        {
+                            playerParty[i].Copy(p);
+                            i++;
+                        }
+
+                        if (playerWon)
+                        {
+
+                            player.WinBattle();
+                        }
+
+                        if (enemyWon)
+                        {
+                            player.LoseBattle();
+                        }
+
                         //preserve any changes to each party member back onto the play
                         GameObject.Destroy(gameObject);
 
@@ -398,14 +443,34 @@ public class BattleHandler : MonoBehaviour
 
                     //skip turns that have nothing
 
-                    while (currentTurn.ability.abilityType == AbilityType.None)
+                    while (currentTurn.ability.abilityType == AbilityType.None || currentTurn.owner.isDead)
                     {
-                        queue_index++;
+                        if (currentTurn.owner is Enemy)
+                        {
+                            if (currentTurn.owner.isDead)
+                            {
+                                queue_index++;
+                            }
+
+                            if (queue_index == actionQueue.Count)
+                            {
+                                break;
+                            }
+
+                            currentTurn = actionQueue[queue_index];
+                            break;
+                        }
+
+                        if (currentTurn.owner is PartyMember)
+                        {
+                            queue_index++;
+                        }
 
                         if (queue_index == actionQueue.Count)
                         {
                             break;
                         }
+
                         currentTurn = actionQueue[queue_index];
                     }
 
@@ -416,23 +481,35 @@ public class BattleHandler : MonoBehaviour
                 if (eventQueue.Count != 0)
                 {
                     LoadNextEvent();
+                }
 
-                    if (eventQueue.Count == 0)
-                    {
-                        //cleanup 
-                        UpdateUI();
-                        UpdateState();
-                    }
+                if (eventQueue.Count == 0)
+                {
+                    queue_index++;
+                    //cleanup 
+                    UpdateUI();
+                    UpdateState();
                 }
 
                 //end of round actions
-                if (queue_index == actionQueue.Count)
+                if (queue_index >= actionQueue.Count)
                 {
                     queue_index = -1;
-                    LoadRound();
-                    issuing_commands = true;
-                    commandPanel.Enable(true);
-                    commandPanel.Setup();
+
+
+                    //if battle has ended, do not open the command panel
+                    if (battleEnded)
+                    {
+                        queue_index = 0;
+                    }
+                    else
+                    {
+                        LoadRound();
+                        issuing_commands = true;
+                        commandPanel.Enable(true);
+                        commandPanel.Setup();
+                    }
+
 
                 }
 

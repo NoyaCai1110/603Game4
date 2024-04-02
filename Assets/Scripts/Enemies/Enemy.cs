@@ -26,11 +26,11 @@ public class Enemy : Combatant
     {
         List<string> complete_log = new List<string>();
 
-        //complete_log.AddRange(ParseAbility(ability));
+        complete_log.AddRange(ParseAbility(ability));
 
         foreach (string s in complete_log)
         {
-            //Debug.Log(s);
+            Debug.Log(s);
         }
         return complete_log;
   
@@ -38,46 +38,27 @@ public class Enemy : Combatant
   
     }
 
-    public List<string> Act(Ability ability, List<PartyMember> partyMembers)
+    public List<string> Act(List<PartyMember> partyMembers)
     {
-        List<string> complete_log = new List<string>();
+       List<string> complete_log = new List<string>();
 
-        //decision-making
-        float randomNum = Random.Range(0f, 1f);
+        Ability basicAttack = Instantiate(abilities[0]);
 
-        if(abilities.Count > 0)
+        PartyMember target = partyMembers[0];
+        //get a valid player target
+        do
         {
-            //50% chance to use a skill
-            if (randomNum < .5)
-            {
-               
-
-            }
-            //otherwise, attack
-            else
-            {
-                PartyMember target = partyMembers[0];
-                //get a valid player target
-                do
-                {
-                    int rand_num = Random.Range(0, partyMembers.Count - 1);
-                    target = partyMembers[rand_num];
-                }
-                while(target.isDead);
-
-                
-
-                
-            }
+            int rand_num = Random.Range(0, partyMembers.Count);
+            target = partyMembers[rand_num];
         }
-        else
-        {
+        while (target.isDead);
 
-        }
-       
-       
-        complete_log.AddRange(Act(ability));
+        //grab basic attack ability
 
+        basicAttack.targets.Add(target);
+        basicAttack.owner = this.name;
+
+        complete_log.AddRange(Act(basicAttack));
 
 
         return complete_log;

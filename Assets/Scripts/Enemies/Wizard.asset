@@ -18,6 +18,7 @@ MonoBehaviour:
   MaxMP: 0
   Attack: 3
   Defense: 1
+  MagicDefense: 0
   Magic: 0
   Speed: 0
   name: Wizard
@@ -26,3 +27,6 @@ MonoBehaviour:
   dropped_gold: 12
   exp: 10
   sprite: {fileID: 21300000, guid: 3c693aed881753041ab3fda5fad5b429, type: 3}
+  abilities:
+  - {fileID: 11400000, guid: 17b95963bafde47419b2c09b1d706999, type: 2}
+  - {fileID: 11400000, guid: 48ac8c30e7ae1f54994bfbc97aab5ae5, type: 2}

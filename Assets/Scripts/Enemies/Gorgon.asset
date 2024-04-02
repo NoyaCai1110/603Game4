@@ -18,6 +18,7 @@ MonoBehaviour:
   MaxMP: 99
   Attack: 5
   Defense: 3
+  MagicDefense: 0
   Magic: 5
   Speed: 5
   name: Gorgon Sorceror
@@ -26,3 +27,6 @@ MonoBehaviour:
   dropped_gold: 250
   exp: 50
   sprite: {fileID: 21300000, guid: 143ba97de08ab394b8c68358afcfa33f, type: 3}
+  abilities:
+  - {fileID: 11400000, guid: 17b95963bafde47419b2c09b1d706999, type: 2}
+  - {fileID: 11400000, guid: 44a8d941e5ca14643abfbadd0c67e662, type: 2}
