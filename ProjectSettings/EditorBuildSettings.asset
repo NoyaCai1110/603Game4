@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 7ecf2b5d0ba791349bc9921f1054d23b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameScene.unity
     guid: 9dfabc1a0bae14d41a2772e389ed26ed
   - enabled: 1
@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ControlsScene.unity
     guid: c81a7ddf5ec7b6048a1d63e6c2bd2542
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 6c6f0a25280117b4ca0f77a9006a80a4
   m_configObjects: {}

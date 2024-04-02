@@ -46,10 +46,10 @@ public class Player : MonoBehaviour
     }
     private void CreateInitialParty()
     {
-        AddPartyMember("bard", "Hero");
+        /*AddPartyMember("bard", "Hero");
         AddPartyMember("fighter", "Jack");
         AddPartyMember("wizard", "WizKid");
-        AddPartyMember("cleric", "Rosie");
+        AddPartyMember("cleric", "Rosie");*/
     }
 
     public void AddPartyMember(string char_class, string char_name)
