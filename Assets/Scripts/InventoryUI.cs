@@ -122,6 +122,7 @@ public class InventoryUI : MonoBehaviour
 
         //Equip weapon through inventory script
         inventoryScript.equip_weapon(weaponIndex, playerScript.party[characterSelected]);
+        characterPanels[characterSelected].transform.GetChild(7).GetChild(1).gameObject.SetActive(true);
 
         CloseWeaponWindow();
     }
@@ -141,6 +142,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         inventoryScript.equip_shield(shieldIndex, playerScript.party[characterSelected]);
+        characterPanels[characterSelected].transform.GetChild(8).GetChild(1).gameObject.SetActive(true);
         
         CloseShieldWindow();
     }
@@ -172,5 +174,21 @@ public class InventoryUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void UnequipWeapon(int characterNumber)
+    {
+        inventoryScript.unequip_weapon(playerScript.party[characterNumber]);
+        characterPanels[characterNumber].transform.GetChild(7).GetComponent<Image>().sprite = null;
+
+        characterPanels[characterSelected].transform.GetChild(7).GetChild(1).gameObject.SetActive(false);
+    }
+
+    public void UnequipShield(int characterNumber)
+    {
+        inventoryScript.unequip_shield(playerScript.party[characterNumber]);
+        characterPanels[characterNumber].transform.GetChild(8).GetComponent<Image>().sprite = null;
+
+        characterPanels[characterSelected].transform.GetChild(8).GetChild(1).gameObject.SetActive(false);
     }
 }
