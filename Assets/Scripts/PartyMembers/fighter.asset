@@ -16,7 +16,7 @@ MonoBehaviour:
   MaxHP: 43
   MP: 12
   MaxMP: 12
-  Attack: 6
+  Attack: 8
   Defense: 6
   MagicDefense: 1
   Magic: 0

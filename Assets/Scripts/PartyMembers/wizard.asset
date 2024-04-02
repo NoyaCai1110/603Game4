@@ -18,7 +18,7 @@ MonoBehaviour:
   MaxMP: 40
   Attack: 2
   Defense: 2
-  MagicDefense: 7
+  MagicDefense: 8
   Magic: 8
   Speed: 3
   name: Wiz

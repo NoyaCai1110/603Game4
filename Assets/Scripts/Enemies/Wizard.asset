@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b27b5ef305ffa146a25d693f8cf8c67, type: 3}
   m_Name: Wizard
   m_EditorClassIdentifier: 
-  HP: 4
-  MaxHP: 4
+  HP: 12
+  MaxHP: 12
   MP: 0
   MaxMP: 0
-  Attack: 3
+  Attack: 8
   Defense: 1
-  MagicDefense: 0
+  MagicDefense: 6
   Magic: 0
   Speed: 0
   name: Wizard

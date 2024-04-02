@@ -17,7 +17,7 @@ MonoBehaviour:
   MP: 9
   MaxMP: 9
   Attack: 9
-  Defense: 2
+  Defense: 3
   MagicDefense: 3
   Magic: 0
   Speed: 5

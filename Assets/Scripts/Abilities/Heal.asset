@@ -16,7 +16,7 @@ MonoBehaviour:
   owner: 
   ability_name: Heal
   abilityType: 3
-  power_modifier: 1
+  power_modifier: 2
   MP_Cost: 3
   targets: []
   conditions: 0100000002000000

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b27b5ef305ffa146a25d693f8cf8c67, type: 3}
   m_Name: Goblin
   m_EditorClassIdentifier: 
-  HP: 2
-  MaxHP: 2
+  HP: 10
+  MaxHP: 10
   MP: 0
   MaxMP: 0
   Attack: 10
   Defense: 3
-  MagicDefense: 0
+  MagicDefense: 2
   Magic: 0
   Speed: 4
   name: Goblin

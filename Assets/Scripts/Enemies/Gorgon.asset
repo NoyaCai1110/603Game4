@@ -16,8 +16,8 @@ MonoBehaviour:
   MaxHP: 50
   MP: 99
   MaxMP: 99
-  Attack: 5
-  Defense: 3
+  Attack: 15
+  Defense: 4
   MagicDefense: 0
   Magic: 5
   Speed: 5
