@@ -50,12 +50,13 @@ public class Inventory : MonoBehaviour
                 tmp = w_list[pm.cur_w];
                 tmp.equipped = false;
                 w_list[pm.cur_w] = tmp;
+                pm.Attack -= tmp.stat;
             }
             tmp = w_list[w_index];
             tmp.equipped = true;
             w_list[w_index] = tmp;
             pm.cur_w = w_index;
-            pm.Attack = w_list[pm.cur_w].stat;
+            pm.Attack += w_list[pm.cur_w].stat;
         }
     }
     public void unequip_weapon(PartyMember pm)
@@ -66,8 +67,9 @@ public class Inventory : MonoBehaviour
             tmp = w_list[pm.cur_w];
             tmp.equipped = false;
             w_list[pm.cur_w] = tmp;
+            pm.Attack -= tmp.stat;
+            print(pm.Attack);
             pm.cur_w = -1;
-            pm.Attack = 0;
         }
     }
 
@@ -89,12 +91,13 @@ public class Inventory : MonoBehaviour
                 tmp = s_list[pm.cur_s];
                 tmp.equipped = false;
                 s_list[pm.cur_s] = tmp;
+                pm.Defense -= tmp.stat;
             }
             tmp = s_list[s_index];
             tmp.equipped = true;
             s_list[s_index] = tmp;
             pm.cur_s = s_index;
-            pm.Defense = s_list[pm.cur_s].stat;
+            pm.Defense += s_list[pm.cur_s].stat;
         }
     }
 
@@ -106,8 +109,9 @@ public class Inventory : MonoBehaviour
             tmp = s_list[pm.cur_s];
             tmp.equipped = false;
             s_list[pm.cur_s] = tmp;
+            pm.Defense -= tmp.stat;
+            print(pm.Defense);
             pm.cur_s = -1;
-            pm.Defense = 0;
         }
     }
 
