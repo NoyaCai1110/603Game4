@@ -45,20 +45,23 @@ public class InventoryUI : MonoBehaviour
         characterSelected = characterNumber;
 
         //Loop through weapons
-        foreach (Weapon w in inventoryScript.w_list)
+        if (!weaponWindow.activeInHierarchy)
         {
-            if (!w.equipped)
+            foreach (Weapon w in inventoryScript.w_list)
             {
-                //Instantiate new weapon UI item
-                GameObject newWeapon = Instantiate(weaponItemPrefab, weaponContent.transform);
+                if (!w.equipped)
+                {
+                    //Instantiate new weapon UI item
+                    GameObject newWeapon = Instantiate(weaponItemPrefab, weaponContent.transform);
 
-                //Set up button method
-                newWeapon.GetComponent<Button>().onClick.AddListener(() => EquipWeapon(newWeapon.transform.GetChild(0).gameObject));
+                    //Set up button method
+                    newWeapon.GetComponent<Button>().onClick.AddListener(() => EquipWeapon(newWeapon.transform.GetChild(0).gameObject));
 
-                //Change info on UI to match that of the weapon in the list
-                newWeapon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = w.name;
-                newWeapon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Attack: " + w.stat;
-                newWeapon.transform.GetChild(2).GetComponent<Image>().sprite = w.image;
+                    //Change info on UI to match that of the weapon in the list
+                    newWeapon.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = w.name;
+                    newWeapon.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Attack: " + w.stat;
+                    newWeapon.transform.GetChild(2).GetComponent<Image>().sprite = w.image;
+                }
             }
         }
 
@@ -73,19 +76,23 @@ public class InventoryUI : MonoBehaviour
         characterSelected = characterNumber;
 
         //Loop through and populate shield list (same implementation as weapon list)
-        foreach (Shield s in inventoryScript.s_list)
+        if (!shieldWindow.activeInHierarchy)
         {
-            if (!s.equipped)
+            foreach (Shield s in inventoryScript.s_list)
             {
-                GameObject newShield = Instantiate(shieldItemPrefab, shieldContent.transform);
+                if (!s.equipped)
+                {
+                    GameObject newShield = Instantiate(shieldItemPrefab, shieldContent.transform);
 
-                newShield.GetComponent<Button>().onClick.AddListener(() => EquipShield(newShield.transform.GetChild(0).gameObject));
+                    newShield.GetComponent<Button>().onClick.AddListener(() => EquipShield(newShield.transform.GetChild(0).gameObject));
 
-                newShield.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = s.name;
-                newShield.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Defense: " + s.stat;
-                newShield.transform.GetChild(2).GetComponent<Image>().sprite = s.image;
+                    newShield.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = s.name;
+                    newShield.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Defense: " + s.stat;
+                    newShield.transform.GetChild(2).GetComponent<Image>().sprite = s.image;
+                }
             }
         }
+        
         shieldWindow.SetActive(true);
     }
 
@@ -112,14 +119,7 @@ public class InventoryUI : MonoBehaviour
         //Equip weapon through inventory script
         inventoryScript.equip_weapon(weaponIndex, playerScript.party[characterSelected]);
 
-        //Close window tab
-        weaponWindow.SetActive(false);
-        
-        //Destroy the list (will get repopulated when window is opened again)
-        foreach(Transform child in weaponContent.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        CloseWeaponWindow();
     }
 
 
@@ -137,16 +137,36 @@ public class InventoryUI : MonoBehaviour
         }
 
         inventoryScript.equip_shield(shieldIndex, playerScript.party[characterSelected]);
-        shieldWindow.SetActive(false);
-
-        foreach(Transform child in shieldContent.transform)
-        {
-            Destroy(child.gameObject);
-        }
+        
+        CloseShieldWindow();
     }
 
     public void CloseInventory()
     {
         this.gameObject.SetActive(false);
+    }
+
+    public void CloseWeaponWindow()
+    {
+        //Close window tab
+        weaponWindow.SetActive(false);
+        
+        //Destroy the list (will get repopulated when window is opened again)
+        foreach(Transform child in weaponContent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void CloseShieldWindow()
+    {
+        //Close window tab
+        shieldWindow.SetActive(false);
+        
+        //Destroy the list (will get repopulated when window is opened again)
+        foreach(Transform child in shieldContent.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }
