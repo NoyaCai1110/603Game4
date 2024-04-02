@@ -8,60 +8,56 @@ using UnityEngine.InputSystem;
 public enum BattleEvent
 {
     BattleStart,
-    BattleEnd, 
+    BattleEnd,
     IssuingCommands,
     PlayerAction,
     EnemyAction,
-    EnemyVictory, 
-    PlayerVictory, 
-    PlayerDies, 
-    EnemyDies, 
-    LevelUp, 
-    GainXP, 
+    EnemyVictory,
+    PlayerVictory,
+    PlayerDies,
+    EnemyDies,
+    LevelUp,
+    GainXP,
     GainLoot
-  
+
 }
 
-public enum ActionType
-{
-    Attack,
-    Heal,
-    Revive,
-    Burn, 
-    Fireball, 
-    WideSweep,
-    Escape,
-    Item, 
-    None
-}
 
 public struct Turn
 {
-    public Turn(Combatant combatant)
+    public Turn(Combatant combatant, Ability ability)
     {
         owner = combatant;
-        action = ActionType.None;
-        targets = new List<Combatant>();
+        this.ability = ability;
     }
 
-    public Combatant owner; 
-    public ActionType action;
-    public List<Combatant> targets;
+    public Combatant owner;
+    public Ability ability;
 }
+
 
 public class BattleHandler : MonoBehaviour
 {
+    public Player player;
     //handles the dialogue for the battle log 
-    private Queue<BattleEvent> eventQueue = new Queue<BattleEvent>();
-    private Queue<Turn> actionQueue = new Queue<Turn>();
+    private Queue<string> eventQueue = new Queue<string>();
+
+    //handles actions
+    private List<Turn> actionQueue = new List<Turn>();
+    private int queue_index = -1;
 
     //each party member and their respective ui panel on the top screen
     public Dictionary<GameObject, PartyMember> partyPanels = new Dictionary<GameObject, PartyMember>();
     public Dictionary<GameObject, Enemy> monster_sprites = new Dictionary<GameObject, Enemy>();
 
     private Turn currentTurn;
-    private BattleEvent currentEvent;
     private bool issuing_commands = false;
+    private bool firstRound = true;
+    private bool battleEnded = false;
+    private bool enemyWon = false;
+    private bool playerWon = false;
+
+    public Ability nothing;
 
     public List<PartyMember> playerParty;
     public List<Enemy> enemyParty;
@@ -73,6 +69,7 @@ public class BattleHandler : MonoBehaviour
     public Logger battle_log; //battle text box
     public void Setup(List<PartyMember> playerParty, List<Enemy> enemyParty)
     {
+        player = GameObject.Find("Player").GetComponent<Player>();
 
         //load player party
         this.playerParty = playerParty;
@@ -117,7 +114,6 @@ public class BattleHandler : MonoBehaviour
             Vector3 spritePosition = new Vector3(Mathf.Lerp(startPositionX, endPositionX, ratio),
                                                  0,
                                                  0);
-
             //add monster to the screen
             GameObject monsterSprite = GameObject.Instantiate(monsterPrefab, monster_container.transform);
 
@@ -131,7 +127,7 @@ public class BattleHandler : MonoBehaviour
             monsterSprite.GetComponent<Image>().sprite = enemyParty[i].sprite;
 
             //attach each enemy to their respective sprite
-            monster_sprites.Add(monsterSprite, enemyParty[i]);
+            monster_sprites.Add(monsterSprite, Instantiate(enemyParty[i]));
             //and then store them in backend (for targeting)
             //instantiate so that the base object isn't permanently modified
             this.enemyParty.Add(Instantiate(enemyParty[i]));
@@ -148,11 +144,8 @@ public class BattleHandler : MonoBehaviour
     //after setting up references, start the fight!
     private void Kickoff()
     {
-        eventQueue.Enqueue(BattleEvent.BattleStart);
         battle_log.ShowDialogue($"Monsters draw near!");
         //initial encounter text
-
-        LoadRound();
 
     }
 
@@ -160,6 +153,9 @@ public class BattleHandler : MonoBehaviour
     //load the initiative order in order of each Combatant's Speed
     private void LoadRound()
     {
+        //clear previous initiative
+        actionQueue.Clear();
+
         int sortBySpeed(Combatant a, Combatant b)
         {
             if (a == null)
@@ -217,11 +213,12 @@ public class BattleHandler : MonoBehaviour
         //sort by Speed
         combatants.Sort(sortBySpeed);
 
-        for (int i = combatants.Count - 1; i == 0; i++)
+        for (int i = 0; i < combatants.Count; i++)
         {
-            Turn newTurn = new Turn(combatants[i]);
 
-            actionQueue.Enqueue(newTurn);
+            Turn newTurn = new Turn(combatants[combatants.Count - 1 - i], nothing);
+
+            actionQueue.Add(newTurn);
         }
 
 
@@ -229,91 +226,151 @@ public class BattleHandler : MonoBehaviour
 
     public void PerformTurn(Turn currentTurn)
     {
+        List<string> text_events = new List<string>();
         if (currentTurn.owner is Enemy)
         {
-            (currentTurn.owner as Enemy).Act(currentTurn);
+            List<PartyMember> temp = new List<PartyMember>();
+            foreach (PartyMember p in partyPanels.Values)
+            {
+                temp.Add(p);
+            }
+            text_events.AddRange((currentTurn.owner as Enemy).Act(temp));
         }
 
         if (currentTurn.owner is PartyMember)
         {
-            (currentTurn.owner as PartyMember).Act(currentTurn);
+            text_events.AddRange((currentTurn.owner as PartyMember).Act(currentTurn.ability));
+        }
+
+        foreach (string item in text_events)
+        {
+            eventQueue.Enqueue(item);
         }
     }
-
-    private void PlayerVictory()
-    {
-        battle_log.ShowDialogue("Victory!");
-        /// add exp
-        //player reaches level up threshold
-        //if(player.exp > threshold){
-        //eventQueue.Enqueue(BattleEvent.Levelup)
-        //}
-
-        eventQueue.Enqueue(BattleEvent.GainLoot);
-    }
-
-    private void GainLoot()
-    {
-
-    }
-
-    private void GainXP()
-    {
-
-    }
-
-    private void LevelUp()
-    {
-
-    }
-
-    private void EnemyVictory()
-    {
-        battle_log.ShowDialogue("The party was wiped out...");
-
-        //if(enemy party alive count == 0)
-        //eventQueue.Enqueue(BattleEvent.PlayerVictory)
-
-        eventQueue.Enqueue(BattleEvent.EnemyVictory);
-    }
-
 
     public void LoadNextEvent()
     {
-        BattleEvent currentEvent = eventQueue.Peek();
-
-        switch (currentEvent)
-        {
-            case BattleEvent.BattleStart:
-                {
-                    break;
-                }
-        }
-
+        string text = eventQueue.Peek();
+        battle_log.ShowDialogue(text);
+        eventQueue.Dequeue();
     }
 
-    public void RecieveCommand(PartyMember member, ActionType command)
+    public void RecieveCommand(PartyMember member, Ability ability)
     {
+        Turn newTurn = new Turn(member, ability);
+
         //Find the turn and modify the action
-        Turn action_owner; 
-        foreach(Turn t in actionQueue)
+        for (int i = 0; i < actionQueue.Count; i++)
         {
-            if (t.owner == member)
+            if (actionQueue[i].owner == newTurn.owner)
             {
-                action_owner = t;
-                break;
+                actionQueue[i] = newTurn;
             }
         }
-
-        action_owner.action = command;
     }
 
     //after commands are inputted, set up initiative and then close command panel
     public void EndCommands()
     {
-    
+        queue_index = 0; //set to index 0 
         commandPanel.Enable(false);
+        issuing_commands = false;
         OnConfirm(); //load in the first action in the action queue
+    }
+
+    private void UpdateUI()
+    {
+        foreach (GameObject panel in partyPanels.Keys)
+        {
+            panel.GetComponent<CharPanel>().Setup(partyPanels[panel]);
+        }
+
+        foreach (GameObject e in monster_sprites.Keys)
+        {
+            //set health bars
+            e.GetComponent<MonsterBar>().SetFill((float)monster_sprites[e].HP / (float)monster_sprites[e].MaxHP);
+
+        }
+
+    }
+
+    private void PlayerVictory()
+    {
+        int totalExp = 0;
+        int totalGold = 0;
+        foreach (Enemy e in enemyParty)
+        {
+            totalExp += e.exp;
+            totalGold += e.dropped_gold;
+        }
+
+        player.AddCoins(totalGold);
+        eventQueue.Enqueue("You emerged victorious!");
+        eventQueue.Enqueue($"The monsters dropped {totalGold} coins.");
+    }
+
+    private void EnemyVictory()
+    {
+        eventQueue.Enqueue("The party was wiped out...!");
+    }
+    //check for any notable changes in the game
+    private void UpdateState()
+    {
+        bool an_enemy_is_alive = false;
+        foreach (GameObject e in monster_sprites.Keys)
+        {
+            if (!monster_sprites[e].isDead)
+            {
+                an_enemy_is_alive = true;
+            }
+            if (monster_sprites[e].isDead)
+            {
+                e.SetActive(false);
+            }
+        }
+
+        //check for enemy wipe
+        if (!an_enemy_is_alive)
+        {
+            if (!battleEnded)
+            {
+                eventQueue.Clear();
+                PlayerVictory();
+
+                //reward loot, exp,
+                //then close the handler
+                battleEnded = true;
+                playerWon = true;
+            }
+
+        }
+        int playerDeadCount = 0;
+
+        //check for player wipe
+        foreach (PartyMember p in partyPanels.Values)
+        {
+            if (p.isDead)
+            {
+                playerDeadCount++;
+            }
+        }
+        if (playerDeadCount == playerParty.Count)
+        {
+            if (!battleEnded)
+            {
+                eventQueue.Clear();
+
+                EnemyVictory();
+
+                //then close the handler
+                battleEnded = true;
+                enemyWon = true;
+            }
+
+        }
+
+
+
     }
 
     //public void LoadCommands;
@@ -323,34 +380,139 @@ public class BattleHandler : MonoBehaviour
         //this input is disabled while the command panel is enabled 
         if (!issuing_commands)
         {
-            //check the turn 
-            bool hasTurn = actionQueue.TryPeek(out currentTurn);
-            //tell the turn's owner to Act()
-            //perform the action, which should load the battleEvent queue
-            if (hasTurn)
+            //first round edge case
+            if (firstRound)
             {
-                PerformTurn(currentTurn);
-            }
-
-
-            //pass through all loaded battle log text before passing to the next action
-            if (eventQueue.Count != 0)
-            {
-                LoadNextEvent();
-            }
-            else
-            {
-                actionQueue.Dequeue();
-
-            }
-
-            //This should always run first at the very first round of battle
-            //when the queue is emptied, load in command panel
-            if (actionQueue.Count == 0)
-            {
+                firstRound = false;
+                queue_index = -1;
+                LoadRound();
                 issuing_commands = true;
                 commandPanel.Enable(true);
                 commandPanel.Setup();
+
+                queue_index = actionQueue.Count;
+
+                return;
+            }
+
+            //handle pre-round actions
+            if (queue_index == -1)
+            {
+
+            }
+            //per turn actions
+            else if (queue_index < actionQueue.Count && actionQueue.Count != 0)
+            {
+                bool noEventsRemaining = (eventQueue.Count == 0);
+
+                //don't perform the next turn until all battle log events have been handled
+                if (noEventsRemaining)
+                {
+                    //if the battle has ended due to a wipe on either sides, or other circumstances, close the ui
+                    if (battleEnded)
+                    {
+                        //save changes to HP and MP
+                        int i = 0;
+                        foreach (PartyMember p in partyPanels.Values)
+                        {
+                            playerParty[i].Copy(p);
+                            i++;
+                        }
+
+                        if (playerWon)
+                        {
+
+                            player.WinBattle();
+                        }
+
+                        if (enemyWon)
+                        {
+                            player.LoseBattle();
+                        }
+
+                        //preserve any changes to each party member back onto the play
+                        GameObject.Destroy(gameObject);
+
+                        return;
+                    }
+
+                    //tell the turn's owner to Act()
+                    //perform the action, which should load the battleEvent queue
+
+                    currentTurn = actionQueue[queue_index];
+
+                    //skip turns that have nothing
+
+                    while (currentTurn.ability.abilityType == AbilityType.None || currentTurn.owner.isDead)
+                    {
+                        if (currentTurn.owner is Enemy)
+                        {
+                            if (currentTurn.owner.isDead)
+                            {
+                                queue_index++;
+                            }
+
+                            if (queue_index == actionQueue.Count)
+                            {
+                                break;
+                            }
+
+                            currentTurn = actionQueue[queue_index];
+                            break;
+                        }
+
+                        if (currentTurn.owner is PartyMember)
+                        {
+                            queue_index++;
+                        }
+
+                        if (queue_index == actionQueue.Count)
+                        {
+                            break;
+                        }
+
+                        currentTurn = actionQueue[queue_index];
+                    }
+
+                    PerformTurn(currentTurn);
+
+                }
+
+                if (eventQueue.Count != 0)
+                {
+                    LoadNextEvent();
+                }
+
+                if (eventQueue.Count == 0)
+                {
+                    queue_index++;
+                    //cleanup 
+                    UpdateUI();
+                    UpdateState();
+                }
+
+                //end of round actions
+                if (queue_index >= actionQueue.Count)
+                {
+                    queue_index = -1;
+
+
+                    //if battle has ended, do not open the command panel
+                    if (battleEnded)
+                    {
+                        queue_index = 0;
+                    }
+                    else
+                    {
+                        LoadRound();
+                        issuing_commands = true;
+                        commandPanel.Enable(true);
+                        commandPanel.Setup();
+                    }
+
+
+                }
+
             }
         }
     }

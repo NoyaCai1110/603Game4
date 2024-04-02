@@ -12,11 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b27b5ef305ffa146a25d693f8cf8c67, type: 3}
   m_Name: Man-eater
   m_EditorClassIdentifier: 
-  name: 
-  HP: 0
-  MaxHP: 0
-  Attack: 0
-  Defense: 0
-  dropped_gold: 0
-  exp: 0
+  HP: 16
+  MaxHP: 16
+  MP: 0
+  MaxMP: 0
+  Attack: 6
+  Defense: 4
+  MagicDefense: 0
+  Magic: 0
+  Speed: 0
+  name: Man-Eater
+  isDead: 0
+  isDefending: 0
+  dropped_gold: 15
+  exp: 6
   sprite: {fileID: 21300000, guid: fdc82f8a896226147967acdd68d90158, type: 3}
+  abilities:
+  - {fileID: 11400000, guid: 17b95963bafde47419b2c09b1d706999, type: 2}

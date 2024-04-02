@@ -11,15 +11,11 @@ public class Player : MonoBehaviour
 
     public List<PartyMember> party;
     public int coins;
-    public int level;
-    public int exp;
-
-    public Enemy testEnemy;
 
     Rigidbody2D rb;
-    public bool isFreeze;
     public GameObject battleHUDPrefab;
-    private GameObject currentEncounter;
+    private FightEncounter currentEncounter; 
+    
 
     
     void Start()
@@ -33,23 +29,14 @@ public class Player : MonoBehaviour
             rb = transform.AddComponent<Rigidbody2D>();
         rb.isKinematic = false;
         rb.gravityScale = 0.0f;
-        isFreeze = false;
 
-        //FOR DEBUGGING
-        /*List<Enemy> testEncounter = new List<Enemy>();
-        testEncounter.Add(testEnemy);
-        testEncounter.Add(testEnemy);
-        testEncounter.Add(testEnemy);
-
-
-        BeginBattle(testEncounter);*/
     }
     private void CreateInitialParty()
     {
-        /*AddPartyMember("bard", "Hero");
-        AddPartyMember("fighter", "Jack");
-        AddPartyMember("wizard", "WizKid");
-        AddPartyMember("cleric", "Rosie");*/
+        foreach(PartyMember p in party)
+        {
+            p.Setup();
+        }
     }
 
     public void AddPartyMember(string char_class, string char_name)
@@ -91,69 +78,29 @@ public class Player : MonoBehaviour
         coins += amount;
     }
     
-    void Freeze()
-    {
-        rb.velocity = new Vector2 (0, 0);
-    }
 
-    void BeginBattle(List<Enemy> enemyParty)
+    public void BeginBattle(FightEncounter encounter)
     {
-        Freeze();
-        isFreeze = true;
-
 
         /*conjure the battle HUD */
         GameObject battleHUD = GameObject.Instantiate(battleHUDPrefab);
-        battleHUD.GetComponent<BattleHandler>().Setup(party, enemyParty);
+        List<Enemy> e_list = encounter.enemies;
+        currentEncounter = encounter;
+        battleHUD.GetComponent<BattleHandler>().Setup(party, e_list);
 
-        currentEncounter = battleHUD;
-
-
-        /*while(HP > 0)
-        {
-            Fight(enemy);
-            Debug.Log(HP + " " + enemy.HP);
-            if (enemy.HP <= 0)
-            {
-                Win(enemy);
-                Destroy(collision.gameObject);
-                break;
-            }
-            if(HP <= 0)
-            {
-                Lose();
-                //YOU DIE!!
-            }
-        }*/
+        
     }
 
-    public void EndBattle()
+    public void WinBattle()
     {
-        GameObject.Destroy(currentEncounter);
-        isFreeze = false;
+        currentEncounter.defeated = true;
+        //tell the move script that they can move now
+        this.gameObject.GetComponent<PlayerMovement>().busy = false;
     }
-    // Update is called once per frame
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //begin battle when encountering an enemy
-        if (collision.gameObject.tag == "Enemy")
-        {
-            EnemyList enemyParty = collision.gameObject.GetComponent<EnemyList>();
-            BeginBattle(enemyParty.enemies);
-            GameObject.Destroy(collision.gameObject);
 
-        }
-    }
-    void Update()
+    public void LoseBattle()
     {
-        //commented out for testing purposes
-        if(!isFreeze) 
-        {
-            //UpdateMovement();
-        }
-        else 
-        {
-            Freeze();
-        }
+        //spawn game over
     }
+
 }

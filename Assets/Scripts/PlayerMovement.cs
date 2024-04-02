@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public MapNode currentNode;
     public GameObject inventoryPanel;
-    public InventoryUI inventoryScript;
+    public bool busy; 
 
     public void MoveToNode(MapNode targetNode)
     {
@@ -20,6 +20,45 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("Cannot move to the selected node.");
         }
+
+        switch (currentNode.type)
+        {
+            case Map_type.Fight:
+                {
+                   
+                    FightEncounter encounter = currentNode.gameObject.GetComponent<FightEncounter>();
+                    if(encounter.defeated == false)
+                    {
+                        this.gameObject.GetComponent<Player>().BeginBattle(encounter);
+                        busy = true;
+                    }
+       
+                    break;
+                }
+            case Map_type.Shop:
+                {
+                    break;
+                }
+            case Map_type.Start:
+                {
+                    break;
+                }
+            case Map_type.Exit:
+                {
+                    break;
+                }
+            case Map_type.Chest:
+                {
+                    break;
+                }
+            //nothing happens
+            case Map_type.Empty:
+                {
+
+                    break;
+                }
+        }
+
     }
     private bool IsAdjacentNode(MapNode node)
     {
@@ -32,26 +71,30 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null && !inventoryPanel.activeInHierarchy)
+        if (!busy)
         {
-            MoveToNode(currentNode.up);
+            if (Input.GetKeyDown(KeyCode.W) && currentNode.up != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.up);
+            }
+            else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.down);
+            }
+            else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.left);
+            }
+            else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null && !inventoryPanel.activeInHierarchy)
+            {
+                MoveToNode(currentNode.right);
+            }
+            else if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.S) && currentNode.down != null && !inventoryPanel.activeInHierarchy)
-        {
-            MoveToNode(currentNode.down);
-        }
-        else if (Input.GetKeyDown(KeyCode.A) && currentNode.left != null && !inventoryPanel.activeInHierarchy)
-        {
-            MoveToNode(currentNode.left);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && currentNode.right != null && !inventoryPanel.activeInHierarchy)
-        {
-            MoveToNode(currentNode.right);
-        }
-        else if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            inventoryScript.ToggleInventory();
-        }
+
         
     }
 }
