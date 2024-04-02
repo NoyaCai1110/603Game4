@@ -18,11 +18,6 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private List<GameObject> items = new List<GameObject>();
     private List<GameObject> itemsM = new List<GameObject>();
 
-    private GameObject player;
-    private bool storeRunning = false;
-    private bool storeClosed = false;
-
-
     void Start()
     {
         shop = GetComponentInParent<Shop>();
@@ -35,24 +30,7 @@ public class ShopUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (!storeRunning && !storeClosed && Collision())
-        {
-            storeRunning = true;
-
-            hideShop2();
-        }
-        else if(!Collision())
-        {
-            closeShop();
-            storeClosed = false;
-        }
-    }
-
-    public void hideBothShops()
-    {
-        shop2.SetActive(false);
-        shop1.SetActive(false);
+        
     }
 
     public void hideShop1()
@@ -70,34 +48,6 @@ public class ShopUI : MonoBehaviour
     {
         shop1.SetActive(true);
         shop2.SetActive(false);
-    }
-
-    public void closeShop()
-    {
-        storeRunning = false;
-        storeClosed = true;
-
-        hideBothShops();
-    }
-
-    private bool Collision()
-    {
-        //gets the centers of both
-        Vector3 pCenter = player.GetComponentInChildren<SpriteRenderer>().bounds.center;
-        Vector3 sCenter = shop.transform.localPosition;
-
-        //determines the distance between the centers of the player and the given shop
-        float distance = (float)Math.Sqrt(Math.Pow(sCenter.x - pCenter.x, 2) + Math.Pow(sCenter.y - pCenter.y, 2));
-
-        //checks if there is a collision, returns true if true
-        if (distance < this.transform.localScale.x + player.transform.localScale.x)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     public void displayItems()
