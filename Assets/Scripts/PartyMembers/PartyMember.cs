@@ -85,8 +85,9 @@ public class PartyMember : Combatant
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        cur_w = -1;
+        cur_s = -1;
+}
 
     // Update is called once per frame
     void Update()

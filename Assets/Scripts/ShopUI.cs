@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class ShopUI : MonoBehaviour
 {
@@ -18,23 +17,25 @@ public class ShopUI : MonoBehaviour
     public Inventory backpack;
     [SerializeField] private List<GameObject> items = new List<GameObject>();
     private List<GameObject> itemsM = new List<GameObject>();
+
     private GameObject player;
     private bool storeRunning = false;
     private bool storeClosed = false;
 
+
     void Start()
     {
         shop = GetComponentInParent<Shop>();
-        player = GameObject.Find("Player");
-        backpack = player.GetComponent<Inventory>();
-
-        //hideShop1();
-        hideBothShops();
+        backpack = GameObject.Find("Player").GetComponent<Inventory>();
+        //shop1.SetActive(true);
+        //shop2.SetActive(false);
+        hideShop1();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (!storeRunning && !storeClosed && Collision())
         {
             storeRunning = true;
