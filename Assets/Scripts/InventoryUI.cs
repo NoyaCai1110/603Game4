@@ -29,37 +29,16 @@ public class InventoryUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Populate the character panels with proper info (CURRENTLY BUGGED)
+        //Populate the character panels with proper info
         for (int i = 0; i < characterPanels.Count; i++)
         {
             characterPanels[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = playerScript.party[i].name;
             characterPanels[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "HP: " + playerScript.party[i].HP;
             characterPanels[i].transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "MP: " + playerScript.party[i].MP;
-            if (playerScript.party[i].cur_w != -1 )
-            {
-                if (!inventoryScript.w_list[playerScript.party[i].cur_w].equipped)
-                {
-                    //inventoryScript.equip_weapon(playerScript.party[i].cur_w, playerScript.party[i]);
-                    characterPanels[i].transform.GetChild(7).GetComponent<Image>().sprite = inventoryScript.w_list[i].image;
-                }
-                else
-                {
-                    playerScript.party[i].cur_w = -1;
-                }
-                
-            }
-            if (playerScript.party[i].cur_s != -1)
-            {
-                if (!inventoryScript.s_list[playerScript.party[i].cur_s].equipped)
-                {
-                    inventoryScript.equip_shield(playerScript.party[i].cur_s, playerScript.party[i]);
-                    characterPanels[i].transform.GetChild(8).GetComponent<Image>().sprite = inventoryScript.s_list[i].image;
-                }
-                else
-                {
-                    playerScript.party[i].cur_s = -1;
-                }
-            }
+            characterPanels[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Attack: " + playerScript.party[i].Attack;
+            characterPanels[i].transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "Magic: " + playerScript.party[i].Magic;
+            characterPanels[i].transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "Defense: " + playerScript.party[i].Defense;
+            characterPanels[i].transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = "Speed: " + playerScript.party[i].Speed;
         }
     }
 
@@ -143,6 +122,8 @@ public class InventoryUI : MonoBehaviour
 
         //Equip weapon through inventory script
         inventoryScript.equip_weapon(weaponIndex, playerScript.party[characterSelected]);
+        characterPanels[characterSelected].transform.GetChild(7).GetChild(1).gameObject.SetActive(true);
+        characterPanels[characterSelected].transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Attack: " + playerScript.party[characterSelected].Attack;
 
         CloseWeaponWindow();
     }
@@ -162,6 +143,8 @@ public class InventoryUI : MonoBehaviour
         }
 
         inventoryScript.equip_shield(shieldIndex, playerScript.party[characterSelected]);
+        characterPanels[characterSelected].transform.GetChild(8).GetChild(1).gameObject.SetActive(true);
+        characterPanels[characterSelected].transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "Defense: " + playerScript.party[characterSelected].Defense;
         
         CloseShieldWindow();
     }
@@ -193,5 +176,23 @@ public class InventoryUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void UnequipWeapon(int characterNumber)
+    {
+        inventoryScript.unequip_weapon(playerScript.party[characterNumber]);
+        characterPanels[characterNumber].transform.GetChild(7).GetComponent<Image>().sprite = null;
+        characterPanels[characterSelected].transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Attack: " + playerScript.party[characterSelected].Attack;
+
+        characterPanels[characterNumber].transform.GetChild(7).GetChild(1).gameObject.SetActive(false);
+    }
+
+    public void UnequipShield(int characterNumber)
+    {
+        inventoryScript.unequip_shield(playerScript.party[characterNumber]);
+        characterPanels[characterNumber].transform.GetChild(8).GetComponent<Image>().sprite = null;
+        characterPanels[characterSelected].transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "Defense: " + playerScript.party[characterSelected].Defense;
+
+        characterPanels[characterNumber].transform.GetChild(8).GetChild(1).gameObject.SetActive(false);
     }
 }
