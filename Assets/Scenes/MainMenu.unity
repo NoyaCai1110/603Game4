@@ -459,7 +459,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Magic Maze
+  m_text: Dungeon Descent
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5fe9ac3df50c18f45a069b4a87f6d088, type: 2}
   m_sharedMaterial: {fileID: -5337887036667339827, guid: 5fe9ac3df50c18f45a069b4a87f6d088, type: 2}
@@ -486,7 +486,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
+  m_fontSize: 86.5
   m_fontSizeBase: 9
   m_fontWeight: 400
   m_enableAutoSizing: 1
