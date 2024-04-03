@@ -397,14 +397,31 @@ public class BattleHandler : MonoBehaviour
                 return;
             }
 
-            //handle pre-round actions
-            if (queue_index == -1)
+            if (queue_index == actionQueue.Count)
             {
+                queue_index++;
+
+                queue_index = -1;
+
+                //if battle has ended, do not open the command panel
+                if (battleEnded)
+                {
+                    queue_index = 0;
+                }
+                else
+                {
+
+                    LoadRound();
+                    issuing_commands = true;
+                    commandPanel.Enable(true);
+                    commandPanel.Setup();
+                }
 
             }
             //per turn actions
             else if (queue_index < actionQueue.Count && actionQueue.Count != 0)
             {
+
                 bool noEventsRemaining = (eventQueue.Count == 0);
 
                 //don't perform the next turn until all battle log events have been handled
@@ -421,6 +438,7 @@ public class BattleHandler : MonoBehaviour
                             i++;
                         }
 
+                        //preserve any changes to each party member back onto the play
                         if (playerWon)
                         {
 
@@ -432,7 +450,7 @@ public class BattleHandler : MonoBehaviour
                             player.LoseBattle();
                         }
 
-                        //preserve any changes to each party member back onto the play
+             
                         GameObject.Destroy(gameObject);
 
                         return;
@@ -440,13 +458,13 @@ public class BattleHandler : MonoBehaviour
 
                     //tell the turn's owner to Act()
                     //perform the action, which should load the battleEvent queue
-
                     currentTurn = actionQueue[queue_index];
 
                     //skip turns that have nothing
 
                     while (currentTurn.ability.abilityType == AbilityType.None || currentTurn.owner.isDead)
                     {
+                        //enemy actions are set during PerformTurn(), so we still want enemies who are alive to do their turn 
                         if (currentTurn.owner is Enemy)
                         {
                             if (currentTurn.owner.isDead)
@@ -454,13 +472,18 @@ public class BattleHandler : MonoBehaviour
                                 queue_index++;
                             }
 
+
                             if (queue_index == actionQueue.Count)
                             {
                                 break;
                             }
 
-                            currentTurn = actionQueue[queue_index];
-                            break;
+                            if (!currentTurn.owner.isDead)
+                            {
+                                currentTurn = actionQueue[queue_index];
+                                break;
+                            }
+                         
                         }
 
                         if (currentTurn.owner is PartyMember)
@@ -491,27 +514,6 @@ public class BattleHandler : MonoBehaviour
                     //cleanup 
                     UpdateUI();
                     UpdateState();
-                }
-
-                //end of round actions
-                if (queue_index >= actionQueue.Count)
-                {
-                    queue_index = -1;
-
-
-                    //if battle has ended, do not open the command panel
-                    if (battleEnded)
-                    {
-                        queue_index = 0;
-                    }
-                    else
-                    {
-                        LoadRound();
-                        issuing_commands = true;
-                        commandPanel.Enable(true);
-                        commandPanel.Setup();
-                    }
-
 
                 }
 
