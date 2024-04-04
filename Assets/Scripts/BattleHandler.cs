@@ -67,6 +67,20 @@ public class BattleHandler : MonoBehaviour
     public GameObject charpanelPrefab;
     public CommandManager commandPanel;
     public Logger battle_log; //battle text box
+
+    public float autoTimer = 0f;
+    public float autoSpeed = 3.0f;
+
+     void Update()
+    {
+        autoTimer += Time.deltaTime;
+
+        if(autoTimer > autoSpeed)
+        {
+            autoTimer = 0f;
+            OnConfirm();
+        }
+    }
     public void Setup(List<PartyMember> playerParty, List<Enemy> enemyParty)
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -379,6 +393,7 @@ public class BattleHandler : MonoBehaviour
     //press A to move to the next event 
     public void OnConfirm()
     {
+        autoTimer = 0f;
         //this input is disabled while the command panel is enabled 
         if (!issuing_commands)
         {
