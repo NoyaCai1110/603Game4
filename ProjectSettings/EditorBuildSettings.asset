@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Inventory Test.unity
     guid: a3af7429d07dfc642b45a5d34f8e9bae
+  - enabled: 1
+    path: Assets/Scenes/NarrativeScene.unity
+    guid: d001f0ee3de1cd847b6040d46b5ab1ab
   m_configObjects: {}
