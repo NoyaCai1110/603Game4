@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
+//using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -16,6 +16,7 @@ public class ShopUI : MonoBehaviour
     public Shop shop;
     public GameObject itemPrefab;
     public Inventory backpack;
+    public TextMeshProUGUI playerCoins;
     [SerializeField] private List<GameObject> items = new List<GameObject>();
     private List<GameObject> itemsM = new List<GameObject>();
     private GameObject player;
@@ -47,6 +48,11 @@ public class ShopUI : MonoBehaviour
         {
             closeShop();
             storeClosed = false;
+        }
+
+        if (shop2.activeInHierarchy)
+        {
+            playerCoins.text = "Coins: " + player.GetComponent<Player>().coins.ToString();
         }
     }
 
@@ -176,12 +182,16 @@ public class ShopUI : MonoBehaviour
 
     public void updateItemUICoin(int i)
     {
-        //Debug.Log(i);
+        string statType = getStatType(i);
+
         TextMeshProUGUI[] textBoxes = items[i].GetComponentsInChildren<TextMeshProUGUI>();
         textBoxes[0].text = shop.m_coin[i].stock.ToString();
         textBoxes[1].text = shop.m_coin[i].name;
-        textBoxes[2].text = shop.m_coin[i].stat.ToString();
-        textBoxes[3].text = shop.m_coin[i].price.ToString();
+        textBoxes[2].text = "+" + shop.m_coin[i].stat.ToString() + statType;
+        textBoxes[3].text = shop.m_coin[i].price.ToString() + " coins";
+
+        Image itemSprite = items[i].transform.GetChild(0).GetComponent<Image>();
+        itemSprite.sprite = shop.m_coin[i].image;
 
         if (shop.m_coin[i].stock == 0)
         {
@@ -190,13 +200,32 @@ public class ShopUI : MonoBehaviour
         }
     }
 
+    private string getStatType(int i)
+    {
+        switch ((int)shop.m_coin[i].type)
+        {
+            case 0:
+                return " coins";
+            case 1:
+                return " attack";
+            case 2:
+                return " defense";
+            case 3:
+                return " health";
+        }
+        return "stat";
+    }
+
     public void updateItemUIMoney(int i)
     {
         TextMeshProUGUI[] textBoxes = itemsM[i].GetComponentsInChildren<TextMeshProUGUI>();
         textBoxes[0].text = shop.m_money[i].stock.ToString();
         textBoxes[1].text = shop.m_money[i].name;
-        textBoxes[2].text = shop.m_money[i].stat.ToString();
-        textBoxes[3].text = shop.m_money[i].price.ToString();
+        textBoxes[2].text = "+" + shop.m_money[i].stat.ToString() + " coins";
+        textBoxes[3].text = "$" + shop.m_money[i].price.ToString() + ".00";
+
+        Image itemSprite = itemsM[i].transform.GetChild(0).GetComponent<Image>();
+        itemSprite.sprite = shop.m_money[i].image;
 
         if (shop.m_money[i].stock == 0)
         {

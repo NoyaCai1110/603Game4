@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b27b5ef305ffa146a25d693f8cf8c67, type: 3}
-  m_Name: Goblin
+  m_Name: Gorgon
   m_EditorClassIdentifier: 
-  HP: 10
-  MaxHP: 10
-  MP: 0
-  MaxMP: 0
-  Attack: 10
-  Defense: 3
-  MagicDefense: 2
-  Magic: 0
-  Speed: 4
-  name: Goblin
+  HP: 50
+  MaxHP: 50
+  MP: 99
+  MaxMP: 99
+  Attack: 15
+  Defense: 4
+  MagicDefense: 0
+  Magic: 5
+  Speed: 5
+  name: Gorgon Sorceror
   isDead: 0
   isDefending: 0
-  dropped_gold: 4
-  exp: 3
-  sprite: {fileID: 21300000, guid: a5c4914cd9451894fa96731520c9a9f0, type: 3}
+  dropped_gold: 250
+  exp: 50
+  sprite: {fileID: 21300000, guid: 143ba97de08ab394b8c68358afcfa33f, type: 3}
   abilities:
   - {fileID: 11400000, guid: 17b95963bafde47419b2c09b1d706999, type: 2}
+  - {fileID: 11400000, guid: 44a8d941e5ca14643abfbadd0c67e662, type: 2}

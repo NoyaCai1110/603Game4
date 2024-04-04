@@ -17,6 +17,24 @@ public class CharPanel : MonoBehaviour
         mana_num.text = $"MP {character.MP}";
         lvl_num.text = $"Lv. {character.level}";
         name.text = $"{character.name}";
+
+        if(character.HP == character.MaxHP)
+        {
+            health_num.color = Color.green;
+        }
+        else
+        {
+            health_num.color = Color.white;
+        }
+
+        if (character.MP == character.MaxMP)
+        {
+            mana_num.color = Color.green;
+        }
+        else
+        {
+            mana_num.color = Color.white;
+        }
     }
 
     //updates text to reflect character's state

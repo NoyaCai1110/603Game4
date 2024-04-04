@@ -12,14 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41cd1eecfc0aa14cb67ae53d8cf0a7d, type: 3}
   m_Name: rogue
   m_EditorClassIdentifier: 
-  HP: 8
-  MaxHP: 8
-  MP: 0
-  MaxMP: 0
-  Attack: 2
-  Defense: 1
+  HP: 0
+  MaxHP: 25
+  MP: 9
+  MaxMP: 9
+  Attack: 9
+  Defense: 3
+  MagicDefense: 3
   Magic: 0
   Speed: 5
-  level: 0
+  name: Rylock
+  isDead: 1
+  isDefending: 0
+  level: 3
   exp: 0
-  isDead: 0
+  abilities: []
+  cur_w: 0
+  cur_s: 0

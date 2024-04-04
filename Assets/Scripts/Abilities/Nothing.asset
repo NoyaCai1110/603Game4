@@ -9,23 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d41cd1eecfc0aa14cb67ae53d8cf0a7d, type: 3}
-  m_Name: bard
+  m_Script: {fileID: 11500000, guid: e6f2ce29e46043a4e8100fbbb6cb2851, type: 3}
+  m_Name: Nothing
   m_EditorClassIdentifier: 
-  HP: 7
-  MaxHP: 7
-  MP: 3
-  MaxMP: 3
-  Attack: 3
-  Defense: 2
-  MagicDefense: 2
-  Magic: 2
-  Speed: 2
-  name: Bill
-  isDead: 0
-  isDefending: 0
-  level: 3
-  exp: 0
-  abilities: []
-  cur_w: 0
-  cur_s: 0
+  targetType: 3
+  owner: 
+  ability_name: Nothing
+  abilityType: 2
+  power_modifier: 0
+  MP_Cost: 0
+  targets: []
+  conditions: 04000000
+  log_text: 
+  description: 
+  unlocked_lvl: 0
