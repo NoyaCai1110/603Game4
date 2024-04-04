@@ -89,9 +89,10 @@ public class ShopUI : MonoBehaviour
 
     private bool Collision()
     {
+        
         //gets the centers of both
         Vector3 pCenter = player.GetComponentInChildren<SpriteRenderer>().bounds.center;
-        Vector3 sCenter = shop.transform.localPosition;
+        Vector3 sCenter = shop.transform.position;
 
         //determines the distance between the centers of the player and the given shop
         float distance = (float)Math.Sqrt(Math.Pow(sCenter.x - pCenter.x, 2) + Math.Pow(sCenter.y - pCenter.y, 2));
@@ -99,6 +100,7 @@ public class ShopUI : MonoBehaviour
         //checks if there is a collision, returns true if true
         if (distance < this.transform.localScale.x + player.transform.localScale.x)
         {
+            //print("Collide");
             return true;
         }
         else

@@ -68,15 +68,15 @@ public class Inventory : MonoBehaviour
             tmp.equipped = false;
             w_list[pm.cur_w] = tmp;
             pm.Attack -= tmp.stat;
-            print(pm.Attack);
+            //print(pm.Attack);
             pm.cur_w = -1;
         }
     }
 
     public void equip_shield(int s_index, PartyMember pm)
     {
-        print(pm);
-        print(pm.cur_s);
+        //print(pm);
+        //print(pm.cur_s);
         //print(pm.HP);
         if (s_index > s_list.Count - 1)
         {
@@ -110,7 +110,7 @@ public class Inventory : MonoBehaviour
             tmp.equipped = false;
             s_list[pm.cur_s] = tmp;
             pm.Defense -= tmp.stat;
-            print(pm.Defense);
+            //print(pm.Defense);
             pm.cur_s = -1;
         }
     }
@@ -139,7 +139,38 @@ public class Inventory : MonoBehaviour
             pm.HP = pm.MaxHP;
         }
     }
-
+    public Weapon init_w(string name, int stat, Sprite image)
+    {
+        Weapon w = new Weapon();
+        w.name = name;  
+        w.stat = stat;
+        w.image = image;
+        w.equipped = false;
+        return w;
+    }
+    public Shield init_s(string name, int stat, Sprite image)
+    {
+        Shield s = new Shield();
+        s.name = name;
+        s.stat = stat;
+        s.image = image;
+        s.equipped = false;
+        return s;
+    }
+    public void pick_item(Weapon weapon)
+    {
+        w_list.Add(weapon);
+        w_list.Sort((x, y) => x.stat.CompareTo(y.stat));
+    }
+    public void pick_item(Shield shield)
+    {
+        s_list.Add(shield);
+        s_list.Sort((x, y) => x.stat.CompareTo(y.stat));
+    }
+    public void pick_item(int coins)
+    {
+        Coins += coins;
+    }
     void Start()
     {
         Coins = 300;
