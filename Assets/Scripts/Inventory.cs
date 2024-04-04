@@ -139,7 +139,38 @@ public class Inventory : MonoBehaviour
             pm.HP = pm.MaxHP;
         }
     }
-
+    public Weapon init_w(string name, int stat, Sprite image)
+    {
+        Weapon w = new Weapon();
+        w.name = name;  
+        w.stat = stat;
+        w.image = image;
+        w.equipped = false;
+        return w;
+    }
+    public Shield init_s(string name, int stat, Sprite image)
+    {
+        Shield s = new Shield();
+        s.name = name;
+        s.stat = stat;
+        s.image = image;
+        s.equipped = false;
+        return s;
+    }
+    public void pick_item(Weapon weapon)
+    {
+        w_list.Add(weapon);
+        w_list.Sort((x, y) => x.stat.CompareTo(y.stat));
+    }
+    public void pick_item(Shield shield)
+    {
+        s_list.Add(shield);
+        s_list.Sort((x, y) => x.stat.CompareTo(y.stat));
+    }
+    public void pick_item(int coins)
+    {
+        Coins += coins;
+    }
     void Start()
     {
         Coins = 300;
