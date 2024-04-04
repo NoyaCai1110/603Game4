@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 21
   MaxHP: 21
-  MP: 2
+  MP: 18
   MaxMP: 18
   Attack: 5
   Defense: 4
@@ -22,7 +22,7 @@ MonoBehaviour:
   Magic: 7
   Speed: 2
   name: Rosie
-  isDead: 0
+  isDead: 1
   isDefending: 0
   level: 3
   exp: 0

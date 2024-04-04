@@ -68,19 +68,6 @@ public class BattleHandler : MonoBehaviour
     public CommandManager commandPanel;
     public Logger battle_log; //battle text box
 
-    public float autoTimer = 0f;
-    public float autoSpeed = 3.0f;
-
-     void Update()
-    {
-        autoTimer += Time.deltaTime;
-
-        if(autoTimer > autoSpeed)
-        {
-            autoTimer = 0f;
-            OnConfirm();
-        }
-    }
     public void Setup(List<PartyMember> playerParty, List<Enemy> enemyParty)
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -208,7 +195,7 @@ public class BattleHandler : MonoBehaviour
 
         List<Combatant> combatants = new List<Combatant>();
 
-        foreach (Enemy e in enemyParty)
+        foreach (Enemy e in monster_sprites.Values)
         {
             if (!e.isDead)
             {
@@ -216,7 +203,7 @@ public class BattleHandler : MonoBehaviour
             }
         }
 
-        foreach (PartyMember p in playerParty)
+        foreach (PartyMember p in partyPanels.Values)
         {
             if (!p.isDead)
             {
@@ -271,14 +258,14 @@ public class BattleHandler : MonoBehaviour
 
     public void RecieveCommand(PartyMember member, Ability ability)
     {
-        Turn newTurn = new Turn(member, ability);
+        Turn newturn = new Turn(member, ability);
 
         //Find the turn and modify the action
         for (int i = 0; i < actionQueue.Count; i++)
         {
-            if (actionQueue[i].owner == newTurn.owner)
+            if (actionQueue[i].owner == member)
             {
-                actionQueue[i] = newTurn;
+                actionQueue[i] = newturn;
             }
         }
     }
@@ -393,7 +380,6 @@ public class BattleHandler : MonoBehaviour
     //press A to move to the next event 
     public void OnConfirm()
     {
-        autoTimer = 0f;
         //this input is disabled while the command panel is enabled 
         if (!issuing_commands)
         {

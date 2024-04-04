@@ -62,7 +62,7 @@ public class CommandManager : MonoBehaviour
         }
 
         //load in the queue
-        foreach (PartyMember member in handler.playerParty)
+        foreach (PartyMember member in playerParty.Values)
         {
             command_queue.Add(member);
         }

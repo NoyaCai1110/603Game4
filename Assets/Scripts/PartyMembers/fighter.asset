@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41cd1eecfc0aa14cb67ae53d8cf0a7d, type: 3}
   m_Name: fighter
   m_EditorClassIdentifier: 
-  HP: 43
-  MaxHP: 43
+  HP: 42
+  MaxHP: 42
   MP: 12
   MaxMP: 12
   Attack: 8
@@ -22,7 +22,7 @@ MonoBehaviour:
   Magic: 0
   Speed: 1
   name: Frank
-  isDead: 0
+  isDead: 1
   isDefending: 0
   level: 3
   exp: 0
