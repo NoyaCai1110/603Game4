@@ -765,12 +765,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'WASD: Move
 
-    A: Advance Combat
+    Space: Advance Combat
 
     Escape: Pause Game
 
-    Tab: Open
-    Inventory'
+    Tab:
+    Open Inventory'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5fe9ac3df50c18f45a069b4a87f6d088, type: 2}
   m_sharedMaterial: {fileID: -5337887036667339827, guid: 5fe9ac3df50c18f45a069b4a87f6d088, type: 2}
