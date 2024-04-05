@@ -210,7 +210,7 @@ public class Combatant : ScriptableObject
     {
 
         log_events.Add($"{this.name} is slain.");
-        isDead = true;
+        this.isDead = true;
 
     }
     //Healing health

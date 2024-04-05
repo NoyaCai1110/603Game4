@@ -30,6 +30,7 @@ public class PartyMember : Combatant
     {
         this.HP = this.MaxHP;
         this.MP = this.MaxMP;
+        this.isDead = false; 
     }
 
     public void UpdateHP_MP(int hp, int mp)

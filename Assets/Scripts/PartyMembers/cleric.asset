@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 21
   MaxHP: 21
-  MP: 2
+  MP: 18
   MaxMP: 18
   Attack: 5
   Defense: 4

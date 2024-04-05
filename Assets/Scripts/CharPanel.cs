@@ -18,14 +18,19 @@ public class CharPanel : MonoBehaviour
         lvl_num.text = $"Lv. {character.level}";
         name.text = $"{character.name}";
 
-        if(character.HP == character.MaxHP)
+        health_num.color = Color.white;
+
+        if (character.HP == 0)
+        {
+            health_num.color = Color.red;
+        }
+
+        if (character.HP == character.MaxHP)
         {
             health_num.color = Color.green;
         }
-        else
-        {
-            health_num.color = Color.white;
-        }
+
+
 
         if (character.MP == character.MaxMP)
         {

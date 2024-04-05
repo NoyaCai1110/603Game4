@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41cd1eecfc0aa14cb67ae53d8cf0a7d, type: 3}
   m_Name: wizard
   m_EditorClassIdentifier: 
-  HP: 16
+  HP: 2
   MaxHP: 16
   MP: 40
   MaxMP: 40
@@ -22,7 +22,7 @@ MonoBehaviour:
   Magic: 8
   Speed: 3
   name: Wiz
-  isDead: 0
+  isDead: 1
   isDefending: 0
   level: 3
   exp: 0
