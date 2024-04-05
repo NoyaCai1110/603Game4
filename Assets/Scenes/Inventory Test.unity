@@ -6350,8 +6350,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - {fileID: 11400000, guid: bf786d1a0e1280546a1379137659356e, type: 2}
-  - {fileID: 11400000, guid: 6a02e4fec94ecb54dbef5eff9575b577, type: 2}
-  - {fileID: 11400000, guid: f8d43e4e650ef624d896c1ccd8978621, type: 2}
+  - {fileID: 11400000, guid: bf786d1a0e1280546a1379137659356e, type: 2}
+  - {fileID: 11400000, guid: bf786d1a0e1280546a1379137659356e, type: 2}
   defeated: 0
 --- !u!1 &1811316163
 GameObject:
@@ -6694,9 +6694,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
+  - {fileID: 11400000, guid: 6a02e4fec94ecb54dbef5eff9575b577, type: 2}
   - {fileID: 11400000, guid: bf786d1a0e1280546a1379137659356e, type: 2}
   - {fileID: 11400000, guid: 6a02e4fec94ecb54dbef5eff9575b577, type: 2}
-  - {fileID: 11400000, guid: f8d43e4e650ef624d896c1ccd8978621, type: 2}
   defeated: 0
 --- !u!114 &1867950920 stripped
 MonoBehaviour:
@@ -6835,9 +6835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 11400000, guid: bf786d1a0e1280546a1379137659356e, type: 2}
-  - {fileID: 11400000, guid: 6a02e4fec94ecb54dbef5eff9575b577, type: 2}
-  - {fileID: 11400000, guid: f8d43e4e650ef624d896c1ccd8978621, type: 2}
+  - {fileID: 11400000, guid: cef846a059a731d48841b836fcb4c424, type: 2}
   defeated: 0
 --- !u!1 &1930210850
 GameObject:

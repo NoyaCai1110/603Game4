@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b27b5ef305ffa146a25d693f8cf8c67, type: 3}
   m_Name: Gorgon
   m_EditorClassIdentifier: 
-  HP: 50
-  MaxHP: 50
+  HP: 60
+  MaxHP: 60
   MP: 99
   MaxMP: 99
   Attack: 15
