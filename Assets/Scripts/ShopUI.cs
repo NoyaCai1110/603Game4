@@ -227,7 +227,7 @@ public class ShopUI : MonoBehaviour
         textBoxes[0].text = shop.m_money[i].stock.ToString();
         textBoxes[1].text = shop.m_money[i].name;
         textBoxes[2].text = "+" + shop.m_money[i].stat.ToString() + " coins";
-        textBoxes[3].text = "$" + shop.m_money[i].price.ToString() + ".00";
+        textBoxes[3].text = "$" + shop.m_money[i].price.ToString() + ".99";
 
         Image itemSprite = itemsM[i].transform.GetChild(0).GetComponent<Image>();
         itemSprite.sprite = shop.m_money[i].image;

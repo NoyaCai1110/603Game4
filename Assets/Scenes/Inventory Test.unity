@@ -2035,7 +2035,7 @@ PrefabInstance:
     - target: {fileID: 2276332599799164950, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: currentNode
       value: 
-      objectReference: {fileID: 611604165}
+      objectReference: {fileID: 493589901}
     - target: {fileID: 2276332599799164950, guid: 20569e2772dabb54291c8ce5b8189526, type: 3}
       propertyPath: inventoryPanel
       value: 
