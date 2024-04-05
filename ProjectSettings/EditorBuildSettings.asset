@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NarrativeScene.unity
     guid: d001f0ee3de1cd847b6040d46b5ab1ab
+  - enabled: 1
+    path: Assets/Scenes/OnboardingLevel.unity
+    guid: 3a54f9c616a0e4f96bc319f2013e9a84
   m_configObjects: {}

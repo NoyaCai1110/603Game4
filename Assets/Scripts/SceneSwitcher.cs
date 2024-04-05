@@ -11,6 +11,7 @@ public class SceneSwitcher : MonoBehaviour
     public int optionsScene = 2;
     public int controlsScene = 3;
     public int narrativeScene = 4;
+    public int onboardingScene=5;
 
 
     // Start is called before the first frame update
@@ -48,6 +49,11 @@ public class SceneSwitcher : MonoBehaviour
     public void onSwitchNarrative()
     {
         SceneManager.LoadScene(narrativeScene, LoadSceneMode.Single);// switches to the narrative scene
+    }
+
+    public void onSwitchOnboarding()
+    {
+        SceneManager.LoadScene(onboardingScene, LoadSceneMode.Single);// switches to the onboarding scene
     }
 
     public void onQuitGame()
