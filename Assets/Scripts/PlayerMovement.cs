@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public MapNode currentNode;
     public GameObject inventoryPanel;
     public InventoryUI inventoryScript;
+    public GameObject completionPopup;
 
     public bool busy; 
     public Onboarding onboardingScript;
@@ -99,6 +100,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 inventoryScript.ToggleInventory();
             }
+        }
+
+        if(currentNode.type.ToString() == "Exit")
+        {
+            completionPopup.SetActive(true);
         }
 
         

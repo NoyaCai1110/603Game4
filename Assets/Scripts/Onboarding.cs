@@ -10,10 +10,12 @@ public class Onboarding : MonoBehaviour
     private string currentNode;
     public GameObject exitPopUp;
     public GameObject onboardingPanel;
+    private bool isOnBoarding = false;
 
     void Start()
     {
         textField.text = "Use WASD Keys to Navigate on the map";
+        isOnBoarding = true;
     }
 
     void Update()
@@ -29,30 +31,40 @@ public class Onboarding : MonoBehaviour
     public void UpdateCurrentNodeType(Map_type type)
     {
         currentNode = type.ToString();
-        if( currentNode == "Fight")
+        if (isOnBoarding == true)
         {
-            textField.text = "Use Space Key to advance in the Fight";
-        }
-        else if(currentNode == "Shop")
-        {
-            textField.text = "You can visit the store to buy weapons";
-        }
-        else if(currentNode == "Chest")
-        {
-            textField.text = "Open the Chest to get a suprice reward";
+            if (currentNode == "Fight")
+            {
+                textField.text = "Use Space Key to advance in the Fight";
+            }
+            else if (currentNode == "Shop")
+            {
+                textField.text = "You can visit the store to buy weapons";
+            }
+            else if (currentNode == "Chest")
+            {
+                textField.text = "Open the Chest to get a suprice reward";
+            }
+            else
+            {
+                textField.text = "Use WASD Keys to Navigate on the map";
+            }
         }
         else
         {
-            textField.text = "Use WASD Keys to Navigate on the map";
+            return;
         }
+
     }
 
     public void closePopup()
     {
         SceneManager.LoadScene(0);
+        isOnBoarding = false;
     }
     public void LoadScene()
     {
         SceneManager.LoadScene(3);
+        isOnBoarding = false;
     }
 }
