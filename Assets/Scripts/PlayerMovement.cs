@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public InventoryUI inventoryScript;
 
     public bool busy; 
+    public Onboarding onboardingScript;
 
     public void MoveToNode(MapNode targetNode)
     {
@@ -17,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
             transform.position = targetNode.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
             currentNode = targetNode;
             Debug.Log("Moved to node of type: " + targetNode.type);
+             
+            // Update Onboarding script with current node type
+            onboardingScript.UpdateCurrentNodeType(currentNode.type);
         }
         else
         {
