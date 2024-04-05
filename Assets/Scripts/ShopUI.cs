@@ -13,6 +13,7 @@ public class ShopUI : MonoBehaviour
     public GameObject shop2;
     public GameObject coinItems;
     public GameObject moneyItems;
+    public GameObject enterShopButton;
     public Shop shop;
     public GameObject itemPrefab;
     public Inventory backpack;
@@ -42,17 +43,19 @@ public class ShopUI : MonoBehaviour
         {
             storeRunning = true;
 
-            hideShop2();
+            enterShopButton.SetActive(true);
         }
         else if (!Collision())
         {
             closeShop();
             storeClosed = false;
+
+            enterShopButton.SetActive(false);
         }
 
         if (shop2.activeInHierarchy)
         {
-            playerCoins.text = "Coins: " + player.GetComponent<Player>().coins.ToString();
+            playerCoins.text = "Coins: " + backpack.Coins.ToString();
         }
     }
 

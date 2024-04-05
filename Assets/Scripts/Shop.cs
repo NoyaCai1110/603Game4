@@ -136,18 +136,20 @@ public class Shop : MonoBehaviour
     void Awake()
     {
         //merchandise using coins
-        c_item = init_item("Life Potion", 20, 5, 20, images[0], item_type.Potions);
+        c_item = init_item("Wooden Sword", 150, 4, 5, images[1], item_type.Weapon);
         m_coin.Add(c_item);
-        c_item = init_item("Wooden Sword", 50, 1, 5, images[1], item_type.Weapon);
+        c_item = init_item("Metal Sword", 300, 4, 8, images[2], item_type.Weapon);
         m_coin.Add(c_item);
-        c_item = init_item("Metal Sword", 80, 1, 8, images[2], item_type.Weapon);
+        c_item = init_item("Wooden Shield", 150, 4, 3, images[3], item_type.Shield);
         m_coin.Add(c_item);
-        c_item = init_item("Wooden Shield", 50, 1, 3, images[3], item_type.Shield);
-        m_coin.Add(c_item);
-        c_item = init_item("Metal Shield", 80, 1, 5, images[4], item_type.Shield);
+        c_item = init_item("Metal Shield", 300, 4, 5, images[4], item_type.Shield);
         m_coin.Add(c_item);
         //merchandise using money
-        m_item = init_item("500 Coins", 5, 1000, 500, images[5], item_type.Coin);
+        m_item = init_item("50 Coins", 1, 1000, 50, images[5], item_type.Coin);
+        m_money.Add(m_item);
+        m_item = init_item("175 Coins", 3, 1000, 175, images[5], item_type.Coin);
+        m_money.Add(m_item);
+        m_item = init_item("400 Coins", 5, 1000, 400, images[5], item_type.Coin);
         m_money.Add(m_item);
     }
     void Start()
