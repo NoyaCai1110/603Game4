@@ -111,7 +111,7 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < inventoryScript.w_list.Count; i++)
         {   
             //Verify button clicked matches the weapon in the list by checking the name
-            if  (inventoryScript.w_list[i].name == weaponName.GetComponent<TextMeshProUGUI>().text)
+            if  (inventoryScript.w_list[i].name == weaponName.GetComponent<TextMeshProUGUI>().text && inventoryScript.w_list[i].equipped == false)
             {
                 //Set index
                 weaponIndex = i;
@@ -136,7 +136,7 @@ public class InventoryUI : MonoBehaviour
         int shieldIndex = 0;
         for (int i = 0; i < inventoryScript.s_list.Count; i++)
         {
-            if  (inventoryScript.s_list[i].name == shieldName.GetComponent<TextMeshProUGUI>().text)
+            if  (inventoryScript.s_list[i].name == shieldName.GetComponent<TextMeshProUGUI>().text && inventoryScript.s_list[i].equipped == false)
             {
                 shieldIndex = i;
                 characterPanels[characterSelected].transform.GetChild(8).GetComponent<Image>().sprite = inventoryScript.s_list[i].image;
